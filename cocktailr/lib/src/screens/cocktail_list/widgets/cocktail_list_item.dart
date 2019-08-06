@@ -35,7 +35,11 @@ class CocktailListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () {},
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  '/cocktail',
+                  arguments: cocktailSnapshot.data.id,
+                ),
                 borderRadius: BorderRadius.circular(8),
                 child: Container(
                   child: Row(
@@ -61,20 +65,12 @@ class CocktailListItem extends StatelessWidget {
     );
   }
 
-  Widget _cocktailImage(Cocktail cocktail, double height) => Hero(
-        tag: "Cocktail ${cocktail.id}",
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: Image.network(
-              cocktail.image,
-              width: height,
-              height: height,
-            ),
-          ),
+  Widget _cocktailImage(Cocktail cocktail, double height) => ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Image.network(
+          cocktail.image,
+          width: height,
+          height: height,
         ),
       );
 

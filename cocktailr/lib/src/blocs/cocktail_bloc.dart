@@ -20,7 +20,7 @@ class CocktailBloc extends BlocCase {
       : _cocktailRepository = cocktailRepository ?? CocktailRepository() {
     _cocktailsFetcher.stream.transform(_cocktailsTransformer()).pipe(_cocktailsOutput);
     _fetchIngredients();
-    fetchCocktailIdsByIngredient("Gin");
+    fetchCocktailIdsByIngredient("Tequila");
   }
 
   Future<void> _fetchIngredients() async {
