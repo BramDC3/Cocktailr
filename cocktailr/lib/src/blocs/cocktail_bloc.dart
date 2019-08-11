@@ -5,7 +5,7 @@ import 'package:rxdart/rxdart.dart';
 
 class CocktailBloc extends BlocCase {
   final _cocktailRepository;
-  final _cocktailIds = BehaviorSubject<List<String>>();
+  final _cocktailIds = PublishSubject<List<String>>();
   final _ingredients = BehaviorSubject<List<String>>();
   final _cocktailsOutput = BehaviorSubject<Map<String, Future<Cocktail>>>();
   final _cocktailsFetcher = PublishSubject<String>();

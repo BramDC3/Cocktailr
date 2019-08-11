@@ -1,3 +1,5 @@
+import 'package:cocktailr/src/utils/string_utils.dart';
+
 class Cocktail {
   final String id;
   final String name;
@@ -21,7 +23,7 @@ class Cocktail {
     return Cocktail(
       id: json['idDrink'],
       name: json['strDrink'],
-      category: json['strCategory'],
+      category: StringUtils.getCategory(json['strCategory']),
       instructions: json['strInstructions'],
       image: json['strDrinkThumb'],
       ingredients: toList(json, 'strIngredient'),
