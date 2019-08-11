@@ -1,10 +1,11 @@
 import 'dart:convert';
+import 'package:cocktailr/src/repositories/cocktail_repository.dart';
 import 'package:http/http.dart' as http;
 import 'package:cocktailr/src/models/cocktail.dart';
 
 const String _baseUrl = 'https://www.thecocktaildb.com/api/json/v1/36578';
 
-class CocktailApi {
+class CocktailApi implements CocktailSource {
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     try {
       final res = await http.get('$_baseUrl/lookup.php?i=$cocktailId');

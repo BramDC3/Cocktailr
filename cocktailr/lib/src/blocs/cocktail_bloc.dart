@@ -4,7 +4,7 @@ import 'package:cocktailr/src/repositories/cocktail_repository.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CocktailBloc extends BlocCase {
-  final _cocktailRepository;
+  final _cocktailRepository = CocktailRepository();
   final _cocktailIds = PublishSubject<List<String>>();
   final _ingredients = BehaviorSubject<List<String>>();
   final _cocktailsOutput = BehaviorSubject<Map<String, Future<Cocktail>>>();
@@ -16,8 +16,7 @@ class CocktailBloc extends BlocCase {
 
   Function(String) get fetchCocktail => _cocktailsFetcher.sink.add;
 
-  CocktailBloc({CocktailRepository cocktailRepository})
-      : _cocktailRepository = cocktailRepository ?? CocktailRepository() {
+  CocktailBloc() {
     _cocktailsFetcher.stream.transform(_cocktailsTransformer()).pipe(_cocktailsOutput);
     _fetchIngredients();
     fetchCocktailIdsByIngredient("Tequila");

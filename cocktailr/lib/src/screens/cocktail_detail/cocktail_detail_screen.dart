@@ -42,7 +42,7 @@ class CocktailDetailScreen extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                     Text(cocktailSnapshot.data.name),
-                    Text("Alcoholic"),
+                    Text(cocktailSnapshot.data.isAlcoholic ? "Alcoholic" : "Non-alcoholic"),
                     Text(cocktailSnapshot.data.category),
                   ],
                 ),

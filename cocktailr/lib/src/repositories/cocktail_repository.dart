@@ -1,11 +1,16 @@
+import 'package:cocktailr/src/database/cocktail_db_sqflite.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/network/cocktail_api.dart';
 
 class CocktailRepository {
-  final CocktailApi _cocktailApi;
+  List<CocktailSource> sources = <CocktailSource>[
+    cocktailDbSqflite,
+    CocktailApi(),
+  ];
 
-  CocktailRepository({CocktailApi cocktailApi})
-      : _cocktailApi = cocktailApi ?? CocktailApi();
+  List<CocktailCache> caches = <CocktailCache>[
+    cocktailDbSqflite,
+  ];
 
   List<String> _ingredients;
   Future<List<String>> get ingredients async {
@@ -13,12 +18,49 @@ class CocktailRepository {
     return _ingredients;
   }
 
-  Future<void> _fetchIngredients() async =>
-      _ingredients = await _cocktailApi.fetchIngredients();
+  Future<void> _fetchIngredients() async {
+    List<String> ingredients;
 
-  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async =>
-      _cocktailApi.fetchCocktailIdsByIngredient(ingredient);
+    for (final source in sources) {
+      ingredients = await source.fetchIngredients();
+      if (ingredients != null && ingredients.isNotEmpty) break;
+    }
 
-  Future<Cocktail> fetchCocktailById(String cocktailId) async =>
-      _cocktailApi.fetchCocktailById(cocktailId);
+    _ingredients = ingredients ?? [];
+  }
+
+  // TO DO
+  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
+    return sources[1].fetchCocktailIdsByIngredient(ingredient);
+  }
+
+  Future<Cocktail> fetchCocktailById(String cocktailId) async {
+    Cocktail cocktail;
+    var source;
+
+    for (source in sources) {
+      cocktail = await source.fetchCocktailById(cocktailId);
+      if (cocktail != null) break;
+    }
+
+    if (cocktail != null) {
+      for (var cache in caches) {
+        if (cache != source) {
+          cache.insertCocktail(cocktail);
+        }
+      }
+    }
+
+    return cocktail;
+  }
+}
+
+abstract class CocktailSource {
+  Future<Cocktail> fetchCocktailById(String cocktailId);
+  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient);
+  Future<List<String>> fetchIngredients();
+}
+
+abstract class CocktailCache {
+  Future<int> insertCocktail(Cocktail cocktail);
 }
