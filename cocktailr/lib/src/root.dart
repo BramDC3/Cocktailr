@@ -1,6 +1,7 @@
 import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/cocktail_detail_screen.dart';
 import 'package:cocktailr/src/screens/cocktail_list/cocktail_list_screen.dart';
+import 'package:cocktailr/src/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -15,7 +16,7 @@ class Root extends StatelessWidget {
     return MaterialApp(
       title: APP_NAME,
       onGenerateRoute: routes,
-      home: CocktailListScreen(),
+      home: HomeScreen(),
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
@@ -26,7 +27,7 @@ class Root extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => CocktailListScreen(),
+          builder: (context) => HomeScreen(),
         );
       case '/cocktail':
         String cocktailId = settings.arguments as String;
