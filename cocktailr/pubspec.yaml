@@ -1,5 +1,5 @@
 name: cocktailr
-description: A new Flutter project.
+description: Find delicious cocktails based on the ingredients you have!
 
 version: 1.0.0+1
 
@@ -19,6 +19,13 @@ dependencies:
   # Used for additional stream functionality.
   rxdart: ^0.22.1
 
+  # Used for caching data.
+  sqflite: ^1.1.6+3
+
+  # Used to support sqflite.
+  path_provider: ^1.2.0
+
+  # Used for icons that iOS users are familiar with (default dependency).
   cupertino_icons: ^0.1.2
 
 dev_dependencies:
