@@ -15,11 +15,12 @@ class Root extends StatelessWidget {
 
     return MaterialApp(
       title: APP_NAME,
-      onGenerateRoute: routes,
       home: HomeScreen(),
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
+      debugShowCheckedModeBanner: false,
+      onGenerateRoute: routes,
     );
   }
 
