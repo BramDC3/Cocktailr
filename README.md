@@ -1,2 +1,0 @@
-# Cocktailr
- Cocktailr Flutter app
