@@ -25,6 +25,9 @@ dependencies:
   # Used to support sqflite.
   path_provider: ^1.2.0
 
+  # Used for more icons.
+  font_awesome_flutter: ^8.5.0
+
   # Used for icons that iOS users are familiar with (default dependency).
   cupertino_icons: ^0.1.2
 

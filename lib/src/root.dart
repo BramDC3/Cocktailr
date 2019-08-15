@@ -1,9 +1,12 @@
 import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/cocktail_detail_screen.dart';
-import 'package:cocktailr/src/screens/cocktail_list/cocktail_list_screen.dart';
-import 'package:cocktailr/src/screens/home/home_screen.dart';
+import 'package:cocktailr/src/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
+import 'blocs/cocktail_bloc.dart';
+import 'blocs/ingredient_bloc.dart';
 
 class Root extends StatelessWidget {
   @override
@@ -13,14 +16,20 @@ class Root extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
 
-    return MaterialApp(
-      title: APP_NAME,
-      home: HomeScreen(),
-      theme: ThemeData(
-        primarySwatch: Colors.red,
+    return MultiProvider(
+      providers: [
+        Provider(builder: (context) => CocktailBloc()),
+        Provider(builder: (context) => IngredientBloc()),
+      ],
+      child: MaterialApp(
+        title: APP_NAME,
+        home: MainScreen(),
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+        ),
+        debugShowCheckedModeBanner: false,
+        onGenerateRoute: routes,
       ),
-      debugShowCheckedModeBanner: false,
-      onGenerateRoute: routes,
     );
   }
 
@@ -28,7 +37,7 @@ class Root extends StatelessWidget {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => MainScreen(),
         );
       case '/cocktail':
         String cocktailId = settings.arguments as String;
@@ -39,7 +48,7 @@ class Root extends StatelessWidget {
         );
       default:
         return MaterialPageRoute(
-          builder: (context) => CocktailListScreen(),
+          builder: (context) => MainScreen(),
         );
     }
   }

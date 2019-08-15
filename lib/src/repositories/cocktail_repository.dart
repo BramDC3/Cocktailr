@@ -12,23 +12,6 @@ class CocktailRepository {
     cocktailDbSqflite,
   ];
 
-  List<String> _ingredients;
-  Future<List<String>> get ingredients async {
-    if (_ingredients == null || _ingredients.isEmpty) await _fetchIngredients();
-    return _ingredients;
-  }
-
-  Future<void> _fetchIngredients() async {
-    List<String> ingredients;
-
-    for (final source in sources) {
-      ingredients = await source.fetchIngredients();
-      if (ingredients != null && ingredients.isNotEmpty) break;
-    }
-
-    _ingredients = ingredients ?? [];
-  }
-
   // TO DO
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     return sources[1].fetchCocktailIdsByIngredient(ingredient);
@@ -58,12 +41,17 @@ class CocktailRepository {
 
     return cocktail;
   }
+
+  // TO DO
+  Future<Cocktail> fetchRandomCocktail() async {
+    return sources[1].fetchRandomCocktail();
+  }
 }
 
 abstract class CocktailSource {
   Future<Cocktail> fetchCocktailById(String cocktailId);
+  Future<Cocktail> fetchRandomCocktail();
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient);
-  Future<List<String>> fetchIngredients();
 }
 
 abstract class CocktailCache {

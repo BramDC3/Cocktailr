@@ -3,8 +3,8 @@ import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class PopularCocktailListItem extends StatelessWidget {
-  PopularCocktailListItem({@required this.cocktailId});
+class TrendingCocktailListItem extends StatelessWidget {
+  TrendingCocktailListItem({@required this.cocktailId});
   final String cocktailId;
 
   @override
@@ -16,14 +16,20 @@ class PopularCocktailListItem extends StatelessWidget {
       builder:
           (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
         if (!snapshot.hasData) {
-          return Container();
+          return Container(
+            height: MediaQuery.of(context).size.height / 3.5,
+            width: MediaQuery.of(context).size.width / 1.2,
+          );
         }
 
         return FutureBuilder(
           future: snapshot.data[cocktailId],
           builder: (context, AsyncSnapshot<Cocktail> cocktailSnapshot) {
             if (!cocktailSnapshot.hasData) {
-              return Container();
+              return Container(
+                height: MediaQuery.of(context).size.height / 3.5,
+                width: MediaQuery.of(context).size.width / 1.2,
+              );
             }
 
             return Container(

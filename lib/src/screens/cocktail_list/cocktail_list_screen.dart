@@ -12,25 +12,19 @@ class CocktailListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final cocktailBloc = Provider.of<CocktailBloc>(context);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(APP_NAME),
-        centerTitle: true,
-      ),
-      body: StreamBuilder(
-        stream: cocktailBloc.cocktailIds,
-        builder: (context, AsyncSnapshot<List<String>> snapshot) {
-          if (!snapshot.hasData) {
-            return loadingSpinner();
-          }
+    return StreamBuilder(
+      stream: cocktailBloc.cocktailIds,
+      builder: (context, AsyncSnapshot<List<String>> snapshot) {
+        if (!snapshot.hasData) {
+          return loadingSpinner();
+        }
 
-          if (snapshot.data.isEmpty) {
-            return noItemsAvailableText(ERROR_NO_COCKTAILS);
-          }
+        if (snapshot.data.isEmpty) {
+          return noItemsAvailableText(ERROR_NO_COCKTAILS);
+        }
 
-          return _buildCocktailList(snapshot.data, cocktailBloc);
-        },
-      ),
+        return _buildCocktailList(snapshot.data, cocktailBloc);
+      },
     );
   }
 
