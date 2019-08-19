@@ -16,6 +16,13 @@ class MainScreen extends StatelessWidget {
     "Cocktails",
   ];
 
+  Future<void> _onSearchIconPressed(BuildContext context) async {
+    Navigator.pushNamed(
+      context,
+      '/search'
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
@@ -28,6 +35,13 @@ class MainScreen extends StatelessWidget {
           appBar: AppBar(
             title: Text(_titles[snapshot.data]),
             centerTitle: true,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.search),
+                onPressed: () => _onSearchIconPressed(context),
+                tooltip: "Search cocktails",
+              )
+            ],
           ),
           body: _screens[snapshot.data],
           bottomNavigationBar: _buildBottomNavigationBar(
