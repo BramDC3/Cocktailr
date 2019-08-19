@@ -28,6 +28,9 @@ dependencies:
   # Used for more icons.
   font_awesome_flutter: ^8.5.0
 
+  # Used for placeholders for network images.
+  transparent_image: ^1.0.0
+
   # Used for icons that iOS users are familiar with (default dependency).
   cupertino_icons: ^0.1.2
 
@@ -37,3 +40,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/ingredients/gin.jpg
+    - assets/images/ingredients/rum.jpg
+    - assets/images/ingredients/tequila.jpeg
+    - assets/images/ingredients/vodka.jpg
+    - assets/images/ingredients/whiskey.jpg

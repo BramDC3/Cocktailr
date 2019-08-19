@@ -1,3 +1,4 @@
+import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/cocktail_detail_screen.dart';
 import 'package:cocktailr/src/screens/main_screen.dart';
@@ -18,8 +19,9 @@ class Root extends StatelessWidget {
 
     return MultiProvider(
       providers: [
-        Provider(builder: (context) => CocktailBloc()),
-        Provider(builder: (context) => IngredientBloc()),
+        Provider(builder: (_) => CocktailBloc()),
+        Provider(builder: (_) => IngredientBloc()),
+        Provider(builder: (_) => MainNavigationBloc())
       ],
       child: MaterialApp(
         title: APP_NAME,

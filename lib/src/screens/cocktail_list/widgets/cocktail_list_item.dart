@@ -1,13 +1,13 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/screens/cocktail_list/widgets/loading_container.dart';
+import 'package:cocktailr/src/screens/cocktail_list/widgets/cocktail_list_item_loading_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CocktailListItem extends StatelessWidget {
-  final String cocktailId;
-
   CocktailListItem({@required this.cocktailId});
+  final String cocktailId;
 
   @override
   Widget build(BuildContext context) {
@@ -19,14 +19,14 @@ class CocktailListItem extends StatelessWidget {
       builder:
           (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
         if (!snapshot.hasData) {
-          return LoadingContainer();
+          return CocktailListItemLoadingContainer();
         }
 
         return FutureBuilder(
           future: snapshot.data[cocktailId],
           builder: (context, AsyncSnapshot<Cocktail> cocktailSnapshot) {
             if (!cocktailSnapshot.hasData) {
-              return LoadingContainer();
+              return CocktailListItemLoadingContainer();
             }
 
             return Card(
@@ -67,8 +67,9 @@ class CocktailListItem extends StatelessWidget {
 
   Widget _cocktailImage(Cocktail cocktail, double height) => ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: Image.network(
-          cocktail.image,
+        child: FadeInImage.memoryNetwork(
+          image: cocktail.image,
+          placeholder: kTransparentImage,
           width: height,
           height: height,
         ),
@@ -89,6 +90,7 @@ class CocktailListItem extends StatelessWidget {
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.black87,
+                fontWeight: FontWeight.bold,
               ),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,

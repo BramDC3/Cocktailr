@@ -3,41 +3,26 @@ import 'package:cocktailr/src/screens/cocktail_list/cocktail_list_screen.dart';
 import 'package:cocktailr/src/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 
-class MainScreen extends StatefulWidget {
-  _MainScreenState createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  MainNavigationBloc _mainNavigationBloc;
-
-  List<Widget> _screens = [
+class MainScreen extends StatelessWidget {
+  final List<Widget> _screens = [
     HomeScreen(),
     CocktailListScreen(),
   ];
 
-  List<String> _titles = [
+  final List<String> _titles = [
     "Explore",
     "Cocktails",
   ];
 
   @override
-  void initState() {
-    super.initState();
-    _mainNavigationBloc = MainNavigationBloc();
-  }
-
-  @override
-  void dispose() {
-    _mainNavigationBloc?.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
+
     return StreamBuilder(
       initialData: 0,
-      stream: _mainNavigationBloc.currentIndex,
+      stream: mainNavigationBloc.currentIndex,
       builder: (context, AsyncSnapshot<int> snapshot) {
         return Scaffold(
           appBar: AppBar(
@@ -45,13 +30,17 @@ class _MainScreenState extends State<MainScreen> {
             centerTitle: true,
           ),
           body: _screens[snapshot.data],
-          bottomNavigationBar: _buildBottomNavigationBar(snapshot.data),
+          bottomNavigationBar: _buildBottomNavigationBar(
+            snapshot.data,
+            mainNavigationBloc,
+          ),
         );
       },
     );
   }
 
-  Widget _buildBottomNavigationBar(int index) => BottomNavigationBar(
+  Widget _buildBottomNavigationBar(int index, MainNavigationBloc bloc) =>
+      BottomNavigationBar(
         currentIndex: index,
         items: [
           BottomNavigationBarItem(
@@ -63,7 +52,7 @@ class _MainScreenState extends State<MainScreen> {
             title: Text("Cocktails"),
           ),
         ],
-        onTap: _mainNavigationBloc.changeCurrentIndex,
+        onTap: bloc.changeCurrentIndex,
         type: BottomNavigationBarType.fixed,
       );
 }

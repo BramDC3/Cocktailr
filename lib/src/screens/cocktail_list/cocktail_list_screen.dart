@@ -30,6 +30,7 @@ class CocktailListScreen extends StatelessWidget {
 
   Widget _buildCocktailList(List<String> cocktailIds, CocktailBloc bloc) =>
       ListView.builder(
+        shrinkWrap: true,
         padding: EdgeInsets.fromLTRB(8, 8, 8, 16),
         itemCount: cocktailIds.length,
         itemBuilder: (BuildContext context, int index) {

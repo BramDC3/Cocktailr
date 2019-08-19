@@ -1,4 +1,4 @@
-import 'package:cocktailr/src/bases/bloc_base.dart';
+import 'package:cocktailr/src/models/bases/bloc_base.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MainNavigationBloc extends BlocBase {

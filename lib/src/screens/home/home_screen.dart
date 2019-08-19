@@ -1,5 +1,7 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
+import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
+import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/screens/home/widgets/popular_ingredient_list_item.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_list_item.dart';
 import 'package:cocktailr/src/utils/popular_ingredients.dart';
@@ -8,7 +10,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  Future<void> _showMysteryCocktail(
+  Future<void> _onIngredientPressed(
+    Ingredient ingredient,
+    BuildContext context,
+  ) async {
+    CocktailBloc cocktailBloc = Provider.of<CocktailBloc>(context);
+    cocktailBloc.fetchCocktailIdsByIngredient(ingredient.name);
+
+    MainNavigationBloc mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
+    mainNavigationBloc.changeCurrentIndex(1);
+  }
+
+  Future<void> _onMysteryCocktailButtonPressed(
     CocktailBloc bloc,
     BuildContext context,
   ) async {
@@ -98,6 +111,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.only(right: 10),
               child: PopularIngredientListItem(
                 ingredient: PopularIngredients.popularIngredients[index],
+                onPressed: _onIngredientPressed,
               ),
             );
           },
@@ -120,7 +134,7 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () => _showMysteryCocktail(bloc, context),
+                onPressed: () => _onMysteryCocktailButtonPressed(bloc, context),
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
