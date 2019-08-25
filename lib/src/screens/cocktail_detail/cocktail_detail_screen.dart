@@ -1,4 +1,5 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
+import 'package:cocktailr/src/constants/color_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
@@ -14,10 +15,6 @@ class CocktailDetailScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Cocktail detail"),
-        centerTitle: true,
-      ),
       body: StreamBuilder(
         stream: cocktailBloc.cocktails,
         builder:
@@ -34,16 +31,37 @@ class CocktailDetailScreen extends StatelessWidget {
               }
 
               return SingleChildScrollView(
-                child: Column(
+                physics: ClampingScrollPhysics(),
+                child: Stack(
+                  overflow: Overflow.visible,
                   children: <Widget>[
                     Image.network(
                       cocktailSnapshot.data.image,
+                      height: screenWidth,
                       width: screenWidth,
                       fit: BoxFit.cover,
                     ),
-                    Text(cocktailSnapshot.data.name),
-                    Text(cocktailSnapshot.data.isAlcoholic ? "Alcoholic" : "Non-alcoholic"),
-                    Text(cocktailSnapshot.data.category),
+                    Container(
+                      width: screenWidth,
+                      margin: EdgeInsets.only(top: screenWidth * 9.3 / 10),
+                      padding: EdgeInsets.only(top: screenWidth * 0.75 / 10),
+                      decoration: BoxDecoration(
+                        color: ColorConstants.defaultBackgroundColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Text(cocktailSnapshot.data.name),
+                          Text(cocktailSnapshot.data.isAlcoholic
+                              ? "Alcoholic"
+                              : "Non-alcoholic"),
+                          Text(cocktailSnapshot.data.category),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               );
