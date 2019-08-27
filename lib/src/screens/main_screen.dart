@@ -17,10 +17,13 @@ class MainScreen extends StatelessWidget {
   ];
 
   Future<void> _onSearchIconPressed(BuildContext context) async {
-    Navigator.pushNamed(
-      context,
-      '/search'
-    );
+    Navigator.pushNamed(context, '/search');
+  }
+
+  Future<bool> _onWillPop(MainNavigationBloc bloc, int index) {
+    if (index == 0) return Future.value(true);
+    bloc.changeCurrentIndex(0);
+    return Future.value(false);
   }
 
   @override
@@ -31,22 +34,28 @@ class MainScreen extends StatelessWidget {
       initialData: 0,
       stream: mainNavigationBloc.currentIndex,
       builder: (context, AsyncSnapshot<int> snapshot) {
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(_titles[snapshot.data]),
-            centerTitle: true,
-            actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () => _onSearchIconPressed(context),
-                tooltip: "Search cocktails",
-              )
-            ],
-          ),
-          body: _screens[snapshot.data],
-          bottomNavigationBar: _buildBottomNavigationBar(
-            snapshot.data,
+        return WillPopScope(
+          onWillPop: () => _onWillPop(
             mainNavigationBloc,
+            snapshot.data,
+          ),
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(_titles[snapshot.data]),
+              centerTitle: true,
+              actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () => _onSearchIconPressed(context),
+                  tooltip: "Search cocktails",
+                )
+              ],
+            ),
+            body: _screens[snapshot.data],
+            bottomNavigationBar: _buildBottomNavigationBar(
+              snapshot.data,
+              mainNavigationBloc,
+            ),
           ),
         );
       },
