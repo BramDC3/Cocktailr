@@ -4,7 +4,7 @@ description: Find delicious cocktails based on the ingredients you have!
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.2 <3.0.0"
 
 dependencies:
   flutter:
@@ -25,6 +25,12 @@ dependencies:
   # Used to support sqflite.
   path_provider: ^1.2.0
 
+  # Used for more icons.
+  font_awesome_flutter: ^8.5.0
+
+  # Used for placeholders for network images.
+  transparent_image: ^1.0.0
+
   # Used for icons that iOS users are familiar with (default dependency).
   cupertino_icons: ^0.1.2
 
@@ -34,3 +40,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/ingredients/gin.jpg
+    - assets/images/ingredients/rum.jpg
+    - assets/images/ingredients/tequila.jpeg
+    - assets/images/ingredients/vodka.jpg
+    - assets/images/ingredients/whiskey.jpg

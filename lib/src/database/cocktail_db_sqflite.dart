@@ -61,12 +61,12 @@ class CocktailDbSqflite implements CocktailSource, CocktailCache {
   }
 
   // TO DO
-  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) {
+  Future<Cocktail> fetchRandomCocktail() {
     return null;
   }
 
   // TO DO
-  Future<List<String>> fetchIngredients() {
+  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) {
     return null;
   }
 
