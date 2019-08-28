@@ -5,25 +5,57 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class MainScreen extends StatelessWidget {
-  final List<Widget> _screens = [
-    HomeScreen(),
-    CocktailListScreen(),
-  ];
+class MainScreen extends StatefulWidget {
+  @override
+  _MainScreenState createState() => _MainScreenState();
+}
 
-  final List<String> _titles = [
-    "Explore",
-    "Cocktails",
-  ];
+class _MainScreenState extends State<MainScreen> {
+  PageController _controller;
 
-  Future<void> _onSearchIconPressed(BuildContext context) async {
-    Navigator.pushNamed(context, '/search');
+  final Map<String, Widget> _screens = Map.fromEntries([
+    MapEntry<String, Widget>(
+      "Explore",
+      HomeScreen(),
+    ),
+    MapEntry<String, Widget>(
+      "Cocktails",
+      CocktailListScreen(),
+    ),
+  ]);
+
+  void _onPageChanged(int index, MainNavigationBloc bloc) =>
+      bloc.changeCurrentIndex(index);
+
+  void _animateToPage(int index) => _controller.animateToPage(
+        index,
+        duration: Duration(milliseconds: 200),
+        curve: Curves.ease,
+      );
+
+  Future<void> _onSearchIconPressed(BuildContext context) async =>
+      Navigator.pushNamed(context, '/search');
+
+  Future<bool> _onWillPop(int index, MainNavigationBloc bloc) {
+    if (index == 0) {
+      return Future.value(true);
+    } else {
+      _animateToPage(0);
+      bloc.changeCurrentIndex(0);
+      return Future.value(false);
+    }
   }
 
-  Future<bool> _onWillPop(MainNavigationBloc bloc, int index) {
-    if (index == 0) return Future.value(true);
-    bloc.changeCurrentIndex(0);
-    return Future.value(false);
+  @override
+  void initState() {
+    super.initState();
+    _controller = PageController(initialPage: 0);
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
   @override
@@ -31,17 +63,16 @@ class MainScreen extends StatelessWidget {
     final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
 
     return StreamBuilder(
-      initialData: 0,
       stream: mainNavigationBloc.currentIndex,
-      builder: (context, AsyncSnapshot<int> snapshot) {
+      initialData: 0,
+      builder: (context, snapshot) {
+        if (snapshot.data != 0) _animateToPage(snapshot.data);
+
         return WillPopScope(
-          onWillPop: () => _onWillPop(
-            mainNavigationBloc,
-            snapshot.data,
-          ),
+          onWillPop: () => _onWillPop(snapshot.data, mainNavigationBloc),
           child: Scaffold(
             appBar: AppBar(
-              title: Text(_titles[snapshot.data]),
+              title: Text(_screens.keys.toList()[snapshot.data]),
               centerTitle: true,
               actions: <Widget>[
                 IconButton(
@@ -51,19 +82,22 @@ class MainScreen extends StatelessWidget {
                 )
               ],
             ),
-            body: _screens[snapshot.data],
-            bottomNavigationBar: _buildBottomNavigationBar(
-              snapshot.data,
-              mainNavigationBloc,
+            body: PageView(
+              controller: _controller,
+              children: _screens.values.toList(),
+              onPageChanged: (int index) => _onPageChanged(
+                index,
+                mainNavigationBloc,
+              ),
             ),
+            bottomNavigationBar: _buildBottomNavigationBar(snapshot.data),
           ),
         );
       },
     );
   }
 
-  Widget _buildBottomNavigationBar(int index, MainNavigationBloc bloc) =>
-      BottomNavigationBar(
+  Widget _buildBottomNavigationBar(int index) => BottomNavigationBar(
         currentIndex: index,
         items: [
           BottomNavigationBarItem(
@@ -75,7 +109,7 @@ class MainScreen extends StatelessWidget {
             title: Text("Cocktails"),
           ),
         ],
-        onTap: bloc.changeCurrentIndex,
+        onTap: _animateToPage,
         type: BottomNavigationBarType.fixed,
       );
 }

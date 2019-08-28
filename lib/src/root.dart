@@ -22,7 +22,7 @@ class Root extends StatelessWidget {
       providers: [
         Provider(builder: (_) => CocktailBloc()),
         Provider(builder: (_) => IngredientBloc()),
-        Provider(builder: (_) => MainNavigationBloc())
+        Provider(builder: (_) => MainNavigationBloc()),
       ],
       child: MaterialApp(
         title: APP_NAME,
