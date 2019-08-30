@@ -2,7 +2,7 @@ import 'package:cocktailr/src/models/bases/bloc_base.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MainNavigationBloc extends BlocBase {
-  final _currentIndex = BehaviorSubject<int>();
+  final _currentIndex = BehaviorSubject<int>.seeded(0);
 
   Stream<int> get currentIndex => _currentIndex.stream;
 
