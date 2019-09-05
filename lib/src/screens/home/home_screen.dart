@@ -1,5 +1,6 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
+import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/screens/home/widgets/popular_ingredient_list_item.dart';
@@ -27,10 +28,8 @@ class HomeScreen extends StatelessWidget {
   ) async {
     Cocktail cocktail = await bloc.fetchRandomCocktail();
     bloc.fetchCocktail(cocktail.id);
-    Navigator.pushNamed(
-      context,
-      '/cocktail',
-      arguments: cocktail.id,
+    Navigator.of(context).pushNamed(
+      FluroRouter.getCocktailDetailRoute(cocktail.id),
     );
   }
 

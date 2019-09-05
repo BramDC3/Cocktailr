@@ -2,7 +2,7 @@ import 'package:cocktailr/src/models/bases/bloc_base.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SearchBloc extends BlocBase {
-  final _keyword = BehaviorSubject<String>();
+  final _keyword = PublishSubject<String>();
 
   Stream<String> get keyword => _keyword.stream;
 

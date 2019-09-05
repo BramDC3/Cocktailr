@@ -1,4 +1,5 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
+import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_list/widgets/cocktail_list_item_loading_container.dart';
 import 'package:flutter/material.dart';
@@ -35,10 +36,8 @@ class CocktailListItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: InkWell(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  '/cocktail',
-                  arguments: cocktailSnapshot.data.id,
+                onTap: () => Navigator.of(context).pushNamed(
+                  FluroRouter.getCocktailDetailRoute(cocktailSnapshot.data.id),
                 ),
                 borderRadius: BorderRadius.circular(8),
                 child: Container(

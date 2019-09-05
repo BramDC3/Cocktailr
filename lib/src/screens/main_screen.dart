@@ -1,4 +1,5 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
+import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/screens/cocktail_list/cocktail_list_screen.dart';
 import 'package:cocktailr/src/screens/home/home_screen.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
       );
 
   Future<void> _onSearchIconPressed(BuildContext context) async =>
-      Navigator.pushNamed(context, '/search');
+      Navigator.of(context).pushNamed(FluroRouter.search);
 
   Future<bool> _onWillPop(int index, MainNavigationBloc bloc) {
     if (index == 0) {

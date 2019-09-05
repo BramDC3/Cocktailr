@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  cupertino_icons: ^0.1.2
+
   # Used for consuming HTTP requests.
   http: ^0.12.0+2
 
@@ -31,8 +33,8 @@ dependencies:
   # Used for placeholders for network images.
   transparent_image: ^1.0.0
 
-  # Used for icons that iOS users are familiar with (default dependency).
-  cupertino_icons: ^0.1.2
+  # Used for navigation.
+  fluro: ^1.5.1
 
 dev_dependencies:
   flutter_test:

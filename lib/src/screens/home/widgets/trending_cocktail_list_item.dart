@@ -1,4 +1,5 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
+import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_loading_container.dart';
 import 'package:flutter/material.dart';
@@ -38,10 +39,8 @@ class TrendingCocktailListItem extends StatelessWidget {
                 elevation: 3,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(10),
-                  onTap: () => Navigator.pushNamed(
-                    context,
-                    '/cocktail',
-                    arguments: cocktailId,
+                  onTap: () => Navigator.of(context).pushNamed(
+                    FluroRouter.getCocktailDetailRoute(cocktailId),
                   ),
                   child: Column(
                     children: <Widget>[

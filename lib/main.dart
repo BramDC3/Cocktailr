@@ -1,4 +1,8 @@
+import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/root.dart';
 import 'package:flutter/material.dart';
 
-void main() => runApp(Root());
+void main() {
+  FluroRouter.setupRouter();
+  runApp(Root());
+}
