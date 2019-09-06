@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/repositories/cocktail_repository.dart';
@@ -60,14 +61,49 @@ class CocktailDbSqflite implements CocktailSource, CocktailCache {
     }
   }
 
-  // TO DO
-  Future<Cocktail> fetchRandomCocktail() {
-    return null;
+  Future<Cocktail> fetchRandomCocktail() async {
+    if (db == null) await init();
+
+    try {
+      final maps = await db.query(
+        "Cocktails",
+        columns: null,
+      );
+
+      if (maps.length > 0) {
+        final index = Random().nextInt(maps.length);
+        return Cocktail.fromDb(maps[index]);
+      }
+
+      return null;
+    } catch (e) {
+      print('Error while fetching random cocktail from sqflite db: $e');
+      return null;
+    }
   }
 
-  // TO DO
-  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) {
-    return null;
+  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
+    if (db == null) await init();
+
+    try {
+      final maps = await db.query(
+        "Cocktails",
+        columns: null,
+      );
+
+      if (maps.length > 0) {
+        return maps
+            .map((c) => Cocktail.fromDb(c))
+            .where((c) => c.ingredients.contains(ingredient))
+            .map((c) => c.id)
+            .toList();
+      }
+
+      return null;
+    } catch (e) {
+      print('Error while fetching cocktailids by ingredient from sqflite db: $e');
+      return [];
+    }
   }
 
   Future<int> insertCocktail(Cocktail cocktail) {

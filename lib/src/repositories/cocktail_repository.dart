@@ -12,12 +12,17 @@ class CocktailRepository {
     cocktailDbSqflite,
   ];
 
-  // TO DO
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
-    return sources[1].fetchCocktailIdsByIngredient(ingredient);
+    List<String> cocktailIds = await sources[1].fetchCocktailIdsByIngredient(ingredient);
+    
+    if (cocktailIds?.isEmpty ?? true) {
+      cocktailIds = await sources[0].fetchCocktailIdsByIngredient(ingredient);
+    }
+
+    return cocktailIds;
   }
 
-  // TO DO
+  // TODO: I need to be a Patreon supporter to use this feature.
   Future<List<String>> fetchPopularCocktailIds() async {
     return ["11002", "11001", "11000", "13621", "17207"];
   }
@@ -42,9 +47,14 @@ class CocktailRepository {
     return cocktail;
   }
 
-  // TO DO
   Future<Cocktail> fetchRandomCocktail() async {
-    return sources[1].fetchRandomCocktail();
+    Cocktail cocktail = await sources[1].fetchRandomCocktail();
+
+    if (cocktail == null) {
+      cocktail = await sources[0].fetchRandomCocktail();
+    }
+
+    return cocktail;
   }
 }
 
