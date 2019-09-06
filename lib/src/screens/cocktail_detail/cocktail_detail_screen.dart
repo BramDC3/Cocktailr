@@ -8,7 +8,6 @@ import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import 'widgets/cocktail_category.dart';
 import 'widgets/cocktail_instructions.dart';

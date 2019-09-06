@@ -5,7 +5,6 @@ import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_list/widgets/cocktail_list_item_loading_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class CocktailListItem extends StatelessWidget {
   CocktailListItem({@required this.cocktailId});

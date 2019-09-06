@@ -10,8 +10,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  cupertino_icons: ^0.1.2
-
   # Used for consuming HTTP requests.
   http: ^0.12.0+2
 
@@ -29,9 +27,6 @@ dependencies:
 
   # Used for more icons.
   font_awesome_flutter: ^8.5.0
-
-  # Used for placeholders for network images.
-  transparent_image: ^1.0.0
 
   # Used for navigation.
   fluro: ^1.5.1
