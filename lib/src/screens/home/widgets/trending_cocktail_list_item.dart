@@ -1,10 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_loading_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class TrendingCocktailListItem extends StatelessWidget {
   TrendingCocktailListItem({@required this.cocktailId});
@@ -52,9 +52,9 @@ class TrendingCocktailListItem extends StatelessWidget {
                             topLeft: Radius.circular(10),
                             topRight: Radius.circular(10),
                           ),
-                          child: FadeInImage.memoryNetwork(
-                            image: "${cocktailSnapshot.data.image}",
-                            placeholder: kTransparentImage,
+                          child: FadeInImage(
+                            image: CachedNetworkImageProvider("${cocktailSnapshot.data.image}"),
+                            placeholder: AssetImage("assets/images/ingredients/white_placeholder.png"),
                             fit: BoxFit.cover,
                           ),
                         ),

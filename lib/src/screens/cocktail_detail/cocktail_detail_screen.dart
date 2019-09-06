@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/constants/color_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
@@ -42,11 +43,11 @@ class CocktailDetailScreen extends StatelessWidget {
                 child: Stack(
                   overflow: Overflow.visible,
                   children: <Widget>[
-                    FadeInImage.memoryNetwork(
-                      image: cocktailSnapshot.data.image,
-                      placeholder: kTransparentImage,
-                      height: screenWidth,
+                    FadeInImage(
+                      image: CachedNetworkImageProvider("${cocktailSnapshot.data.image}"),
+                      placeholder: AssetImage("assets/images/ingredients/white_placeholder.png"),
                       width: screenWidth,
+                      height: screenWidth,
                       fit: BoxFit.cover,
                     ),
                     SafeArea(

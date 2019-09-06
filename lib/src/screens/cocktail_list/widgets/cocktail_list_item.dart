@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
@@ -66,11 +67,12 @@ class CocktailListItem extends StatelessWidget {
 
   Widget _cocktailImage(Cocktail cocktail, double height) => ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: FadeInImage.memoryNetwork(
-          image: cocktail.image,
-          placeholder: kTransparentImage,
+        child: FadeInImage(
+          image: CachedNetworkImageProvider("${cocktail.image}"),
+          placeholder: AssetImage("assets/images/ingredients/white_placeholder.png"),
           width: height,
           height: height,
+          fit: BoxFit.cover,
         ),
       );
 
