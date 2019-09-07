@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CocktailInstructions extends StatelessWidget {
-  CocktailInstructions({@required this.instructions, @required this.padding});
   final String instructions;
   final double padding;
+
+  CocktailInstructions({@required this.instructions, @required this.padding});
 
   @override
   Widget build(BuildContext context) {

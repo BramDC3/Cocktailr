@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'package:cocktailr/src/bases/ingredient_source.dart';
 import 'package:cocktailr/src/constants/url_constants.dart';
-import 'package:cocktailr/src/repositories/ingredient_repository.dart';
 import 'package:http/http.dart' as http;
 
 class IngredientApi implements IngredientSource {

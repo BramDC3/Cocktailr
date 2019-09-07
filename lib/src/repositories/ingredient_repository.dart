@@ -1,3 +1,4 @@
+import 'package:cocktailr/src/bases/ingredient_source.dart';
 import 'package:cocktailr/src/network/ingredient_api.dart';
 
 class IngredientRepository {
@@ -21,12 +22,4 @@ class IngredientRepository {
 
     _ingredients = ingredients ?? [];
   }
-}
-
-abstract class IngredientSource {
-  Future<List<String>> fetchIngredients();
-}
-
-abstract class IngredientCache {
-  Future<int> insertIngredient();
 }

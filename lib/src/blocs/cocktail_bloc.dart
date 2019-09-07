@@ -1,9 +1,8 @@
-import 'package:cocktailr/src/models/bases/bloc_base.dart';
+import 'package:cocktailr/src/bases/bloc_base.dart';
+import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/repositories/cocktail_repository.dart';
 import 'package:rxdart/rxdart.dart';
-
-const String INITIAL_INGREDIENT = "Tequila";
 
 class CocktailBloc extends BlocBase {
   final _cocktailRepository = CocktailRepository();
@@ -14,8 +13,7 @@ class CocktailBloc extends BlocBase {
 
   Observable<List<String>> get cocktailIds => _cocktailIds.stream;
   Observable<List<String>> get popularCocktailIds => _popularCocktailIds;
-  Observable<Map<String, Future<Cocktail>>> get cocktails =>
-      _cocktailsOutput.stream;
+  Observable<Map<String, Future<Cocktail>>> get cocktails => _cocktailsOutput.stream;
 
   Function(String) get fetchCocktail => _cocktailsFetcher.sink.add;
 
@@ -29,22 +27,18 @@ class CocktailBloc extends BlocBase {
 
   Future<void> fetchCocktailIdsByIngredient(String ingredient) async {
     _cocktailIds.sink.add(null);
-    List<String> cocktailIds =
-        await _cocktailRepository.fetchCocktailIdsByIngredient(ingredient);
+    List<String> cocktailIds = await _cocktailRepository.fetchCocktailIdsByIngredient(ingredient);
     _cocktailIds.sink.add(cocktailIds);
   }
 
+  Future<Cocktail> fetchRandomCocktail() async => _cocktailRepository.fetchRandomCocktail();
+
   Future<void> _fetchPopularCocktailIds() async {
-    List<String> popularCocktailIds =
-        await _cocktailRepository.fetchPopularCocktailIds();
+    List<String> popularCocktailIds = await _cocktailRepository.fetchPopularCocktailIds();
     _popularCocktailIds.sink.add(popularCocktailIds);
   }
 
-  Future<Cocktail> _fetchCockailById(String cocktailId) async =>
-      _cocktailRepository.fetchCocktailById(cocktailId);
-
-  Future<Cocktail> fetchRandomCocktail() async =>
-      _cocktailRepository.fetchRandomCocktail();
+  Future<Cocktail> _fetchCockailById(String cocktailId) async => _cocktailRepository.fetchCocktailById(cocktailId);
 
   _cocktailsTransformer() {
     return ScanStreamTransformer(

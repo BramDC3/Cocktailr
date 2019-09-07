@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/widgets.dart';
 
 class Cocktail {
@@ -27,13 +26,13 @@ class Cocktail {
   factory Cocktail.fromJson(Map<String, dynamic> json) {
     return Cocktail(
       id: json['idDrink'],
-      name: json['strDrink'],
-      category: StringUtils.getCategory(json['strCategory']),
+      name: capitalizeName(json['strDrink']),
+      category: refactorCategory(json['strCategory']),
       instructions: json['strInstructions'],
       image: json['strDrinkThumb'],
       isAlcoholic: json['strAlcoholic'] == 'Alcoholic',
-      ingredients: _toList(json, 'strIngredient'),
-      measurements: _toList(json, 'strMeasure'),
+      ingredients: filterList(json, 'strIngredient'),
+      measurements: filterList(json, 'strMeasure'),
     );
   }
 
@@ -63,9 +62,47 @@ class Cocktail {
     };
   }
 
-  static List<String> _toList(Map<String, dynamic> json, String tag) {
+  static List<String> filterList(Map<String, dynamic> json, String tag) {
     List<String> list = List.generate(15, (int i) => json['$tag${i + 1}']);
     list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null);
     return list;
+  }
+
+  static String capitalizeName(String name) {
+    if (name == null || name.length <= 1) return name?.toUpperCase() ?? "";
+    if (!name.contains(" ")) return "${name[0].toUpperCase()}${name.substring(1)}";
+    return name
+        .split(" ")
+        .map((word) => "${word[0].toUpperCase()}${word.substring(1)}")
+        .join(" ");
+  }
+
+  static String refactorCategory(String category) {
+    switch (category) {
+      case "Ordinary Drink":
+        return "Mundane";
+      case "Cocktail":
+        return "Cocktail";
+      case "Milk \/ Float \/ Shake":
+        return "Milkshake";
+      case "Other\/Unknown":
+        return "Mundane";
+      case "Cocoa":
+        return "Cocoa";
+      case "Shot":
+        return "Shot";
+      case "Coffee \/ Tea":
+        return "Coffee / Tea";
+      case "Homemade Liqueur":
+        return "Liqueur";
+      case "Punch \/ Party Drink":
+        return "Party Drink";
+      case "Beer":
+        return "Beer";
+      case "Soft Drink \/ Soda":
+        return "Soda";
+      default:
+        return "Mundane";
+    }
   }
 }

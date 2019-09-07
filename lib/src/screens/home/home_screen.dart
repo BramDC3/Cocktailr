@@ -5,7 +5,6 @@ import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/screens/home/widgets/popular_ingredient_list_item.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_list_item.dart';
-import 'package:cocktailr/src/utils/popular_ingredients.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -104,12 +103,12 @@ class HomeScreen extends StatelessWidget {
           shrinkWrap: true,
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.only(left: 19, right: 8),
-          itemCount: PopularIngredients.popularIngredients.length,
+          itemCount: popularIngredients.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: EdgeInsets.only(right: 10),
               child: PopularIngredientListItem(
-                ingredient: PopularIngredients.popularIngredients[index],
+                ingredient: popularIngredients[index],
                 onPressed: _onIngredientPressed,
               ),
             );

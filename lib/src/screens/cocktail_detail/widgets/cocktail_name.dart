@@ -1,4 +1,3 @@
-import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/material.dart';
 
 class CocktailName extends StatelessWidget {
@@ -45,7 +44,7 @@ class CocktailName extends StatelessWidget {
   }
 
   Text _cocktailNameWord(String word, bool bold) => Text(
-        StringUtils.capitalizeWord(word),
+        word,
         style: TextStyle(
           fontSize: 36,
           fontWeight: bold ? FontWeight.bold : FontWeight.normal,

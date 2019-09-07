@@ -112,7 +112,7 @@ class CocktailDetailScreen extends StatelessWidget {
                                       ),
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: buildIngredientList(
+                                        children: _buildIngredientList(
                                           cocktailSnapshot.data,
                                         ),
                                       ),
@@ -144,7 +144,7 @@ class CocktailDetailScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> buildIngredientList(Cocktail cocktail) {
+  List<Widget> _buildIngredientList(Cocktail cocktail) {
     List<Widget> ingredientListItems = [];
 
     for (int i = 0; i < cocktail.ingredients.length; i++) {
