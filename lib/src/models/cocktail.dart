@@ -63,6 +63,8 @@ class Cocktail {
   }
 
   static List<String> filterList(Map<String, dynamic> json, String tag) {
+    if (json == null || tag == null) return [];
+
     List<String> list = List.generate(15, (int i) => json['$tag${i + 1}']);
     list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null);
     return list;
@@ -70,36 +72,47 @@ class Cocktail {
 
   static String capitalizeName(String name) {
     if (name == null || name.length <= 1) return name?.toUpperCase() ?? "";
-    if (!name.contains(" ")) return "${name[0].toUpperCase()}${name.substring(1)}";
+    if (!name.contains(RegExp(r"\s+")))
+      return "${name[0].toUpperCase()}${name.substring(1)}";
+
     return name
-        .split(" ")
-        .map((word) => "${word[0].toUpperCase()}${word.substring(1)}")
+        .trim()
+        .split(RegExp(r"\s+"))
+        .map((word) => word.length > 1
+            ? "${word[0].toUpperCase()}${word.substring(1)}"
+            : word.toUpperCase())
         .join(" ");
   }
 
   static String refactorCategory(String category) {
-    switch (category) {
-      case "Ordinary Drink":
+    switch (category?.toLowerCase()?.trim() ?? "") {
+      case "ordinary drink":
+      case "mundane":
         return "Mundane";
-      case "Cocktail":
+      case "cocktail":
         return "Cocktail";
-      case "Milk \/ Float \/ Shake":
+      case "milk \/ float \/ shake":
+      case "milkshake":
         return "Milkshake";
-      case "Other\/Unknown":
+      case "other\/unknown":
         return "Mundane";
-      case "Cocoa":
+      case "cocoa":
         return "Cocoa";
-      case "Shot":
+      case "shot":
         return "Shot";
-      case "Coffee \/ Tea":
+      case "coffee \/ tea":
+      case "coffee / tea":
         return "Coffee / Tea";
-      case "Homemade Liqueur":
+      case "homemade liqueur":
+      case "liqueur":
         return "Liqueur";
-      case "Punch \/ Party Drink":
+      case "punch \/ party drink":
+      case "party drink":
         return "Party Drink";
-      case "Beer":
+      case "beer":
         return "Beer";
-      case "Soft Drink \/ Soda":
+      case "soft drink \/ soda":
+      case "soda":
         return "Soda";
       default:
         return "Mundane";
