@@ -62,10 +62,10 @@ class Cocktail {
     };
   }
 
-  static List<String> filterList(Map<String, dynamic> json, String tag) {
-    if (json == null || tag == null) return [];
+  static List<String> filterList(Map<String, String> json, String tag) {
+    if (json == null || tag == null || json.isEmpty || tag.isEmpty) return [];
 
-    List<String> list = List.generate(15, (int i) => json['$tag${i + 1}']);
+    List<String> list = List.generate(json.length <= 15 ? json.length : 15, (int i) => json['$tag${i + 1}']);
     list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null);
     return list;
   }

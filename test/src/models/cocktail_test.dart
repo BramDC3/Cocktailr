@@ -77,15 +77,46 @@ void main() {
   });
 
   group('Filter cocktail list (ingredients & measurements)', () {
-    test('Input is null, return value is empty array', () {
+    test('Input map and tag are null, return value is empty list', () {
+      List<String> filteredList = Cocktail.filterList(null, null);
+      expect(filteredList, []);
+    });
+
+    test('Input map is null, return value is empty arrlistay', () {
       List<String> filteredList = Cocktail.filterList(null, 'ingredient');
       expect(filteredList, []);
     });
 
-    test('Input is empty map, return value is empty array', () {
-      List<String> filteredList =
-          Cocktail.filterList(Map<String, dynamic>(), 'ingredient');
+    test('Input tag is null, return value is empty list', () {
+      List<String> filteredList = Cocktail.filterList(Map<String, String>(), null);
       expect(filteredList, []);
+    });
+
+    test('Input map and tag are empty, return value is empty list', () {
+      List<String> filteredList = Cocktail.filterList(Map<String, String>(), '');
+      expect(filteredList, []);
+    });
+
+    test('Input map is empty, return value is empty list', () {
+      List<String> filteredList = Cocktail.filterList(Map<String, String>(), 'ingredient');
+      expect(filteredList, []);
+    });
+
+    test('Input and tag are valid, return is filtered list', () {
+      String tag = "ingredient";
+
+      Map<String, String> json = Map.fromEntries([
+        MapEntry<String, String>("${tag}1", "Vodka"),
+        MapEntry<String, String>("${tag}2", "Light rum"),
+        MapEntry<String, String>("${tag}3", "Gin"),
+        MapEntry<String, String>("${tag}4", "Tequila"),
+        MapEntry<String, String>("${tag}5", "Lemon"),
+        MapEntry<String, String>("${tag}6", "Coca-Cola"),
+      ]);
+
+      List<String> filteredList = Cocktail.filterList(json, tag);
+      expect(filteredList.length, 6);
+      expect(filteredList.where((i) => i == '' || i == ' ' || i == '\n' || i == null).toList().length, 0);
     });
   });
 }
