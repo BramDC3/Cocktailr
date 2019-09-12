@@ -1,15 +1,34 @@
 import 'dart:convert';
 
 import 'package:flutter/widgets.dart';
+import 'package:hive/hive.dart';
 
+part 'cocktail.g.dart';
+
+@HiveType()
 class Cocktail {
+  @HiveField(0)
   final String id;
+
+  @HiveField(1)
   final String name;
+
+  @HiveField(2)
   final String category;
+
+  @HiveField(3)
   final String instructions;
+
+  @HiveField(4)
   final String image;
+
+  @HiveField(5)
   final bool isAlcoholic;
+
+  @HiveField(6)
   final List<dynamic> ingredients;
+
+  @HiveField(7)
   final List<dynamic> measurements;
 
   Cocktail({
@@ -62,7 +81,7 @@ class Cocktail {
     };
   }
 
-  static List<String> filterList(Map<String, String> json, String tag) {
+  static List<String> filterList(Map<String, dynamic> json, String tag) {
     if (json == null || tag == null || json.isEmpty || tag.isEmpty) return [];
 
     List<String> list = List.generate(json.length <= 15 ? json.length : 15, (int i) => json['$tag${i + 1}']);

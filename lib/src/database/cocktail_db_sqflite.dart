@@ -100,7 +100,7 @@ class CocktailDbSqflite implements CocktailSource, CocktailCache {
             .toList();
       }
 
-      return null;
+      return [];
     } catch (e) {
       print('Error while fetching cocktailids by ingredient from sqflite db: $e');
       return [];
