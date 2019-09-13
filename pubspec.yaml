@@ -20,10 +20,13 @@ dependencies:
   rxdart: ^0.22.1
 
   # Used for caching data.
-  sqflite: ^1.1.6+3
+  # sqflite: ^1.1.6+3
 
-  # Used to support sqflite.
+  # Used to support local storage.
   path_provider: ^1.2.0
+
+  # Used for caching data, but is cross-platform.
+  hive: ^1.0.0
 
   # Used for more icons.
   font_awesome_flutter: ^8.5.0
@@ -35,6 +38,12 @@ dependencies:
   cached_network_image: ^1.1.1
 
 dev_dependencies:
+  # Extension for Hive to create type adapters.
+  hive_generator: ^0.5.1
+
+  # Tools to write binaries that run builders.
+  build_runner: ^1.6.9
+
   flutter_test:
     sdk: flutter
 
