@@ -1,20 +1,17 @@
 import 'package:cocktailr/src/bases/cocktail_cache.dart';
 import 'package:cocktailr/src/bases/cocktail_source.dart';
 import 'package:cocktailr/src/database/cocktail_db_hive.dart';
-import 'package:cocktailr/src/database/cocktail_db_sqflite.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/network/cocktail_api.dart';
 
 class CocktailRepository {
   List<CocktailSource> sources = <CocktailSource>[
     cocktailDbHive,
-    cocktailDbSqflite,
     CocktailApi(),
   ];
 
   List<CocktailCache> caches = <CocktailCache>[
     cocktailDbHive,
-    cocktailDbSqflite,
   ];
 
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {

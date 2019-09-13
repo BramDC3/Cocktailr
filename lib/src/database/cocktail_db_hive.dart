@@ -72,6 +72,8 @@ class CocktailDbHive implements CocktailSource, CocktailCache {
           .toList();
 
       if (cocktails?.isNotEmpty ?? false) {
+        cocktails.sort((a, b) => a.name.compareTo(b.name));
+        
         return cocktails.map((cocktail) => cocktail.id).toList();
       }
 

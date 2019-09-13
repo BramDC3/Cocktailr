@@ -20,9 +20,9 @@ dependencies:
   rxdart: ^0.22.1
 
   # Used for caching data.
-  sqflite: ^1.1.6+3
+  # sqflite: ^1.1.6+3
 
-  # Used to support sqflite.
+  # Used to support local storage.
   path_provider: ^1.2.0
 
   # Used for caching data, but is cross-platform.
