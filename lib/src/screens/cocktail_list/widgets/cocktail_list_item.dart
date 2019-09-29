@@ -7,8 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CocktailListItem extends StatelessWidget {
-  CocktailListItem({@required this.cocktailId});
   final String cocktailId;
+
+  CocktailListItem({@required this.cocktailId});
 
   @override
   Widget build(BuildContext context) {
@@ -17,58 +18,61 @@ class CocktailListItem extends StatelessWidget {
 
     return StreamBuilder(
       stream: cocktailBloc.cocktails,
-      builder:
-          (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
+      builder: (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
         if (!snapshot.hasData) {
           return CocktailListItemLoadingContainer();
         }
 
-        return FutureBuilder(
-          future: snapshot.data[cocktailId],
-          builder: (context, AsyncSnapshot<Cocktail> cocktailSnapshot) {
-            if (!cocktailSnapshot.hasData) {
-              return CocktailListItemLoadingContainer();
-            }
-
-            return Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: InkWell(
-                onTap: () => Navigator.of(context).pushNamed(
-                  FluroRouter.getCocktailDetailRoute(cocktailSnapshot.data.id),
-                ),
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  child: Row(
-                    children: <Widget>[
-                      _cocktailImage(
-                        cocktailSnapshot.data,
-                        height,
-                      ),
-                      Expanded(
-                        child: _cocktailDetails(
-                          cocktailSnapshot.data,
-                          height,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
+        return _cocktailListItem(snapshot.data[cocktailId], height);
       },
     );
   }
+
+  Widget _cocktailListItem(Future<Cocktail> cocktailFuture, double height) =>
+      FutureBuilder(
+        future: cocktailFuture,
+        builder: (context, AsyncSnapshot<Cocktail> snapshot) {
+          if (!snapshot.hasData) {
+            return CocktailListItemLoadingContainer();
+          }
+
+          return Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: InkWell(
+              onTap: () => Navigator.of(context).pushNamed(
+                FluroRouter.getCocktailDetailRoute(snapshot.data.id),
+              ),
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                child: Row(
+                  children: <Widget>[
+                    _cocktailImage(
+                      snapshot.data,
+                      height,
+                    ),
+                    Expanded(
+                      child: _cocktailDetails(
+                        snapshot.data,
+                        height,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
 
   Widget _cocktailImage(Cocktail cocktail, double height) => ClipRRect(
         borderRadius: BorderRadius.circular(8),
         child: FadeInImage(
           image: CachedNetworkImageProvider("${cocktail.image}"),
-          placeholder: AssetImage("assets/images/ingredients/white_placeholder.png"),
+          placeholder:
+              AssetImage("assets/images/ingredients/white_placeholder.png"),
           width: height,
           height: height,
           fit: BoxFit.cover,

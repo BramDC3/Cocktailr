@@ -40,11 +40,11 @@ class _MainScreenState extends State<MainScreen> {
   Future<bool> _onWillPop(int index, MainNavigationBloc bloc) {
     if (index == 0) {
       return Future.value(true);
-    } else {
-      _animateToPage(0);
-      bloc.changeCurrentIndex(0);
-      return Future.value(false);
     }
+
+    _animateToPage(0);
+    bloc.changeCurrentIndex(0);
+    return Future.value(false);
   }
 
   @override
@@ -66,8 +66,10 @@ class _MainScreenState extends State<MainScreen> {
     return StreamBuilder(
       stream: mainNavigationBloc.currentIndex,
       initialData: 0,
-      builder: (context, snapshot) {
-        if (snapshot.data != 0) _animateToPage(snapshot.data);
+      builder: (context, AsyncSnapshot<int> snapshot) {
+        if (snapshot.data != 0) {
+          _animateToPage(snapshot.data);
+        }
 
         return WillPopScope(
           onWillPop: () => _onWillPop(snapshot.data, mainNavigationBloc),

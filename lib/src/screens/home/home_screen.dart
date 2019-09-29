@@ -1,7 +1,6 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/fluro_router.dart';
-import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/screens/home/widgets/popular_ingredient_list_item.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_list_item.dart';
@@ -10,23 +9,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  Future<void> _onIngredientPressed(
-    Ingredient ingredient,
-    BuildContext context,
-  ) async {
-    CocktailBloc cocktailBloc = Provider.of<CocktailBloc>(context);
+  Future<void> _onIngredientPressed(Ingredient ingredient, BuildContext context) async {
+    final cocktailBloc = Provider.of<CocktailBloc>(context);
     cocktailBloc.fetchCocktailIdsByIngredient(ingredient.name);
 
-    MainNavigationBloc mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
+    final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
     mainNavigationBloc.changeCurrentIndex(1);
   }
 
-  Future<void> _onMysteryCocktailButtonPressed(
-    CocktailBloc bloc,
-    BuildContext context,
-  ) async {
-    Cocktail cocktail = await bloc.fetchRandomCocktail();
+  Future<void> _onMysteryCocktailButtonPressed(CocktailBloc bloc, BuildContext context) async {
+    final cocktail = await bloc.fetchRandomCocktail();
     bloc.fetchCocktail(cocktail.id);
+
     Navigator.of(context).pushNamed(
       FluroRouter.getCocktailDetailRoute(cocktail.id),
     );

@@ -2,6 +2,7 @@ import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
+import 'package:cocktailr/src/utils/platform_utils.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,15 +16,11 @@ class _SearchScreenState extends State<SearchScreen> {
   SearchBloc _searchBloc;
   TextEditingController _controller;
 
-  Future<void> _onIngredientPressed(
-    String ingredient,
-    BuildContext context,
-  ) async {
-    CocktailBloc cocktailBloc = Provider.of<CocktailBloc>(context);
+  Future<void> _onIngredientPressed(String ingredient) async {
+    final cocktailBloc = Provider.of<CocktailBloc>(context);
     cocktailBloc.fetchCocktailIdsByIngredient(ingredient);
 
-    MainNavigationBloc mainNavigationBloc =
-        Provider.of<MainNavigationBloc>(context);
+    final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
     mainNavigationBloc.changeCurrentIndex(1);
 
     Navigator.of(context).pop();
@@ -49,54 +46,16 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return StreamBuilder(
       stream: _searchBloc.keyword,
-      builder: (context, AsyncSnapshot<String> keywordSnapshot) {
+      builder: (context, AsyncSnapshot<String> snapshot) {
         return Scaffold(
-          appBar: _buildSearchAppBar(keywordSnapshot.data),
-          body: StreamBuilder(
-            stream: ingredientBloc.ingredients,
-            builder: (context, AsyncSnapshot<List<String>> ingredientSnapshot) {
-              if (!ingredientSnapshot.hasData) {
-                return loadingSpinner();
-              }
-
-              List<String> ingredients = [...ingredientSnapshot.data];
-              String keyword = keywordSnapshot.data;
-
-              if (keyword != null && keyword != "") {
-                ingredients = ingredients
-                    .where(
-                        (i) => i.toLowerCase().contains(keyword.toLowerCase()))
-                    .toList();
-              }
-
-              if (ingredients.length > 10) {
-                ingredients = ingredients.sublist(0, 10);
-              }
-
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: ingredients.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => _onIngredientPressed(
-                      ingredients[index],
-                      context,
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.local_bar),
-                      title: Text(ingredients[index]),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+          appBar: _buildAppBar(snapshot.data),
+          body: _buildBody(ingredientBloc, snapshot.data),
         );
       },
     );
   }
 
-  PreferredSizeWidget _buildSearchAppBar(String keyword) => AppBar(
+  AppBar _buildAppBar(String keyword) => AppBar(
         title: TextField(
           autofocus: true,
           controller: _controller,
@@ -126,5 +85,40 @@ class _SearchScreenState extends State<SearchScreen> {
                   },
                 ),
               ],
+      );
+
+  Widget _buildBody(IngredientBloc bloc, String keyword) => StreamBuilder(
+        stream: bloc.ingredients,
+        builder: (context, AsyncSnapshot<List<String>> snapshot) {
+          if (!snapshot.hasData) {
+            return loadingSpinner();
+          }
+
+          List<String> ingredients = [...snapshot.data];
+
+          if (keyword != null && keyword.isNotEmpty) {
+            ingredients = ingredients
+                .where((i) => i.toLowerCase().contains(keyword.toLowerCase()))
+                .toList();
+          }
+
+          if (PlatformUtils.isMobileDevice() && ingredients.length > 10) {
+            ingredients = ingredients.sublist(0, 10);
+          }
+
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: ingredients.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: () => _onIngredientPressed(ingredients[index]),
+                child: ListTile(
+                  leading: Icon(Icons.local_bar),
+                  title: Text(ingredients[index]),
+                ),
+              );
+            },
+          );
+        },
       );
 }

@@ -13,13 +13,14 @@ import 'widgets/cocktail_category.dart';
 import 'widgets/cocktail_instructions.dart';
 
 class CocktailDetailScreen extends StatelessWidget {
-  CocktailDetailScreen({@required this.cocktailId});
   final String cocktailId;
+
+  CocktailDetailScreen({@required this.cocktailId});
 
   @override
   Widget build(BuildContext context) {
     final cocktailBloc = Provider.of<CocktailBloc>(context);
-    final screenWidth = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: StreamBuilder(
@@ -30,119 +31,150 @@ class CocktailDetailScreen extends StatelessWidget {
             return loadingSpinner();
           }
 
-          return FutureBuilder(
-            future: snapshot.data[cocktailId],
-            builder: (context, AsyncSnapshot<Cocktail> cocktailSnapshot) {
-              if (!cocktailSnapshot.hasData) {
-                return loadingSpinner();
-              }
-
-              return SingleChildScrollView(
-                physics: ClampingScrollPhysics(),
-                child: Stack(
-                  overflow: Overflow.visible,
-                  children: <Widget>[
-                    FadeInImage(
-                      image: CachedNetworkImageProvider("${cocktailSnapshot.data.image}"),
-                      placeholder: AssetImage("assets/images/ingredients/white_placeholder.png"),
-                      width: screenWidth,
-                      height: screenWidth,
-                      fit: BoxFit.cover,
-                    ),
-                    SafeArea(
-                      left: false,
-                      child: ButtonBar(
-                        alignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          _goBackButton(context),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: screenWidth,
-                      margin: EdgeInsets.only(
-                        top: screenWidth * 9.5 / 10,
-                        bottom: 36,
-                      ),
-                      padding: EdgeInsets.only(
-                        top: screenWidth * 0.6 / 10,
-                      ),
-                      decoration: BoxDecoration(
-                        color: ColorConstants.defaultBackgroundColor,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(24),
-                          topRight: Radius.circular(24),
-                        ),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              Expanded(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: screenWidth / 10.5,
-                                      ),
-                                      child: CocktailName(
-                                        cocktailName:
-                                            cocktailSnapshot.data.name,
-                                      ),
-                                    ),
-                                    SizedBox(height: 8),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: screenWidth / 10,
-                                      ),
-                                      child: CocktailAlcoholicLabel(
-                                        isAlcoholic:
-                                            cocktailSnapshot.data.isAlcoholic,
-                                      ),
-                                    ),
-                                    SizedBox(height: 32),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal: screenWidth / 10,
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: _buildIngredientList(
-                                          cocktailSnapshot.data,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              CocktailCategory(
-                                width: screenWidth,
-                                cocktail: cocktailSnapshot.data,
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 24),
-                          CocktailInstructions(
-                            instructions: cocktailSnapshot.data.instructions,
-                            padding: screenWidth / 10,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
+          return _buildCocktail(
+            snapshot.data[cocktailId],
+            width,
           );
         },
       ),
     );
   }
+
+  Widget _buildCocktail(Future<Cocktail> cocktailFuture, double width) =>
+      FutureBuilder(
+        future: cocktailFuture,
+        builder: (context, AsyncSnapshot<Cocktail> snapshot) {
+          if (!snapshot.hasData) {
+            return loadingSpinner();
+          }
+
+          return SingleChildScrollView(
+            physics: ClampingScrollPhysics(),
+            child: Stack(
+              overflow: Overflow.visible,
+              children: <Widget>[
+                _cocktailImage(snapshot.data, width),
+                _goBackButton(context),
+                _cocktailInfoContainer(snapshot.data, width),
+              ],
+            ),
+          );
+        },
+      );
+
+  Widget _cocktailImage(Cocktail cocktail, double width) => FadeInImage(
+        image: CachedNetworkImageProvider(cocktail.image),
+        placeholder: AssetImage(
+          "assets/images/ingredients/white_placeholder.png",
+        ),
+        width: width,
+        height: width,
+        fit: BoxFit.cover,
+      );
+
+    Widget _goBackButton(BuildContext context) => SafeArea(
+        left: false,
+        child: ButtonBar(
+          alignment: MainAxisAlignment.start,
+          children: <Widget>[
+            _goBackButtonIcon(context),
+          ],
+        ),
+      );
+
+  Widget _goBackButtonIcon(BuildContext context) => Stack(
+        children: <Widget>[
+          IconButton(
+            tooltip: "Go back",
+            onPressed: Navigator.of(context).pop,
+            icon: Icon(
+              FontAwesomeIcons.chevronLeft,
+              color: Colors.white,
+              size: 26,
+            ),
+          ),
+          IconButton(
+            tooltip: "Go back",
+            onPressed: Navigator.of(context).pop,
+            icon: Icon(
+              FontAwesomeIcons.chevronCircleLeft,
+              color: Colors.black87,
+              size: 26,
+            ),
+          ),
+        ],
+      );
+
+  Widget _cocktailInfoContainer(Cocktail cocktail, double width) => Container(
+        width: width,
+        margin: EdgeInsets.only(
+          top: width * 9.5 / 10,
+          bottom: 36,
+        ),
+        padding: EdgeInsets.only(top: width * 0.6 / 10),
+        decoration: BoxDecoration(
+          color: ColorConstants.defaultBackgroundColor,
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(24),
+            topRight: Radius.circular(24),
+          ),
+        ),
+        child: _cocktailInfo(cocktail, width),
+      );
+
+  Widget _cocktailInfo(Cocktail cocktail, double width) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Expanded(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _cocktailName(cocktail, width),
+                    SizedBox(height: 8),
+                    _cocktailAlcoholicLabel(cocktail, width),
+                    SizedBox(height: 32),
+                    _cocktailIngredientList(cocktail, width),
+                  ],
+                ),
+              ),
+              CocktailCategory(
+                width: width,
+                cocktail: cocktail,
+              ),
+            ],
+          ),
+          SizedBox(height: 24),
+          CocktailInstructions(
+            instructions: cocktail.instructions,
+            padding: width / 10,
+          ),
+        ],
+      );
+
+  Widget _cocktailName(Cocktail cocktail, double width) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: width / 10.5),
+        child: CocktailName(cocktailName: cocktail.name),
+      );
+
+  Widget _cocktailAlcoholicLabel(Cocktail cocktail, double width) => Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: width / 10,
+        ),
+        child: CocktailAlcoholicLabel(isAlcoholic: cocktail.isAlcoholic),
+      );
+
+  Widget _cocktailIngredientList(cocktail, width) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: width / 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: _buildIngredientList(cocktail),
+        ),
+      );
 
   List<Widget> _buildIngredientList(Cocktail cocktail) {
     List<Widget> ingredientListItems = [];
@@ -183,27 +215,4 @@ class CocktailDetailScreen extends StatelessWidget {
 
     return ingredientListItems;
   }
-
-  Widget _goBackButton(BuildContext context) => Stack(
-        children: <Widget>[
-          IconButton(
-            tooltip: "Go back",
-            onPressed: Navigator.of(context).pop,
-            icon: Icon(
-              FontAwesomeIcons.chevronLeft,
-              color: Colors.white,
-              size: 26,
-            ),
-          ),
-          IconButton(
-            tooltip: "Go back",
-            onPressed: Navigator.of(context).pop,
-            icon: Icon(
-              FontAwesomeIcons.chevronCircleLeft,
-              color: Colors.black87,
-              size: 26,
-            ),
-          ),
-        ],
-      );
 }
