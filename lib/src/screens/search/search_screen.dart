@@ -78,7 +78,8 @@ class _SearchScreenState extends State<SearchScreen> {
             ? <Widget>[]
             : <Widget>[
                 IconButton(
-                  icon: Icon(Icons.cancel),
+                  icon: Icon(Icons.clear),
+                  tooltip: "Clear entry",
                   onPressed: () {
                     _controller.text = "";
                     _searchBloc.changeKeyword("");
