@@ -14,7 +14,23 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   SearchBloc _searchBloc;
-  TextEditingController _controller;
+  TextEditingController _textEditingController;
+
+  List<String> _filterIngredients(List<String> ingredients, String keyword) {
+    List<String> filteredIngredients = [...ingredients];
+
+    if (keyword != null && keyword.isNotEmpty) {
+      filteredIngredients = filteredIngredients
+          .where((i) => i.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    }
+
+    if (PlatformUtils.isMobileDevice() && filteredIngredients.length > 10) {
+      filteredIngredients = filteredIngredients.sublist(0, 10);
+    }
+
+    return filteredIngredients;
+  }
 
   Future<void> _onIngredientPressed(String ingredient) async {
     final cocktailBloc = Provider.of<CocktailBloc>(context);
@@ -30,35 +46,33 @@ class _SearchScreenState extends State<SearchScreen> {
   void initState() {
     super.initState();
     _searchBloc = SearchBloc();
-    _controller = TextEditingController();
+    _textEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
     _searchBloc?.dispose();
-    _controller?.dispose();
+    _textEditingController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    IngredientBloc ingredientBloc = Provider.of<IngredientBloc>(context);
-
     return StreamBuilder(
       stream: _searchBloc.keyword,
       builder: (context, AsyncSnapshot<String> snapshot) {
         return Scaffold(
           appBar: _buildAppBar(snapshot.data),
-          body: _buildBody(ingredientBloc, snapshot.data),
+          body: _buildBody(snapshot.data),
         );
       },
     );
   }
 
-  AppBar _buildAppBar(String keyword) => AppBar(
+  Widget _buildAppBar(String keyword) => AppBar(
         title: TextField(
           autofocus: true,
-          controller: _controller,
+          controller: _textEditingController,
           keyboardType: TextInputType.text,
           style: TextStyle(
             color: Colors.white,
@@ -81,31 +95,24 @@ class _SearchScreenState extends State<SearchScreen> {
                   icon: Icon(Icons.clear),
                   tooltip: "Clear entry",
                   onPressed: () {
-                    _controller.text = "";
+                    _textEditingController.text = "";
                     _searchBloc.changeKeyword("");
                   },
                 ),
               ],
       );
 
-  Widget _buildBody(IngredientBloc bloc, String keyword) => StreamBuilder(
-        stream: bloc.ingredients,
+  Widget _buildBody(String keyword) => StreamBuilder(
+        stream: Provider.of<IngredientBloc>(context).ingredients,
         builder: (context, AsyncSnapshot<List<String>> snapshot) {
           if (!snapshot.hasData) {
-            return loadingSpinner();
+            return LoadingSpinner();
           }
 
-          List<String> ingredients = [...snapshot.data];
-
-          if (keyword != null && keyword.isNotEmpty) {
-            ingredients = ingredients
-                .where((i) => i.toLowerCase().contains(keyword.toLowerCase()))
-                .toList();
-          }
-
-          if (PlatformUtils.isMobileDevice() && ingredients.length > 10) {
-            ingredients = ingredients.sublist(0, 10);
-          }
+          List<String> ingredients = _filterIngredients(
+            snapshot.data,
+            keyword,
+          );
 
           return ListView.builder(
             shrinkWrap: true,

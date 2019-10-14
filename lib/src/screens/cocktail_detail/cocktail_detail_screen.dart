@@ -28,7 +28,7 @@ class CocktailDetailScreen extends StatelessWidget {
         builder:
             (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
           if (!snapshot.hasData) {
-            return loadingSpinner();
+            return LoadingSpinner();
           }
 
           return _buildCocktail(
@@ -45,7 +45,7 @@ class CocktailDetailScreen extends StatelessWidget {
         future: cocktailFuture,
         builder: (context, AsyncSnapshot<Cocktail> snapshot) {
           if (!snapshot.hasData) {
-            return loadingSpinner();
+            return LoadingSpinner();
           }
 
           return SingleChildScrollView(

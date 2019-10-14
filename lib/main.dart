@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 void main() {
-  Hive.registerAdapter(CocktailAdapter(), 35);
+  Hive.registerAdapter(CocktailAdapter(), 0);
   FluroRouter.setupRouter();
   runApp(Root());
 }

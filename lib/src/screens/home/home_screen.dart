@@ -17,7 +17,8 @@ class HomeScreen extends StatelessWidget {
     mainNavigationBloc.changeCurrentIndex(1);
   }
 
-  Future<void> _onMysteryCocktailButtonPressed(CocktailBloc bloc, BuildContext context) async {
+  Future<void> _onMysteryCocktailButtonPressed(BuildContext context) async {
+    final bloc = Provider.of<CocktailBloc>(context);
     final cocktail = await bloc.fetchRandomCocktail();
     bloc.fetchCocktail(cocktail.id);
 
@@ -42,7 +43,7 @@ class HomeScreen extends StatelessWidget {
           _buildPopularIngredientsList(context),
           SizedBox(height: 16),
           _sectionTitle("Mystery Cocktail"),
-          _buildMysteryCocktailButton(cocktailBloc, context),
+          _buildMysteryCocktailButton(context),
         ],
       ),
     );
@@ -63,7 +64,7 @@ class HomeScreen extends StatelessWidget {
         stream: bloc.popularCocktailIds,
         builder: (context, AsyncSnapshot<List<String>> snapshot) {
           if (!snapshot.hasData) {
-            return loadingSpinner();
+            return LoadingSpinner();
           }
 
           return Container(
@@ -110,7 +111,7 @@ class HomeScreen extends StatelessWidget {
         ),
       );
 
-  Widget _buildMysteryCocktailButton(CocktailBloc bloc, BuildContext context) =>
+  Widget _buildMysteryCocktailButton(BuildContext context) =>
       Padding(
         padding: EdgeInsets.symmetric(horizontal: 19, vertical: 5),
         child: Row(
@@ -126,7 +127,7 @@ class HomeScreen extends StatelessWidget {
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () => _onMysteryCocktailButtonPressed(bloc, context),
+                onPressed: () => _onMysteryCocktailButtonPressed(context),
                 padding: EdgeInsets.all(20),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),

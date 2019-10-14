@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 class SearchBloc extends BlocBase {
   final _keyword = PublishSubject<String>();
 
-  Stream<String> get keyword => _keyword.stream;
+  Observable<String> get keyword => _keyword.stream;
 
   Function(String) get changeKeyword => _keyword.sink.add;
 
