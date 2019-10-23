@@ -103,7 +103,7 @@ class _SearchScreenState extends State<SearchScreen> {
       );
 
   Widget _buildBody(String keyword) => StreamBuilder(
-        stream: Provider.of<IngredientBloc>(context).ingredients,
+        stream: Provider.of<IngredientBloc>(context).ingredientNames,
         builder: (context, AsyncSnapshot<List<String>> snapshot) {
           if (!snapshot.hasData) {
             return LoadingSpinner();

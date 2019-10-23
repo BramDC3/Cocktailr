@@ -1,32 +1,33 @@
 import 'package:cocktailr/src/models/cocktail.dart';
+import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Capitalize name of cocktail', () {
     test('Input is null, return value is empty string', () {
-      String capitalizedName = Cocktail.capitalizeName(null);
+      String capitalizedName = StringUtils.capitalizeAllWords(null);
       expect(capitalizedName, '');
     });
 
     test('Input is an empty string, return value is empty string', () {
-      String capitalizedName = Cocktail.capitalizeName('');
+      String capitalizedName = StringUtils.capitalizeAllWords('');
       expect(capitalizedName, '');
     });
 
     test('Input has no letters, return value is parameter', () {
-      String capitalizedName = Cocktail.capitalizeName('#@-)28387329^');
+      String capitalizedName = StringUtils.capitalizeAllWords('#@-)28387329^');
       expect(capitalizedName, '#@-)28387329^');
     });
 
     test('Input is one word, return value is capitalized word', () {
-      String capitalizedName = Cocktail.capitalizeName('cocktail');
+      String capitalizedName = StringUtils.capitalizeAllWords('cocktail');
       expect(capitalizedName, 'Cocktail');
     });
 
     test(
         'Input has whitespaces before and after, return value is trimmed capitalized word',
         () {
-      String capitalizedName = Cocktail.capitalizeName('    my cocktail    ');
+      String capitalizedName = StringUtils.capitalizeAllWords('    my cocktail    ');
       expect(capitalizedName, 'My Cocktail');
     });
 
@@ -34,12 +35,12 @@ void main() {
         'Input has multiple spaces between multiple words, return value is capitalized name',
         () {
       String capitalizedName =
-          Cocktail.capitalizeName('   this    is  a     test     ');
+          StringUtils.capitalizeAllWords('   this    is  a     test     ');
       expect(capitalizedName, 'This Is A Test');
     });
 
     test('Input has multiple words, return value is capitalized name', () {
-      String capitalizedName = Cocktail.capitalizeName('this is a test');
+      String capitalizedName = StringUtils.capitalizeAllWords('this is a test');
       expect(capitalizedName, 'This Is A Test');
     });
   });

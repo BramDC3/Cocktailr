@@ -53,8 +53,8 @@ flutter:
   assets:
     - assets/images/ingredients/gin.jpg
     - assets/images/ingredients/rum.jpg
-    - assets/images/ingredients/tequila.jpeg
+    - assets/images/ingredients/tequila.jpg
     - assets/images/ingredients/vodka.jpg
     - assets/images/ingredients/whiskey.jpg
 
-    - assets/images/ingredients/white_placeholder.png
+    - assets/images/white_placeholder.png

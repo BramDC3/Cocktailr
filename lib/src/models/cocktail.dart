@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
 
@@ -45,7 +46,7 @@ class Cocktail {
   factory Cocktail.fromJson(Map<String, dynamic> json) {
     return Cocktail(
       id: json['idDrink'],
-      name: capitalizeName(json['strDrink']),
+      name: StringUtils.capitalizeAllWords(json['strDrink']),
       category: refactorCategory(json['strCategory']),
       instructions: json['strInstructions'],
       image: json['strDrinkThumb'],
@@ -87,20 +88,6 @@ class Cocktail {
     List<String> list = List.generate(json.length <= 15 ? json.length : 15, (int i) => json['$tag${i + 1}']);
     list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null);
     return list;
-  }
-
-  static String capitalizeName(String name) {
-    if (name == null || name.length <= 1) return name?.toUpperCase() ?? "";
-    if (!name.contains(RegExp(r"\s+")))
-      return "${name[0].toUpperCase()}${name.substring(1)}";
-
-    return name
-        .trim()
-        .split(RegExp(r"\s+"))
-        .map((word) => word.length > 1
-            ? "${word[0].toUpperCase()}${word.substring(1)}"
-            : word.toUpperCase())
-        .join(" ");
   }
 
   static String refactorCategory(String category) {

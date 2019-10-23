@@ -1,17 +1,15 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:cocktailr/src/bases/cocktail_cache.dart';
-import 'package:cocktailr/src/bases/cocktail_source.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/utils/platform_utils.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
-class CocktailDbHive implements CocktailSource, CocktailCache {
+class CocktailCache {
   Box db;
 
-  CocktailDbHive() {
+  CocktailCache() {
     init();
   }
 
@@ -24,7 +22,6 @@ class CocktailDbHive implements CocktailSource, CocktailCache {
     db = await Hive.openBox("Cocktails");
   }
 
-  @override
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     if (db == null) await init();
 
@@ -43,7 +40,6 @@ class CocktailDbHive implements CocktailSource, CocktailCache {
     }
   }
 
-  @override
   Future<Cocktail> fetchRandomCocktail() async {
     if (db == null) await init();
 
@@ -62,7 +58,6 @@ class CocktailDbHive implements CocktailSource, CocktailCache {
     }
   }
 
-  @override
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     if (db == null) await init();
 
@@ -84,7 +79,6 @@ class CocktailDbHive implements CocktailSource, CocktailCache {
     }
   }
 
-  @override
   Future<int> insertCocktail(Cocktail cocktail) async {
     try {
       db.put(cocktail.id, cocktail);
@@ -95,5 +89,3 @@ class CocktailDbHive implements CocktailSource, CocktailCache {
     }
   }
 }
-
-final cocktailDbHive = CocktailDbHive();

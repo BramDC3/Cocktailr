@@ -1,25 +1,18 @@
-import 'package:cocktailr/src/bases/ingredient_source.dart';
+import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/network/ingredient_api.dart';
 
 class IngredientRepository {
-  List<IngredientSource> sources = <IngredientSource>[
-    IngredientApi(),
-  ];
+  final IngredientApi ingredientApi = IngredientApi();
 
-  List<String> _ingredients;
-  Future<List<String>> get ingredients async {
-    if (_ingredients == null || _ingredients.isEmpty) await _fetchIngredients();
-    return _ingredients;
+  Future<List<String>> fetchIngredientNames() async {
+    return ingredientApi.fetchIngredientsNames();
   }
 
-  Future<void> _fetchIngredients() async {
-    List<String> ingredients;
+  Future<List<String>> fetchTrendingIngredientNames() async {
+    return ["Tequila", "Vodka", "Rum", "Gin", "Whiskey"];
+  }
 
-    for (final source in sources) {
-      ingredients = await source.fetchIngredients();
-      if (ingredients != null && ingredients.isNotEmpty) break;
-    }
-
-    _ingredients = ingredients ?? [];
+  Future<Ingredient> fetchIngredientByName(String ingredientName) async {
+    return ingredientApi.fetchIngredientByName(ingredientName);
   }
 }

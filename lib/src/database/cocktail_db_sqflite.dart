@@ -9,7 +9,7 @@
 // import 'package:sqflite/sqflite.dart';
 // import 'package:sqflite/sqlite_api.dart';
 
-// class CocktailDbSqflite implements CocktailSource, CocktailCache {
+// class CocktailDbSqflite {
 //   Database db;
 
 //   CocktailDbSqflite() {
@@ -115,5 +115,3 @@
 //     );
 //   }
 // }
-
-// final cocktailDbSqflite = CocktailDbSqflite();

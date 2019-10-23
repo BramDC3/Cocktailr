@@ -1,10 +1,9 @@
 import 'dart:convert';
-import 'package:cocktailr/src/bases/cocktail_source.dart';
 import 'package:cocktailr/src/constants/url_constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:cocktailr/src/models/cocktail.dart';
 
-class CocktailApi implements CocktailSource {
+class CocktailApi {
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     try {
       final res = await http.get('$cocktailDbBaseUrl/lookup.php?i=$cocktailId');
