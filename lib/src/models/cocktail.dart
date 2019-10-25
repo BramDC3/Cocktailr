@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
@@ -10,25 +8,18 @@ part 'cocktail.g.dart';
 class Cocktail {
   @HiveField(0)
   final String id;
-
   @HiveField(1)
   final String name;
-
   @HiveField(2)
   final String category;
-
   @HiveField(3)
   final String instructions;
-
   @HiveField(4)
   final String image;
-
   @HiveField(5)
   final bool isAlcoholic;
-
   @HiveField(6)
   final List<dynamic> ingredients;
-
   @HiveField(7)
   final List<dynamic> measurements;
 
@@ -54,32 +45,6 @@ class Cocktail {
       ingredients: filterList(json, 'strIngredient'),
       measurements: filterList(json, 'strMeasure'),
     );
-  }
-
-  factory Cocktail.fromDb(Map<String, dynamic> json) {
-    return Cocktail(
-      id: json['id'],
-      name: json['name'],
-      category: json['category'],
-      instructions: json['instructions'],
-      image: json['image'],
-      isAlcoholic: json['isAlcoholic'] == 1,
-      ingredients: jsonDecode(json['ingredients']),
-      measurements: jsonDecode(json['measurements']),
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      "id": id,
-      "name": name,
-      "category": category,
-      "instructions": instructions,
-      "image": image,
-      "isAlcoholic": isAlcoholic ? 1 : 0,
-      "ingredients": jsonEncode(ingredients),
-      "measurements": jsonEncode(measurements),
-    };
   }
 
   static List<String> filterList(Map<String, dynamic> json, String tag) {

@@ -33,10 +33,11 @@ class CocktailRepository {
   }
 
   Future<Cocktail> fetchRandomCocktail() async {
-    Cocktail cocktail = await cocktailApi.fetchRandomCocktail();
+    Cocktail cocktail = await cocktailCache.fetchRandomCocktail();
 
     if (cocktail == null) {
-      cocktail = await cocktailCache.fetchRandomCocktail();
+      cocktail = await cocktailApi.fetchRandomCocktail();
+      cocktailCache.insertCocktail(cocktail);
     }
 
     return cocktail;

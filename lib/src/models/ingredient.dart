@@ -2,13 +2,23 @@ import 'package:cocktailr/src/constants/url_constants.dart';
 import 'package:cocktailr/src/models/enum/image_size.dart';
 import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 
+part 'ingredient.g.dart';
+
+@HiveType()
 class Ingredient {
+  @HiveField(0)
   final String id;
+  @HiveField(1)
   final String name;
+  @HiveField(2)
   final String description;
+  @HiveField(3)
   final String type;
+  @HiveField(4)
   final bool isAlcoholic;
+  @HiveField(5)
   final String abv;
 
   Ingredient({
@@ -33,54 +43,4 @@ class Ingredient {
       abv: json['strABV'],
     );
   }
-
-  factory Ingredient.fromDb(Map<String, dynamic> json) {
-    return Ingredient(
-      id: json['id'],
-      name: json['name'],
-      description: json['description'],
-      type: json['type'],
-      isAlcoholic: json['isAlcoholic'] == 1,
-      abv: json['abv'],
-    );
-  }
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      "id": id,
-      "name": name,
-      "description": description,
-      "type": type,
-      "isAlcoholic": isAlcoholic ? 1 : 0,
-      "abv": abv,
-    };
-  }
 }
-
-// List<Ingredient> get popularIngredients => [
-//       Ingredient(
-//         id: "t",
-//         name: "Tequila",
-//         image: "assets/images/ingredients/tequila.jpeg",
-//       ),
-//       Ingredient(
-//         id: "v",
-//         name: "Vodka",
-//         image: "assets/images/ingredients/vodka.jpg",
-//       ),
-//       Ingredient(
-//         id: "r",
-//         name: "Rum",
-//         image: "assets/images/ingredients/rum.jpg",
-//       ),
-//       Ingredient(
-//         id: "g",
-//         name: "Gin",
-//         image: "assets/images/ingredients/gin.jpg",
-//       ),
-//       Ingredient(
-//         id: "w",
-//         name: "Whiskey",
-//         image: "assets/images/ingredients/whiskey.jpg",
-//       ),
-//     ];

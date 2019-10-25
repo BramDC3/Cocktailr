@@ -107,7 +107,7 @@ class TrendingCocktailListItem extends StatelessWidget {
             image: CachedNetworkImageProvider("${cocktail.image}"),
             fit: BoxFit.cover,
             placeholder: AssetImage(
-              "assets/images/ingredients/white_placeholder.png",
+              "assets/images/white_placeholder.png",
             ),
           ),
         ),
