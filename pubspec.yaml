@@ -19,10 +19,7 @@ dependencies:
   # Used for additional stream functionality.
   rxdart: ^0.22.1
 
-  # Used for caching data.
-  # sqflite: ^1.1.6+3
-
-  # Used to support local storage.
+  # Used to find the paths for local storage.
   path_provider: ^1.2.0
 
   # Used for caching data, but is cross-platform.
