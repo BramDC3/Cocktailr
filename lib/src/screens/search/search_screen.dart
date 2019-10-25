@@ -1,7 +1,6 @@
-import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
-import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
+import 'package:cocktailr/src/screens/search/widgets/search_screen_list_item.dart';
 import 'package:cocktailr/src/utils/platform_utils.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
@@ -30,16 +29,6 @@ class _SearchScreenState extends State<SearchScreen> {
     }
 
     return filteredIngredients;
-  }
-
-  Future<void> _onIngredientPressed(String ingredient) async {
-    final cocktailBloc = Provider.of<CocktailBloc>(context);
-    cocktailBloc.fetchCocktailIdsByIngredient(ingredient);
-
-    final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
-    mainNavigationBloc.changeCurrentIndex(1);
-
-    Navigator.of(context).pop();
   }
 
   @override
@@ -118,11 +107,13 @@ class _SearchScreenState extends State<SearchScreen> {
             shrinkWrap: true,
             itemCount: ingredients.length,
             itemBuilder: (context, index) {
-              return InkWell(
-                onTap: () => _onIngredientPressed(ingredients[index]),
-                child: ListTile(
-                  leading: Icon(Icons.local_bar),
-                  title: Text(ingredients[index]),
+              Provider.of<IngredientBloc>(context)
+                  .fetchIngredient(ingredients[index]);
+
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: SearchScreenListItem(
+                  ingredientName: ingredients[index],
                 ),
               );
             },

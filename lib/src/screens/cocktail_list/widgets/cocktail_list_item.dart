@@ -72,7 +72,7 @@ class CocktailListItem extends StatelessWidget {
         child: FadeInImage(
           image: CachedNetworkImageProvider("${cocktail.image}"),
           placeholder:
-              AssetImage("assets/images/ingredients/white_placeholder.png"),
+              AssetImage("assets/images/white_placeholder.png"),
           width: height,
           height: height,
           fit: BoxFit.cover,

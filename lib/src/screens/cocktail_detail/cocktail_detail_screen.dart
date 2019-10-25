@@ -65,7 +65,7 @@ class CocktailDetailScreen extends StatelessWidget {
   Widget _cocktailImage(Cocktail cocktail, double width) => FadeInImage(
         image: CachedNetworkImageProvider(cocktail.image),
         placeholder: AssetImage(
-          "assets/images/ingredients/white_placeholder.png",
+          "assets/images/white_placeholder.png",
         ),
         width: width,
         height: width,
