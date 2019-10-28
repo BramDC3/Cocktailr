@@ -15,7 +15,7 @@ class CocktailInstructions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "How to make it:",
+            "How to prepare:",
             style: TextStyle(
               fontSize: 20,
               color: Colors.black87,

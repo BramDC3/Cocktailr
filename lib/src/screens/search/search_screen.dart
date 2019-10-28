@@ -24,10 +24,6 @@ class _SearchScreenState extends State<SearchScreen> {
           .toList();
     }
 
-    if (PlatformUtils.isMobileDevice() && filteredIngredients.length > 10) {
-      filteredIngredients = filteredIngredients.sublist(0, 10);
-    }
-
     return filteredIngredients;
   }
 

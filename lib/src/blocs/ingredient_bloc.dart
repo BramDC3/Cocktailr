@@ -26,6 +26,7 @@ class IngredientBloc extends BlocBase {
 
   Future<void> _fetchIngredientNames() async {
     List<String> ingredientsNames = await _ingredientRepository.fetchIngredientNames();
+    ingredientsNames.sort((a, b) => a.compareTo(b));
     _ingredientNames.sink.add(ingredientsNames);
   }
 
