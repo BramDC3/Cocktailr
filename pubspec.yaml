@@ -53,5 +53,14 @@ flutter:
     - assets/images/ingredients/tequila.jpg
     - assets/images/ingredients/vodka.jpg
     - assets/images/ingredients/whiskey.jpg
-
     - assets/images/white_placeholder.png
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+

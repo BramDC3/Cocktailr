@@ -40,6 +40,7 @@ class _RootState extends State<Root> {
         title: APP_NAME,
         theme: ThemeData(
           primarySwatch: Colors.red,
+          fontFamily: 'Roboto',
         ),
         initialRoute: 'main',
         onGenerateRoute: FluroRouter.router.generator,
