@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
+import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/constants/color_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_alcoholic_label.dart';
+import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_ingredient_list_item.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_name.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +74,7 @@ class CocktailDetailScreen extends StatelessWidget {
         fit: BoxFit.cover,
       );
 
-    Widget _goBackButton(BuildContext context) => SafeArea(
+  Widget _goBackButton(BuildContext context) => SafeArea(
         left: false,
         child: ButtonBar(
           alignment: MainAxisAlignment.start,
@@ -137,7 +139,7 @@ class CocktailDetailScreen extends StatelessWidget {
                     _cocktailName(cocktail, width),
                     SizedBox(height: 8),
                     _cocktailAlcoholicLabel(cocktail, width),
-                    SizedBox(height: 32),
+                    SizedBox(height: 12),
                     _cocktailIngredientList(cocktail, width),
                   ],
                 ),
@@ -148,7 +150,7 @@ class CocktailDetailScreen extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 24),
+          SizedBox(height: 20),
           CocktailInstructions(
             instructions: cocktail.instructions,
             padding: width / 10,
@@ -168,51 +170,21 @@ class CocktailDetailScreen extends StatelessWidget {
         child: CocktailAlcoholicLabel(isAlcoholic: cocktail.isAlcoholic),
       );
 
-  Widget _cocktailIngredientList(cocktail, width) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: width / 10),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: _buildIngredientList(cocktail),
+  Widget _cocktailIngredientList(Cocktail cocktail, double width) => Padding(
+        padding: EdgeInsets.only(left: width / 16, right: width / 10),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: cocktail.ingredients.length,
+          itemBuilder: (context, index) {
+            Provider.of<IngredientBloc>(context).fetchIngredient(cocktail.ingredients[index]);
+
+            return CocktailIngredientListItem(
+              ingredientName: cocktail.ingredients[index],
+              measurement: index < cocktail.measurements.length ? cocktail.measurements[index] : "",
+              isLastIngredient: index == cocktail.ingredients.length - 1,
+            );
+          },
         ),
       );
-
-  List<Widget> _buildIngredientList(Cocktail cocktail) {
-    List<Widget> ingredientListItems = [];
-
-    for (int i = 0; i < cocktail.ingredients.length; i++) {
-      ingredientListItems.add(
-        Container(
-          margin: EdgeInsets.symmetric(vertical: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(cocktail.ingredients[i]),
-              ),
-              SizedBox(height: 4),
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  i < cocktail.measurements.length
-                      ? cocktail.measurements[i]
-                      : "",
-                  style: TextStyle(
-                    color: Colors.black54,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-
-      if (i + 1 != cocktail.ingredients.length) {
-        ingredientListItems.add(Divider());
-      }
-    }
-
-    return ingredientListItems;
-  }
 }
