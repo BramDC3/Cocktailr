@@ -37,7 +37,7 @@ class Cocktail {
   factory Cocktail.fromJson(Map<String, dynamic> json) {
     return Cocktail(
       id: json['idDrink'],
-      name: StringUtils.capitalizeAllWords(json['strDrink']),
+      name: capitalizeAllWords(json['strDrink']),
       category: refactorCategory(json['strCategory']),
       instructions: json['strInstructions'],
       image: json['strDrinkThumb'],

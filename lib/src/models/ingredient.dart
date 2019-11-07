@@ -1,5 +1,5 @@
 import 'package:cocktailr/src/constants/url_constants.dart';
-import 'package:cocktailr/src/models/enum/image_size.dart';
+import 'package:cocktailr/src/models/enums/image_size.dart';
 import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
@@ -31,12 +31,12 @@ class Ingredient {
   });
 
   String image(ImageSize imageSize) =>
-      "$ingredientImageBaseUrl/$name-${StringUtils.getSizeFromImageSize(imageSize)}.png";
+      "$ingredientImageBaseUrl/$name-${getSizeFromImageSize(imageSize)}.png";
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(
       id: json['idIngredient'],
-      name: StringUtils.capitalizeAllWords(json['strIngredient']),
+      name: capitalizeAllWords(json['strIngredient']),
       description: json['strDescription'],
       type: json['strType'],
       isAlcoholic: json['strAlcohol'] == 'Yes',

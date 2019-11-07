@@ -14,7 +14,7 @@ class CocktailCache {
   }
 
   Future<void> init() async {
-    if (PlatformUtils.isMobileDevice()) {
+    if (isMobileDevice()) {
       Directory documentsDirectory = await getApplicationDocumentsDirectory();
       Hive.init(documentsDirectory.path);
     }

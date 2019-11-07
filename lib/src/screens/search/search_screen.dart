@@ -2,6 +2,7 @@ import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
 import 'package:cocktailr/src/screens/search/widgets/search_screen_list_item.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
+import 'package:cocktailr/src/widgets/responsiveness/responsive_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -45,10 +46,12 @@ class _SearchScreenState extends State<SearchScreen> {
     return StreamBuilder(
       stream: _searchBloc.keyword,
       builder: (context, AsyncSnapshot<String> snapshot) {
-        return Scaffold(
-          appBar: _buildAppBar(snapshot.data),
-          body: _buildBody(snapshot.data),
-        );
+        return ResponsiveBuilder(builder: (context, sizingInformation) {
+          return Scaffold(
+            appBar: _buildAppBar(snapshot.data),
+            body: _buildBody(snapshot.data),
+          );
+        });
       },
     );
   }

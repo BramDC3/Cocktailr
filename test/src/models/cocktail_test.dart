@@ -5,29 +5,29 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Capitalize name of cocktail', () {
     test('Input is null, return value is empty string', () {
-      String capitalizedName = StringUtils.capitalizeAllWords(null);
+      String capitalizedName = capitalizeAllWords(null);
       expect(capitalizedName, '');
     });
 
     test('Input is an empty string, return value is empty string', () {
-      String capitalizedName = StringUtils.capitalizeAllWords('');
+      String capitalizedName = capitalizeAllWords('');
       expect(capitalizedName, '');
     });
 
     test('Input has no letters, return value is parameter', () {
-      String capitalizedName = StringUtils.capitalizeAllWords('#@-)28387329^');
+      String capitalizedName = capitalizeAllWords('#@-)28387329^');
       expect(capitalizedName, '#@-)28387329^');
     });
 
     test('Input is one word, return value is capitalized word', () {
-      String capitalizedName = StringUtils.capitalizeAllWords('cocktail');
+      String capitalizedName = capitalizeAllWords('cocktail');
       expect(capitalizedName, 'Cocktail');
     });
 
     test(
         'Input has whitespaces before and after, return value is trimmed capitalized word',
         () {
-      String capitalizedName = StringUtils.capitalizeAllWords('    my cocktail    ');
+      String capitalizedName = capitalizeAllWords('    my cocktail    ');
       expect(capitalizedName, 'My Cocktail');
     });
 
@@ -35,12 +35,12 @@ void main() {
         'Input has multiple spaces between multiple words, return value is capitalized name',
         () {
       String capitalizedName =
-          StringUtils.capitalizeAllWords('   this    is  a     test     ');
+          capitalizeAllWords('   this    is  a     test     ');
       expect(capitalizedName, 'This Is A Test');
     });
 
     test('Input has multiple words, return value is capitalized name', () {
-      String capitalizedName = StringUtils.capitalizeAllWords('this is a test');
+      String capitalizedName = capitalizeAllWords('this is a test');
       expect(capitalizedName, 'This Is A Test');
     });
   });
