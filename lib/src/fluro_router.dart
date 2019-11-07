@@ -1,8 +1,11 @@
 import 'package:cocktailr/src/screens/search/search_screen.dart';
+import 'package:device_simulator/device_simulator.dart';
 import 'package:fluro/fluro.dart';
 
 import 'screens/cocktail_detail/cocktail_detail_screen.dart';
 import 'screens/main_screen.dart';
+
+const bool debugEnableDeviceSimulator = true;
 
 class FluroRouter {
   static Router router = Router();
@@ -20,18 +23,27 @@ class FluroRouter {
   }
 
   static Handler _mainHandler = Handler(
-    handlerFunc: (_, Map<String, List<String>> params) => MainScreen(),
+    handlerFunc: (_, Map<String, List<String>> params) => DeviceSimulator(
+      enable: debugEnableDeviceSimulator,
+      child: MainScreen(),
+    ),
   );
 
   static Handler _cocktailHandler = Handler(
     handlerFunc: (_, Map<String, List<String>> params) {
       String cocktailId = _parseCocktailId(params);
-      return CocktailDetailScreen(cocktailId: cocktailId);
+      return DeviceSimulator(
+        enable: debugEnableDeviceSimulator,
+        child: CocktailDetailScreen(cocktailId: cocktailId),
+      );
     },
   );
 
   static Handler _searchHandler = Handler(
-    handlerFunc: (_, Map<String, List<String>> params) => SearchScreen(),
+    handlerFunc: (_, Map<String, List<String>> params) => DeviceSimulator(
+      enable: debugEnableDeviceSimulator,
+      child: SearchScreen(),
+    ),
   );
 
   static String getCocktailDetailRoute(String cocktailId) {

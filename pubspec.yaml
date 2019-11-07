@@ -31,6 +31,9 @@ dependencies:
   # Used for navigation.
   fluro: ^1.5.1
 
+  # Used for testing responsiveness.
+  device_simulator: ^0.9.5
+
 dev_dependencies:
   # Extension for Hive to create type adapters.
   hive_generator: ^0.5.1

@@ -1,5 +1,4 @@
 import 'package:cocktailr/src/bases/bloc_base.dart';
-import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/repositories/cocktail_repository.dart';
 import 'package:rxdart/rxdart.dart';
@@ -22,7 +21,7 @@ class CocktailBloc extends BlocBase {
         .transform(_cocktailsTransformer())
         .pipe(_cocktailsOutput);
     _fetchPopularCocktailIds();
-    fetchCocktailIdsByIngredient(INITIAL_INGREDIENT);
+    fetchCocktailIdsByIngredient("Tequila");
   }
 
   Future<void> fetchCocktailIdsByIngredient(String ingredient) async {
