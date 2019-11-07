@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
@@ -104,7 +103,7 @@ class TrendingCocktailListItem extends StatelessWidget {
             topRight: Radius.circular(10),
           ),
           child: FadeInImage(
-            image: CachedNetworkImageProvider("${cocktail.image}"),
+            image: NetworkImage("${cocktail.image}"),
             fit: BoxFit.cover,
             placeholder: AssetImage(
               "assets/images/white_placeholder.png",

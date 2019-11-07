@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
@@ -49,7 +48,7 @@ class SearchScreenListItem extends StatelessWidget {
         onTap: () => _onIngredientPressed(snapshot.data.name, context),
         child: ListTile(
           leading: FadeInImage(
-            image: CachedNetworkImageProvider("${snapshot.data.image(ImageSize.SMALL)}"),
+            image: NetworkImage("${snapshot.data.image(ImageSize.SMALL)}"),
             fit: BoxFit.cover,
             placeholder: AssetImage(
               "assets/images/white_placeholder.png",

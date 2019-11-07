@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/constants/color_constants.dart';
@@ -65,7 +64,7 @@ class CocktailDetailScreen extends StatelessWidget {
       );
 
   Widget _cocktailImage(Cocktail cocktail, double width) => FadeInImage(
-        image: CachedNetworkImageProvider(cocktail.image),
+        image: NetworkImage(cocktail.image),
         placeholder: AssetImage(
           "assets/images/white_placeholder.png",
         ),

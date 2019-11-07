@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/models/enum/image_size.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
@@ -82,7 +81,7 @@ class CocktailIngredientListItem extends StatelessWidget {
 
   Widget _ingredientImage(Ingredient ingredient, BuildContext context) =>
       FadeInImage(
-        image: CachedNetworkImageProvider("${ingredient.image(ImageSize.SMALL)}"),
+        image: NetworkImage("${ingredient.image(ImageSize.SMALL)}"),
         fit: BoxFit.contain,
         height: MediaQuery.of(context).size.width / 7.5,
         width: MediaQuery.of(context).size.width / 7.5,
