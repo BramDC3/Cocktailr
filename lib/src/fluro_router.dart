@@ -1,8 +1,8 @@
+import 'package:cocktailr/src/screens/cocktail_detail/mobile/cocktail_detail_screen_mobile.dart';
 import 'package:cocktailr/src/screens/search/search_screen.dart';
 import 'package:device_simulator/device_simulator.dart';
 import 'package:fluro/fluro.dart';
 
-import 'screens/cocktail_detail/cocktail_detail_screen.dart';
 import 'screens/main_screen.dart';
 
 const bool debugEnableDeviceSimulator = false;
@@ -34,7 +34,7 @@ class FluroRouter {
       String cocktailId = _parseCocktailId(params);
       return DeviceSimulator(
         enable: debugEnableDeviceSimulator,
-        child: CocktailDetailScreen(cocktailId: cocktailId),
+        child: CocktailDetailScreenMobile(cocktailId: cocktailId),
       );
     },
   );

@@ -9,12 +9,15 @@ class CocktailBloc extends BlocBase {
   final _popularCocktailIds = BehaviorSubject<List<String>>();
   final _cocktailsOutput = BehaviorSubject<Map<String, Future<Cocktail>>>();
   final _cocktailsFetcher = BehaviorSubject<String>();
+  final _selectedCocktail = BehaviorSubject<Cocktail>();
 
   Observable<List<String>> get cocktailIds => _cocktailIds.stream;
   Observable<List<String>> get popularCocktailIds => _popularCocktailIds;
   Observable<Map<String, Future<Cocktail>>> get cocktails => _cocktailsOutput.stream;
+  Observable<Cocktail> get selectedCocktail => _selectedCocktail.stream;
 
   Function(String) get fetchCocktail => _cocktailsFetcher.sink.add;
+  Function(Cocktail) get selectCocktail => _selectedCocktail.sink.add;
 
   CocktailBloc() {
     _cocktailsFetcher.stream
@@ -55,5 +58,6 @@ class CocktailBloc extends BlocBase {
     _popularCocktailIds.close();
     _cocktailsOutput.close();
     _cocktailsFetcher.close();
+    _selectedCocktail.close();
   }
 }

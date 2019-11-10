@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class CocktailListItemLoadingContainer extends StatelessWidget {
+class CocktailListItemMobileLoadingContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.width / 4.2;

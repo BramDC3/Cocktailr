@@ -2,21 +2,21 @@ import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/constants/color_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_alcoholic_label.dart';
-import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_ingredient_list_item.dart';
-import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_name.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets/cocktail_category.dart';
+import 'widgets/cocktail_alcoholic_label.dart';
+import 'widgets/cocktail_ingredient_list_item.dart';
 import 'widgets/cocktail_instructions.dart';
+import 'widgets/cocktail_name.dart';
+import 'widgets/cocktail_category.dart';
 
-class CocktailDetailScreen extends StatelessWidget {
+class CocktailDetailScreenMobile extends StatelessWidget {
   final String cocktailId;
 
-  CocktailDetailScreen({@required this.cocktailId});
+  CocktailDetailScreenMobile({@required this.cocktailId});
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,7 @@ class CocktailDetailScreen extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder(
         stream: cocktailBloc.cocktails,
-        builder:
-            (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
+        builder: (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
           if (!snapshot.hasData) {
             return LoadingSpinner();
           }
@@ -41,8 +40,7 @@ class CocktailDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCocktail(Future<Cocktail> cocktailFuture, double width) =>
-      FutureBuilder(
+  Widget _buildCocktail(Future<Cocktail> cocktailFuture, double width) => FutureBuilder(
         future: cocktailFuture,
         builder: (context, AsyncSnapshot<Cocktail> snapshot) {
           if (!snapshot.hasData) {
