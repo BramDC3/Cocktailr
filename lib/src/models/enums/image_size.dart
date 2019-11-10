@@ -1,5 +1,5 @@
 enum ImageSize {
   SMALL,
   MEDIUM,
-  LARGE
+  LARGE,
 }

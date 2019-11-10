@@ -10,9 +10,9 @@ class IngredientRepository {
   Future<List<String>> fetchIngredientNames() async {
     List<String> ingredientNames = await ingredientApi.fetchIngredientsNames();
 
-    if (ingredientNames.isEmpty) {
-      ingredientNames = await ingredientCache.fetchIngredientNames();
-    }
+    // if (ingredientNames.isEmpty) {
+    //   ingredientNames = await ingredientCache.fetchIngredientNames();
+    // }
 
     ingredientNames = ingredientNames.where((i) => StringExtensions.containsNoUnicodeCharacters(i)).toList();
 
@@ -24,14 +24,14 @@ class IngredientRepository {
   }
 
   Future<Ingredient> fetchIngredientByName(String ingredientName) async {
-    Ingredient ingredient = await ingredientCache.fetchIngredientByName(ingredientName);
+    Ingredient ingredient = await ingredientApi.fetchIngredientByName(ingredientName);
 
     if (ingredient == null) {
       ingredient = await ingredientApi.fetchIngredientByName(ingredientName);
 
-      if (ingredient != null) {
-        ingredientCache.insertIngredient(ingredient);
-      }
+      // if (ingredient != null) {
+      //   ingredientCache.insertIngredient(ingredient);
+      // }
     }
 
     return ingredient;

@@ -31,7 +31,7 @@ class Ingredient {
   });
 
   String image(ImageSize imageSize) =>
-      "$ingredientImageBaseUrl/$name-${getSizeFromImageSize(imageSize)}.png";
+      "$ingredientImageBaseUrl/$name${getImageSizeValue(imageSize)}.png";
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(

@@ -14,15 +14,14 @@ String capitalizeAllWords(String name) {
       .join(" ");
 }
 
-String getSizeFromImageSize(ImageSize imageSize) {
+String getImageSizeValue(ImageSize imageSize) {
   switch (imageSize) {
     case ImageSize.SMALL:
-      return "small";
+      return "-small";
     case ImageSize.MEDIUM:
-      return "medium";
+      return "-medium";
     case ImageSize.LARGE:
-      return "large";
     default:
-      return "small";
+      return "";
   }
 }
