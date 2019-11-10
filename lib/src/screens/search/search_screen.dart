@@ -4,6 +4,7 @@ import 'package:cocktailr/src/screens/search/widgets/search_screen_list_item.dar
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:responsive_layout_builder/responsive_layout_builder.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -45,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
     return StreamBuilder(
       stream: _searchBloc.keyword,
       builder: (context, AsyncSnapshot<String> snapshot) {
-        return ResponsiveBuilder(builder: (context, sizingInformation) {
+        return ResponsiveLayoutBuilder(builder: (context, sizingInformation) {
           return Scaffold(
             appBar: _buildAppBar(snapshot.data),
             body: _buildBody(snapshot.data),

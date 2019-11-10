@@ -23,7 +23,7 @@ dependencies:
   path_provider: ^1.2.0
 
   # Used for caching data, but is cross-platform.
-  hive: ^1.0.0
+  hive: ^1.1.1
 
   # Used for more icons.
   font_awesome_flutter: ^8.5.0
@@ -34,9 +34,12 @@ dependencies:
   # Used for testing responsiveness.
   device_simulator: ^0.9.5
 
+  # Used to create responsive layouts.
+  responsive_layout_builder: ^0.4.0
+
 dev_dependencies:
   # Extension for Hive to create type adapters.
-  hive_generator: ^0.5.1
+  hive_generator: ^0.5.2
 
   # Tools to write binaries that run builders.
   build_runner: ^1.6.9

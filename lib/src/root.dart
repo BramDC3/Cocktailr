@@ -1,5 +1,6 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,11 @@ class _RootState extends State<Root> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
     return MultiProvider(
       providers: [
         Provider(builder: (_) => CocktailBloc()),

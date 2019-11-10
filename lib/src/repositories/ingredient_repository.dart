@@ -4,14 +4,14 @@ import 'package:cocktailr/src/network/ingredient_api.dart';
 
 class IngredientRepository {
   final IngredientApi ingredientApi = IngredientApi();
-  // final IngredientCache ingredientCache = IngredientCache();
+  final IngredientCache ingredientCache = IngredientCache();
 
   Future<List<String>> fetchIngredientNames() async {
     List<String> ingredientNames = await ingredientApi.fetchIngredientsNames();
 
-    // if (ingredientNames.isEmpty) {
-    //   ingredientNames = await ingredientCache.fetchIngredientNames();
-    // }
+    if (ingredientNames.isEmpty) {
+      ingredientNames = await ingredientCache.fetchIngredientNames();
+    }
 
     return ingredientNames;
   }
@@ -21,12 +21,12 @@ class IngredientRepository {
   }
 
   Future<Ingredient> fetchIngredientByName(String ingredientName) async {
-    Ingredient ingredient = await ingredientApi.fetchIngredientByName(ingredientName);
+    Ingredient ingredient = await ingredientCache.fetchIngredientByName(ingredientName);
 
-    // if (ingredient == null) {
-    //   ingredient = await ingredientApi.fetchIngredientByName(ingredientName);
-    //   ingredientCache.insertIngredient(ingredient);
-    // }
+    if (ingredient == null) {
+      ingredient = await ingredientApi.fetchIngredientByName(ingredientName);
+      ingredientCache.insertIngredient(ingredient);
+    }
 
     return ingredient;
   }
