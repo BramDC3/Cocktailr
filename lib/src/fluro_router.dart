@@ -5,7 +5,7 @@ import 'package:fluro/fluro.dart';
 import 'screens/cocktail_detail/cocktail_detail_screen.dart';
 import 'screens/main_screen.dart';
 
-const bool debugEnableDeviceSimulator = true;
+const bool debugEnableDeviceSimulator = false;
 
 class FluroRouter {
   static Router router = Router();

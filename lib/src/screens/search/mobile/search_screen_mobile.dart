@@ -1,6 +1,7 @@
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
 import 'package:cocktailr/src/screens/search/mobile/widgets/search_screen_list_item_mobile.dart';
+import 'package:cocktailr/src/screens/search/widgets/clear_field_icon.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,11 @@ class _SearchScreenMobileState extends State<SearchScreenMobile> {
     }
 
     return filteredIngredients;
+  }
+
+  void _clearTextField() {
+    _textEditingController.text = "";
+    _searchBloc.changeKeyword("");
   }
 
   @override
@@ -70,18 +76,13 @@ class _SearchScreenMobileState extends State<SearchScreenMobile> {
           ),
           onChanged: _searchBloc.changeKeyword,
         ),
-        actions: keyword == null || keyword == ""
-            ? <Widget>[]
-            : <Widget>[
-                IconButton(
-                  icon: Icon(Icons.clear),
-                  tooltip: "Clear entry",
-                  onPressed: () {
-                    _textEditingController.text = "";
-                    _searchBloc.changeKeyword("");
-                  },
-                ),
-              ],
+        actions: <Widget>[
+          ClearFieldIcon(
+            keyword: keyword,
+            color: Colors.white,
+            onPressed: _clearTextField,
+          ),
+        ],
       );
 
   Widget _buildBody(String keyword) => StreamBuilder(

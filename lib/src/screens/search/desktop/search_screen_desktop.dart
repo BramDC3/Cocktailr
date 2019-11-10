@@ -1,6 +1,7 @@
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
 import 'package:cocktailr/src/screens/search/desktop/widgets/search_screen_list_item_desktop.dart';
+import 'package:cocktailr/src/screens/search/widgets/clear_field_icon.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,11 @@ class _SearchScreenDesktopState extends State<SearchScreenDesktop> {
     }
 
     return filteredIngredients;
+  }
+
+  void _clearTextField() {
+    _textEditingController.text = "";
+    _searchBloc.changeKeyword("");
   }
 
   @override
@@ -89,7 +95,11 @@ class _SearchScreenDesktopState extends State<SearchScreenDesktop> {
                         onChanged: _searchBloc.changeKeyword,
                       ),
                     ),
-                    _getActionIcon(keyword),
+                    ClearFieldIcon(
+                      keyword: keyword,
+                      color: Colors.black87,
+                      onPressed: _clearTextField,
+                    ),
                   ],
                 ),
               ),
@@ -134,18 +144,4 @@ class _SearchScreenDesktopState extends State<SearchScreenDesktop> {
         flex: 1,
         child: Container(),
       );
-
-  Widget _getActionIcon(String keyword) => keyword == null || keyword == ""
-      ? Container()
-      : IconButton(
-          icon: Icon(
-            Icons.clear,
-            color: Colors.black87,
-          ),
-          tooltip: "Clear entry",
-          onPressed: () {
-            _textEditingController.text = "";
-            _searchBloc.changeKeyword("");
-          },
-        );
 }
