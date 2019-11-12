@@ -33,10 +33,7 @@ class CocktailIngredientListItemDesktop extends StatelessWidget {
     );
   }
 
-  Widget _cocktailIngredientListItem(
-    Future<Ingredient> ingredientFuture,
-  ) =>
-      FutureBuilder(
+  Widget _cocktailIngredientListItem(Future<Ingredient> ingredientFuture) => FutureBuilder(
         future: ingredientFuture,
         builder: (context, AsyncSnapshot<Ingredient> snapshot) {
           if (!snapshot.hasData) {
@@ -72,12 +69,16 @@ class CocktailIngredientListItemDesktop extends StatelessWidget {
         placeholder: AssetImage("assets/images/white_placeholder.png"),
       );
 
-  Widget _ingredientName() => Text(ingredientName);
+  Widget _ingredientName() => Text(
+        ingredientName,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+      );
 
   Widget _ingredientMeasurement() => Text(
         measurement,
-        style: TextStyle(
-          color: Colors.black54,
-        ),
+        style: TextStyle(color: Colors.black54),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
       );
 }

@@ -1,9 +1,10 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_loading_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'trending_cocktail_loading_container.dart';
 
 class TrendingCocktailListItem extends StatelessWidget {
   final String cocktailId;

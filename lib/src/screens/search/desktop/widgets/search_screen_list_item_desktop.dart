@@ -1,6 +1,6 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
-import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
+import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/enums/image_size.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +15,7 @@ class SearchScreenListItemDesktop extends StatelessWidget {
     final cocktailBloc = Provider.of<CocktailBloc>(context);
     cocktailBloc.fetchCocktailIdsByIngredient(ingredient);
 
-    final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
-    mainNavigationBloc.changeCurrentIndex(1);
-
-    Navigator.of(context).pop();
+    Navigator.of(context).pushReplacementNamed(FluroRouter.cocktails);
   }
 
   @override

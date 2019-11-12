@@ -2,6 +2,7 @@ import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
 import 'package:cocktailr/src/screens/search/desktop/widgets/search_screen_list_item_desktop.dart';
 import 'package:cocktailr/src/screens/search/widgets/clear_field_icon.dart';
+import 'package:cocktailr/src/widgets/desktop/menu_bar_desktop.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -46,16 +47,29 @@ class _SearchScreenDesktopState extends State<SearchScreenDesktop> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _searchBloc.keyword,
-      builder: (context, AsyncSnapshot<String> snapshot) {
-        return Scaffold(
-          appBar: _buildSearchBar(snapshot.data),
-          body: _buildBody(snapshot.data),
-        );
-      },
+    return Scaffold(
+      body: Row(
+        mainAxisSize: MainAxisSize.max,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          MenuBarDesktop(),
+          Expanded(
+            child: _buildSearchScreen(),
+          )
+        ],
+      ),
     );
   }
+
+  Widget _buildSearchScreen() => StreamBuilder(
+        stream: _searchBloc.keyword,
+        builder: (context, AsyncSnapshot<String> snapshot) {
+          return Scaffold(
+            appBar: _buildSearchBar(snapshot.data),
+            body: _buildBody(snapshot.data),
+          );
+        },
+      );
 
   Widget _buildSearchBar(String keyword) => AppBar(
         automaticallyImplyLeading: false,

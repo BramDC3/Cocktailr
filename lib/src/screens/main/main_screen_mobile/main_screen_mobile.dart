@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
-class MainScreen extends StatefulWidget {
+class MainScreenMobile extends StatefulWidget {
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainScreenMobileState createState() => _MainScreenMobileState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenMobileState extends State<MainScreenMobile> {
   PageController _controller;
 
   final Map<String, Widget> _screens = Map.fromEntries([
