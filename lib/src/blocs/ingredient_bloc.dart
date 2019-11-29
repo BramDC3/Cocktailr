@@ -1,4 +1,4 @@
-import 'package:cocktailr/src/bases/bloc_base.dart';
+import 'package:cocktailr/src/bases/blocs/bloc_base.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/repositories/ingredient_repository.dart';
 import 'package:rxdart/rxdart.dart';

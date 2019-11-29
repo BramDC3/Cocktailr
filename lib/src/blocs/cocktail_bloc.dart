@@ -1,4 +1,4 @@
-import 'package:cocktailr/src/bases/bloc_base.dart';
+import 'package:cocktailr/src/bases/blocs/bloc_base.dart';
 import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/repositories/cocktail_repository.dart';

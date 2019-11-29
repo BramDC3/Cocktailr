@@ -1,9 +1,9 @@
 import 'package:cocktailr/src/database/cocktail_cache.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/network/cocktail_api.dart';
+import 'package:cocktailr/src/network/cocktail_api_impl.dart';
 
 class CocktailRepository {
-  final CocktailApi cocktailApi = CocktailApi();
+  final CocktailApiImpl cocktailApi = CocktailApiImpl();
   final CocktailCache cocktailCache = CocktailCache();
 
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {

@@ -32,7 +32,10 @@ dependencies:
   fluro: ^1.5.1
 
   # Used to cache network images.
-  cached_network_image: ^1.1.1
+  cached_network_image: ^2.0.0-rc
+
+  # Used as an improved HTTP client.
+  dio: ^3.0.7
 
 dev_dependencies:
   # Extension for Hive to create type adapters.
