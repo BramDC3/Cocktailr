@@ -7,20 +7,12 @@ import 'package:dio/dio.dart';
 
 class CocktailApiImpl extends CocktailApi {
   // TODO: Dependency injection
-  Dio _dio;
-
-  CocktailApiImpl() {
-    _createDio();
-  }
-
-  void _createDio() {
-    _dio = Dio(BaseOptions(
+  Dio _dio = Dio(BaseOptions(
       connectTimeout: AppConfig.connectTimeout,
       receiveTimeout: AppConfig.receiveTimeout,
       baseUrl: AppConfig.baseUrl,
     ))
       ..interceptors.add(CocktailInterceptors());
-  }
 
   @override
   Future<Cocktail> fetchCocktailById(String cocktailId) async {

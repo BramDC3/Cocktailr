@@ -37,6 +37,9 @@ dependencies:
   # Used as an improved HTTP client.
   dio: ^3.0.7
 
+  # Used for cleaner, more beautiful logs.
+  logger: ^0.7.0+2
+
 dev_dependencies:
   # Extension for Hive to create type adapters.
   hive_generator: ^0.5.1
