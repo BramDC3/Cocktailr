@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:cocktailr/src/bases/network/api/cocktail_api.dart';
 import 'package:cocktailr/src/network/clients/cocktail_client.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
@@ -14,7 +12,7 @@ class CocktailApiImpl extends CocktailApi {
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     try {
       final res = await cocktailClient.dio.get('/lookup.php?i=$cocktailId');
-      final cocktail = json.decode(res.data)['drinks'][0];
+      final cocktail = res.data['drinks'][0];
 
       return Cocktail.fromJson(cocktail);
     } catch (e) {
@@ -27,7 +25,7 @@ class CocktailApiImpl extends CocktailApi {
   Future<Cocktail> fetchRandomCocktail() async {
     try {
       final res = await cocktailClient.dio.get('/random.php');
-      final cocktail = json.decode(res.data)['drinks'][0];
+      final cocktail = res.data['drinks'][0];
 
       return Cocktail.fromJson(cocktail);
     } catch (e) {
@@ -40,7 +38,7 @@ class CocktailApiImpl extends CocktailApi {
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     try {
       final res = await cocktailClient.dio.get('/filter.php?i=$ingredient');
-      final list = json.decode(res.data)['drinks'];
+      final list = res.data['drinks'];
 
       List<String> cocktailIds = [];
       for (int i = 0; i < list.length; i++) {

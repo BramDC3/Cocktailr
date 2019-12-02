@@ -23,7 +23,7 @@ dependencies:
   path_provider: ^1.2.0
 
   # Used for caching data, but is cross-platform.
-  hive: ^1.0.0
+  hive: ^1.1.1
 
   # Used for more icons.
   font_awesome_flutter: ^8.5.0
