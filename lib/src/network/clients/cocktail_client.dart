@@ -1,21 +1,23 @@
-import 'package:cocktailr/src/network/interceptors/cocktail_interceptors.dart';
+import 'package:cocktailr/src/bases/network/clients/base_client.dart';
+import 'package:cocktailr/src/network/interceptors/cocktail_interceptor.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class CocktailClient {
+class CocktailClient implements BaseClient {
   final Dio dio;
-  final CocktailInterceptors cocktailInterceptors;
+  final CocktailInterceptor cocktailInterceptor;
 
   get client => dio;
 
   CocktailClient({
     @required this.dio,
-    @required this.cocktailInterceptors,
+    @required this.cocktailInterceptor,
   }) {
-    _initClient();
+    initClient();
   }
 
-  void _initClient() {
-    dio..interceptors.add(cocktailInterceptors);
+  @override
+  void initClient() {
+    dio..interceptors.add(cocktailInterceptor);
   }
 }

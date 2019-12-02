@@ -1,4 +1,4 @@
-import 'package:cocktailr/src/bases/network/cocktail_api.dart';
+import 'package:cocktailr/src/bases/network/api/cocktail_api.dart';
 import 'package:cocktailr/src/database/cocktail_cache.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:flutter/material.dart';

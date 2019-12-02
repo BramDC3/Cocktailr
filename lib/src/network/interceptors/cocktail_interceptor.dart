@@ -4,11 +4,11 @@ import 'package:cocktailr/src/network/loggers/cocktail_logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class CocktailInterceptors implements Interceptor {
+class CocktailInterceptor implements Interceptor {
   final CocktailLogger cocktailLogger;
   final _cache = Map<Uri, Response>();
 
-  CocktailInterceptors({@required this.cocktailLogger});
+  CocktailInterceptor({@required this.cocktailLogger});
 
   @override
   Future<dynamic> onError(DioError error) async {

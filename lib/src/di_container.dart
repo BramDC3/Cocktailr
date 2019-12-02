@@ -1,15 +1,15 @@
-import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
-import 'package:cocktailr/src/network/clients/cocktail_client.dart';
-import 'package:cocktailr/src/network/cocktail_api_impl.dart';
-import 'package:cocktailr/src/network/interceptors/cocktail_interceptors.dart';
-import 'package:cocktailr/src/repositories/cocktail_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:logger/logger.dart';
 
 import 'app_config.dart';
-import 'bases/network/cocktail_api.dart';
+import 'bases/network/api/cocktail_api.dart';
+import 'blocs/cocktail_bloc.dart';
+import 'network/api/cocktail_api_impl.dart';
+import 'network/clients/cocktail_client.dart';
+import 'network/interceptors/cocktail_interceptor.dart';
 import 'network/loggers/cocktail_logger.dart';
+import 'repositories/cocktail_repository.dart';
 
 final sl = GetIt.instance;
 
@@ -26,7 +26,7 @@ void init() {
   // Clients
   sl.registerLazySingleton(() => CocktailClient(
         dio: sl(),
-        cocktailInterceptors: sl(),
+        cocktailInterceptor: sl(),
       ));
 
   // Dio
@@ -37,7 +37,7 @@ void init() {
       )));
 
   // Interceptors
-  sl.registerLazySingleton(() => CocktailInterceptors(cocktailLogger: sl()));
+  sl.registerLazySingleton(() => CocktailInterceptor(cocktailLogger: sl()));
 
   // Loggers
   sl.registerLazySingleton(() => Logger(

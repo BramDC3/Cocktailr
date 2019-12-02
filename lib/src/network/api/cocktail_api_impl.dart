@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:cocktailr/src/bases/network/cocktail_api.dart';
+import 'package:cocktailr/src/bases/network/api/cocktail_api.dart';
 import 'package:cocktailr/src/network/clients/cocktail_client.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:flutter/foundation.dart';

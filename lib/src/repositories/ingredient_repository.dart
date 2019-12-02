@@ -1,6 +1,6 @@
 import 'package:cocktailr/src/database/ingredient_cache.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
-import 'package:cocktailr/src/network/ingredient_api.dart';
+import 'package:cocktailr/src/network/api/ingredient_api.dart';
 
 class IngredientRepository {
   final IngredientApi ingredientApi = IngredientApi();
