@@ -1,23 +1,19 @@
 import 'dart:convert';
-import 'package:cocktailr/src/app_config.dart';
+
 import 'package:cocktailr/src/bases/network/cocktail_api.dart';
-import 'package:cocktailr/src/network/interceptors/cocktail_interceptors.dart';
+import 'package:cocktailr/src/network/clients/cocktail_client.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
 class CocktailApiImpl extends CocktailApi {
-  // TODO: Dependency injection
-  Dio _dio = Dio(BaseOptions(
-      connectTimeout: AppConfig.connectTimeout,
-      receiveTimeout: AppConfig.receiveTimeout,
-      baseUrl: AppConfig.baseUrl,
-    ))
-      ..interceptors.add(CocktailInterceptors());
+  final CocktailClient cocktailClient;
+
+  CocktailApiImpl({@required this.cocktailClient});
 
   @override
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     try {
-      final res = await _dio.get('/lookup.php?i=$cocktailId');
+      final res = await cocktailClient.dio.get('/lookup.php?i=$cocktailId');
       final cocktail = json.decode(res.data)['drinks'][0];
 
       return Cocktail.fromJson(cocktail);
@@ -30,7 +26,7 @@ class CocktailApiImpl extends CocktailApi {
   @override
   Future<Cocktail> fetchRandomCocktail() async {
     try {
-      final res = await _dio.get('/random.php');
+      final res = await cocktailClient.dio.get('/random.php');
       final cocktail = json.decode(res.data)['drinks'][0];
 
       return Cocktail.fromJson(cocktail);
@@ -43,7 +39,7 @@ class CocktailApiImpl extends CocktailApi {
   @override
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     try {
-      final res = await _dio.get('/filter.php?i=$ingredient');
+      final res = await cocktailClient.dio.get('/filter.php?i=$ingredient');
       final list = json.decode(res.data)['drinks'];
 
       List<String> cocktailIds = [];

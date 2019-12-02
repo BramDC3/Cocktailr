@@ -40,6 +40,9 @@ dependencies:
   # Used for cleaner, more beautiful logs.
   logger: ^0.7.0+2
 
+  # Used for dependency injection.
+  get_it: ^3.0.3
+
 dev_dependencies:
   # Extension for Hive to create type adapters.
   hive_generator: ^0.5.1

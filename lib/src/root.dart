@@ -1,5 +1,6 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/constants/string_constants.dart';
+import 'package:cocktailr/src/di_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -32,7 +33,7 @@ class _RootState extends State<Root> {
 
     return MultiProvider(
       providers: [
-        Provider(builder: (_) => CocktailBloc()),
+        Provider(builder: (_) => sl<CocktailBloc>()),
         Provider(builder: (_) => IngredientBloc()),
         Provider(builder: (_) => MainNavigationBloc()),
       ],

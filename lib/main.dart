@@ -4,8 +4,10 @@ import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/root.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:cocktailr/src/di_container.dart' as di;
 
 void main() {
+  di.init();
   Hive.registerAdapter(CocktailAdapter(), 0);
   Hive.registerAdapter(IngredientAdapter(), 1);
   FluroRouter.setupRouter();

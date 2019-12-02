@@ -1,19 +1,12 @@
 import 'package:cocktailr/src/bases/network/loggers/base_logger.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
 class CocktailLogger extends BaseLogger {
-  // TODO: Dependency Injection
-  final logger = Logger(
-    printer: PrettyPrinter(
-      colors: true,
-      errorMethodCount: 4,
-      printEmojis: false,
-      printTime: true,
-      lineLength: 120,
-      methodCount: 0,
-    ),
-  );
+  final Logger logger;
+
+  CocktailLogger({@required this.logger});
 
   @override
   void printOnErrorLogs(DioError error) {
