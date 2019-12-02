@@ -3,10 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 
-class CocktailLogger extends BaseLogger {
+class DioLogger extends BaseLogger {
   final Logger logger;
 
-  CocktailLogger({@required this.logger});
+  DioLogger({@required this.logger});
 
   @override
   void printOnErrorLogs(DioError error) {

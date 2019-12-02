@@ -34,7 +34,7 @@ class _RootState extends State<Root> {
     return MultiProvider(
       providers: [
         Provider(builder: (_) => sl<CocktailBloc>()),
-        Provider(builder: (_) => IngredientBloc()),
+        Provider(builder: (_) => sl<IngredientBloc>()),
         Provider(builder: (_) => MainNavigationBloc()),
       ],
       child: MaterialApp(

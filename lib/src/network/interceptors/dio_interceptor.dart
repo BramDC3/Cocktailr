@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:cocktailr/src/network/loggers/cocktail_logger.dart';
+import 'package:cocktailr/src/network/loggers/dio_logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
-class CocktailInterceptor implements Interceptor {
-  final CocktailLogger cocktailLogger;
+class DioInterceptor implements Interceptor {
+  final DioLogger dioLogger;
   final _cache = Map<Uri, Response>();
 
-  CocktailInterceptor({@required this.cocktailLogger});
+  DioInterceptor({@required this.dioLogger});
 
   @override
   Future<dynamic> onError(DioError error) async {
-    cocktailLogger.printOnErrorLogs(error);
+    dioLogger.printOnErrorLogs(error);
 
     if (error.type != DioErrorType.CONNECT_TIMEOUT && error.type != DioErrorType.DEFAULT) {
       return error;
@@ -28,14 +28,14 @@ class CocktailInterceptor implements Interceptor {
 
   @override
   Future<dynamic> onRequest(RequestOptions options) async {
-    cocktailLogger.printOnRequestLogs(options);
+    dioLogger.printOnRequestLogs(options);
 
     return options;
   }
 
   @override
   Future<dynamic> onResponse(Response response) async {
-    cocktailLogger.printOnResponseLogs(response);
+    dioLogger.printOnResponseLogs(response);
 
     _cache[response.request.uri] = response;
 

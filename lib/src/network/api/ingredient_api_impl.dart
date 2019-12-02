@@ -1,14 +1,18 @@
-import 'dart:convert';
-
-import 'package:cocktailr/src/constants/url_constants.dart';
+import 'package:cocktailr/src/bases/network/api/ingredient_api.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 
-class IngredientApi {
+class IngredientApiImpl extends IngredientApi {
+  final Dio dio;
+
+  IngredientApiImpl({@required this.dio});
+
+  @override
   Future<Ingredient> fetchIngredientByName(String ingredientName) async {
     try {
-      final res = await http.get('$cocktailDbBaseUrl/search.php?i=$ingredientName');
-      final ingredient = json.decode(res.body)['ingredients'][0];
+      final res = await dio.get('/search.php?i=$ingredientName');
+      final ingredient = res.data['ingredients'][0];
 
       return Ingredient.fromJson(ingredient);
     } catch(e) {
@@ -17,10 +21,11 @@ class IngredientApi {
     }
   }
 
+  @override
   Future<List<String>> fetchIngredientsNames() async {
     try {
-      final res = await http.get('$cocktailDbBaseUrl/list.php?i=list');
-      final list = json.decode(res.body)['drinks'];
+      final res = await dio.get('/list.php?i=list');
+      final list = res.data['drinks'];
 
       List<String> ingredients = [];
       for (int i = 0; i < list.length; i++) {
