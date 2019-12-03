@@ -2,6 +2,10 @@ import 'package:cocktailr/src/bases/bloc_base.dart';
 import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/repositories/cocktail_repository.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:flutter/foundation.dart';
+>>>>>>> Stashed changes
 import 'package:rxdart/rxdart.dart';
 
 class CocktailBloc extends BlocBase {
@@ -40,7 +44,7 @@ class CocktailBloc extends BlocBase {
 
   Future<Cocktail> _fetchCockailById(String cocktailId) async => _cocktailRepository.fetchCocktailById(cocktailId);
 
-  _cocktailsTransformer() {
+  ScanStreamTransformer<String, Map<String, Future<Cocktail>>> _cocktailsTransformer() {
     return ScanStreamTransformer(
       (Map<String, Future<Cocktail>> cache, String id, _) {
         cache[id] = _fetchCockailById(id);

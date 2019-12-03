@@ -6,12 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
+  final SearchBloc searchBloc;
+
+  SearchScreen({@required this.searchBloc});
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  SearchBloc _searchBloc;
   TextEditingController _textEditingController;
 
   List<String> _filterIngredients(List<String> ingredients, String keyword) {
@@ -29,13 +32,12 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    _searchBloc = SearchBloc();
     _textEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _searchBloc?.dispose();
+    widget.searchBloc?.dispose();
     _textEditingController?.dispose();
     super.dispose();
   }
@@ -43,7 +45,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _searchBloc.keyword,
+      stream: widget.searchBloc.keyword,
       builder: (context, AsyncSnapshot<String> snapshot) {
         return Scaffold(
           appBar: _buildAppBar(snapshot.data),
@@ -70,7 +72,7 @@ class _SearchScreenState extends State<SearchScreen> {
               fontSize: 20,
             ),
           ),
-          onChanged: _searchBloc.changeKeyword,
+          onChanged: widget.searchBloc.changeKeyword,
         ),
         actions: keyword == null || keyword == ""
             ? <Widget>[]
@@ -80,7 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   tooltip: "Clear entry",
                   onPressed: () {
                     _textEditingController.text = "";
-                    _searchBloc.changeKeyword("");
+                    widget.searchBloc.changeKeyword("");
                   },
                 ),
               ],

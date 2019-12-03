@@ -1,6 +1,10 @@
 import 'package:cocktailr/src/bases/bloc_base.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/repositories/ingredient_repository.dart';
+<<<<<<< Updated upstream
+=======
+import 'package:flutter/foundation.dart';
+>>>>>>> Stashed changes
 import 'package:rxdart/rxdart.dart';
 
 class IngredientBloc extends BlocBase {
@@ -37,7 +41,7 @@ class IngredientBloc extends BlocBase {
 
   Future<Ingredient> _fetchIngredientByName(String ingredientName) async => _ingredientRepository.fetchIngredientByName(ingredientName);
 
-  _ingredientsTransformer() {
+   ScanStreamTransformer<String, Map<String, Future<Ingredient>>> _ingredientsTransformer() {
     return ScanStreamTransformer(
       (Map<String, Future<Ingredient>> cache, String name, _) {
         cache[name] = _fetchIngredientByName(name);

@@ -1,3 +1,4 @@
+import 'package:cocktailr/src/di_container.dart';
 import 'package:cocktailr/src/screens/search/search_screen.dart';
 import 'package:fluro/fluro.dart';
 
@@ -31,7 +32,7 @@ class FluroRouter {
   );
 
   static Handler _searchHandler = Handler(
-    handlerFunc: (_, Map<String, List<String>> params) => SearchScreen(),
+    handlerFunc: (_, Map<String, List<String>> params) => SearchScreen(searchBloc: sl()),
   );
 
   static String getCocktailDetailRoute(String cocktailId) {
