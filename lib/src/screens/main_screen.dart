@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _onSearchIconPressed(BuildContext context) async {
-    Navigator.of(context).pushNamed(FluroRouter.search);
+    await Navigator.of(context).pushNamed(FluroRouter.search);
   }
 
   Future<bool> _onWillPop(int index, MainNavigationBloc bloc) {

@@ -30,7 +30,7 @@ class CocktailRepository {
     Cocktail cocktail = await cocktailApi.fetchCocktailById(cocktailId);
 
     if (cocktail != null) {
-      cocktailCache.insertCocktail(cocktail);
+      await cocktailCache.insertCocktail(cocktail);
     } else {
       cocktail = await cocktailCache.fetchCocktailById(cocktailId);
     }
@@ -43,7 +43,7 @@ class CocktailRepository {
 
     if (cocktail == null) {
       cocktail = await cocktailApi.fetchRandomCocktail();
-      cocktailCache.insertCocktail(cocktail);
+      await cocktailCache.insertCocktail(cocktail);
     }
 
     return cocktail;

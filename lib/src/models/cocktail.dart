@@ -74,7 +74,7 @@ String refactorCategory(String category) {
     case "shot":
       return "Shot";
     case "coffee \/ tea":
-    case "coffee / tea":
+    case "coffee tea":
       return "Coffee / Tea";
     case "homemade liqueur":
     case "liqueur":

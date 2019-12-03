@@ -14,7 +14,7 @@ class SearchScreenListItem extends StatelessWidget {
 
   Future<void> _onIngredientPressed(String ingredient, BuildContext context) async {
     final cocktailBloc = Provider.of<CocktailBloc>(context);
-    cocktailBloc.fetchCocktailIdsByIngredient(ingredient);
+    await cocktailBloc.fetchCocktailIdsByIngredient(ingredient);
 
     final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
     mainNavigationBloc.changeCurrentIndex(1);

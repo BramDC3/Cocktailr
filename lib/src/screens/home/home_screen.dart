@@ -10,10 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  Future<void> _onIngredientPressed(
-      Ingredient ingredient, BuildContext context) async {
+  Future<void> _onIngredientPressed(Ingredient ingredient, BuildContext context) async {
     final cocktailBloc = Provider.of<CocktailBloc>(context);
-    cocktailBloc.fetchCocktailIdsByIngredient(ingredient.name);
+    await cocktailBloc.fetchCocktailIdsByIngredient(ingredient.name);
 
     final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
     mainNavigationBloc.changeCurrentIndex(1);
@@ -24,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     final cocktail = await bloc.fetchRandomCocktail();
     bloc.fetchCocktail(cocktail.id);
 
-    Navigator.of(context).pushNamed(
+    await Navigator.of(context).pushNamed(
       FluroRouter.getCocktailDetailRoute(cocktail.id),
     );
   }

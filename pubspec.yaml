@@ -41,6 +41,9 @@ dependencies:
   get_it: ^3.0.3
 
 dev_dependencies:
+  # Linter
+  pedantic: ^1.8.0+1
+
   # Extension for Hive to create type adapters.
   hive_generator: ^0.5.2
 
