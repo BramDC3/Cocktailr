@@ -1,4 +1,4 @@
-import 'package:cocktailr/src/models/enum/image_size.dart';
+import 'package:cocktailr/src/enums/image_size.dart';
 
 extension ImageSizeExtensions on ImageSize {
   String get stringValue {

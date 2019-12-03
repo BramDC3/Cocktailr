@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
-import 'package:cocktailr/src/models/enum/image_size.dart';
+import 'package:cocktailr/src/enums/image_size.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
