@@ -1,13 +1,16 @@
+import 'package:cocktailr/src/bases/database/ingredient_cache.dart';
 import 'package:cocktailr/src/bases/network/api/ingredient_api.dart';
-import 'package:cocktailr/src/database/ingredient_cache.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:flutter/material.dart';
 
 class IngredientRepository {
   final IngredientApi ingredientApi;
-  final IngredientCache ingredientCache = IngredientCache();
+  final IngredientCache ingredientCache;
 
-  IngredientRepository({@required this.ingredientApi});
+  IngredientRepository({
+    @required this.ingredientApi,
+    @required this.ingredientCache,
+  });
 
   Future<List<String>> fetchIngredientNames() async {
     List<String> ingredientNames = await ingredientApi.fetchIngredientsNames();

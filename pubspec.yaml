@@ -10,10 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Used for consuming HTTP requests.
-  http: ^0.12.0+2
-
-  # Used for dependency injection.
+  # Used for providing BLoCs.
   provider: ^3.0.0+1
 
   # Used for additional stream functionality.
@@ -45,10 +42,10 @@ dependencies:
 
 dev_dependencies:
   # Extension for Hive to create type adapters.
-  hive_generator: ^0.5.1
+  hive_generator: ^0.5.2
 
   # Tools to write binaries that run builders.
-  build_runner: ^1.6.9
+  build_runner:
 
   flutter_test:
     sdk: flutter
