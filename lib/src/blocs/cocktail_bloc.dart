@@ -1,11 +1,12 @@
-import 'package:cocktailr/src/bases/bloc_base.dart';
+import 'package:cocktailr/src/bases/blocs/bloc_base.dart';
 import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/repositories/cocktail_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CocktailBloc extends BlocBase {
-  final _cocktailRepository = CocktailRepository();
+  final CocktailRepository cocktailRepository;
   final _cocktailIds = BehaviorSubject<List<String>>();
   final _popularCocktailIds = BehaviorSubject<List<String>>();
   final _cocktailsOutput = BehaviorSubject<Map<String, Future<Cocktail>>>();
@@ -17,7 +18,7 @@ class CocktailBloc extends BlocBase {
 
   Function(String) get fetchCocktail => _cocktailsFetcher.sink.add;
 
-  CocktailBloc() {
+  CocktailBloc({@required this.cocktailRepository}) {
     _cocktailsFetcher.stream
         .transform(_cocktailsTransformer())
         .pipe(_cocktailsOutput);
@@ -27,18 +28,18 @@ class CocktailBloc extends BlocBase {
 
   Future<void> fetchCocktailIdsByIngredient(String ingredient) async {
     _cocktailIds.sink.add(null);
-    List<String> cocktailIds = await _cocktailRepository.fetchCocktailIdsByIngredient(ingredient);
+    List<String> cocktailIds = await cocktailRepository.fetchCocktailIdsByIngredient(ingredient);
     _cocktailIds.sink.add(cocktailIds);
   }
 
-  Future<Cocktail> fetchRandomCocktail() async => _cocktailRepository.fetchRandomCocktail();
+  Future<Cocktail> fetchRandomCocktail() async => cocktailRepository.fetchRandomCocktail();
 
   Future<void> _fetchPopularCocktailIds() async {
-    List<String> popularCocktailIds = await _cocktailRepository.fetchPopularCocktailIds();
+    List<String> popularCocktailIds = await cocktailRepository.fetchPopularCocktailIds();
     _popularCocktailIds.sink.add(popularCocktailIds);
   }
 
-  Future<Cocktail> _fetchCockailById(String cocktailId) async => _cocktailRepository.fetchCocktailById(cocktailId);
+  Future<Cocktail> _fetchCockailById(String cocktailId) async => cocktailRepository.fetchCocktailById(cocktailId);
 
   _cocktailsTransformer() {
     return ScanStreamTransformer(

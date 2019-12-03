@@ -2,7 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/utils/platform_utils.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -14,7 +14,7 @@ class CocktailCache {
   }
 
   Future<void> init() async {
-    if (PlatformUtils.isMobileDevice()) {
+    if (!kIsWeb) {
       Directory documentsDirectory = await getApplicationDocumentsDirectory();
       Hive.init(documentsDirectory.path);
     }
