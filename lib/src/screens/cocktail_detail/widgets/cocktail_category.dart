@@ -3,9 +3,10 @@ import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:flutter/material.dart';
 
 class CocktailCategory extends StatelessWidget {
-  CocktailCategory({@required this.width, @required this.cocktail});
   final double width;
   final Cocktail cocktail;
+
+  CocktailCategory({@required this.width, @required this.cocktail});
 
   @override
   Widget build(BuildContext context) {

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CocktailAlcoholicLabel extends StatelessWidget {
-  CocktailAlcoholicLabel({@required this.isAlcoholic});
   final bool isAlcoholic;
+
+  CocktailAlcoholicLabel({@required this.isAlcoholic});
 
   @override
   Widget build(BuildContext context) {

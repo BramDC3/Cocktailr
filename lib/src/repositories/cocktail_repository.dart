@@ -1,59 +1,51 @@
-import 'package:cocktailr/src/database/cocktail_db_sqflite.dart';
+import 'package:cocktailr/src/bases/database/cocktail_cache.dart';
+import 'package:cocktailr/src/bases/network/api/cocktail_api.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/network/cocktail_api.dart';
+import 'package:flutter/material.dart';
 
 class CocktailRepository {
-  List<CocktailSource> sources = <CocktailSource>[
-    cocktailDbSqflite,
-    CocktailApi(),
-  ];
+  final CocktailApi cocktailApi;
+  final CocktailCache cocktailCache;
 
-  List<CocktailCache> caches = <CocktailCache>[
-    cocktailDbSqflite,
-  ];
+  CocktailRepository({
+    @required this.cocktailApi,
+    @required this.cocktailCache,
+  });
 
-  // TO DO
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
-    return sources[1].fetchCocktailIdsByIngredient(ingredient);
+    List<String> cocktailIds = await cocktailApi.fetchCocktailIdsByIngredient(ingredient);
+
+    if (cocktailIds.isEmpty) {
+      cocktailIds = await cocktailCache.fetchCocktailIdsByIngredient(ingredient);
+    }
+
+    return cocktailIds;
   }
 
-  // TO DO
   Future<List<String>> fetchPopularCocktailIds() async {
     return ["11002", "11001", "11000", "13621", "17207"];
   }
 
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
-    Cocktail cocktail;
-    var source;
-
-    for (source in sources) {
-      cocktail = await source.fetchCocktailById(cocktailId);
-      if (cocktail != null) break;
-    }
+    Cocktail cocktail = await cocktailApi.fetchCocktailById(cocktailId);
 
     if (cocktail != null) {
-      for (var cache in caches) {
-        if (cache != source) {
-          cache.insertCocktail(cocktail);
-        }
-      }
+      cocktailCache.insertCocktail(cocktail);
+    } else {
+      cocktail = await cocktailCache.fetchCocktailById(cocktailId);
     }
 
     return cocktail;
   }
 
-  // TO DO
   Future<Cocktail> fetchRandomCocktail() async {
-    return sources[1].fetchRandomCocktail();
+    Cocktail cocktail = await cocktailCache.fetchRandomCocktail();
+
+    if (cocktail == null) {
+      cocktail = await cocktailApi.fetchRandomCocktail();
+      cocktailCache.insertCocktail(cocktail);
+    }
+
+    return cocktail;
   }
-}
-
-abstract class CocktailSource {
-  Future<Cocktail> fetchCocktailById(String cocktailId);
-  Future<Cocktail> fetchRandomCocktail();
-  Future<List<String>> fetchCocktailIdsByIngredient(String ingredient);
-}
-
-abstract class CocktailCache {
-  Future<int> insertCocktail(Cocktail cocktail);
 }

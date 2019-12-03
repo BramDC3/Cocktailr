@@ -10,31 +10,43 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Used for consuming HTTP requests.
-  http: ^0.12.0+2
-
-  # Used for dependency injection.
+  # Used for providing BLoCs.
   provider: ^3.0.0+1
 
   # Used for additional stream functionality.
   rxdart: ^0.22.1
 
-  # Used for caching data.
-  sqflite: ^1.1.6+3
-
-  # Used to support sqflite.
+  # Used to find the paths for local storage.
   path_provider: ^1.2.0
+
+  # Used for caching data, but is cross-platform.
+  hive: ^1.1.1
 
   # Used for more icons.
   font_awesome_flutter: ^8.5.0
 
-  # Used for placeholders for network images.
-  transparent_image: ^1.0.0
+  # Used for navigation.
+  fluro: ^1.5.1
 
-  # Used for icons that iOS users are familiar with (default dependency).
-  cupertino_icons: ^0.1.2
+  # Used to cache network images.
+  cached_network_image: ^2.0.0-rc
+
+  # Used as an improved HTTP client.
+  dio: ^3.0.7
+
+  # Used for cleaner, more beautiful logs.
+  logger: ^0.7.0+2
+
+  # Used for dependency injection.
+  get_it: ^3.0.3
 
 dev_dependencies:
+  # Extension for Hive to create type adapters.
+  hive_generator: ^0.5.2
+
+  # Tools to write binaries that run builders.
+  build_runner:
+
   flutter_test:
     sdk: flutter
 
@@ -44,6 +56,17 @@ flutter:
   assets:
     - assets/images/ingredients/gin.jpg
     - assets/images/ingredients/rum.jpg
-    - assets/images/ingredients/tequila.jpeg
+    - assets/images/ingredients/tequila.jpg
     - assets/images/ingredients/vodka.jpg
     - assets/images/ingredients/whiskey.jpg
+    - assets/images/white_placeholder.png
+
+  fonts:
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Roboto-Bold.ttf
+          weight: 700
+

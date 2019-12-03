@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CocktailInstructions extends StatelessWidget {
-  CocktailInstructions({@required this.instructions, @required this.padding});
   final String instructions;
   final double padding;
+
+  CocktailInstructions({@required this.instructions, @required this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class CocktailInstructions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "How to make it:",
+            "How to prepare:",
             style: TextStyle(
               fontSize: 20,
               color: Colors.black87,

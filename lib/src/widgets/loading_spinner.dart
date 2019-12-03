@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
-Widget loadingSpinner() => Container(
+class LoadingSpinner extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
       padding: EdgeInsets.all(8),
       child: Center(
         child: CircularProgressIndicator(
@@ -11,3 +14,5 @@ Widget loadingSpinner() => Container(
         ),
       ),
     );
+  }
+}

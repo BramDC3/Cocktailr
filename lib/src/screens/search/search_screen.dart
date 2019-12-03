@@ -1,7 +1,6 @@
-import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
-import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
+import 'package:cocktailr/src/screens/search/widgets/search_screen_list_item.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,93 +12,51 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   SearchBloc _searchBloc;
-  TextEditingController _controller;
+  TextEditingController _textEditingController;
 
-  Future<void> _onIngredientPressed(
-    String ingredient,
-    BuildContext context,
-  ) async {
-    CocktailBloc cocktailBloc = Provider.of<CocktailBloc>(context);
-    cocktailBloc.fetchCocktailIdsByIngredient(ingredient);
+  List<String> _filterIngredients(List<String> ingredients, String keyword) {
+    List<String> filteredIngredients = [...ingredients];
 
-    MainNavigationBloc mainNavigationBloc =
-        Provider.of<MainNavigationBloc>(context);
-    mainNavigationBloc.changeCurrentIndex(1);
+    if (keyword != null && keyword.isNotEmpty) {
+      filteredIngredients = filteredIngredients
+          .where((i) => i.toLowerCase().contains(keyword.toLowerCase()))
+          .toList();
+    }
 
-    Navigator.of(context).pop();
+    return filteredIngredients;
   }
 
   @override
   void initState() {
     super.initState();
     _searchBloc = SearchBloc();
-    _controller = TextEditingController();
+    _textEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
     _searchBloc?.dispose();
-    _controller?.dispose();
+    _textEditingController?.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    IngredientBloc ingredientBloc = Provider.of<IngredientBloc>(context);
-
     return StreamBuilder(
       stream: _searchBloc.keyword,
-      builder: (context, AsyncSnapshot<String> keywordSnapshot) {
+      builder: (context, AsyncSnapshot<String> snapshot) {
         return Scaffold(
-          appBar: _buildSearchAppBar(keywordSnapshot.data),
-          body: StreamBuilder(
-            stream: ingredientBloc.ingredients,
-            builder: (context, AsyncSnapshot<List<String>> ingredientSnapshot) {
-              if (!ingredientSnapshot.hasData) {
-                return loadingSpinner();
-              }
-
-              List<String> ingredients = [...ingredientSnapshot.data];
-              String keyword = keywordSnapshot.data;
-
-              if (keyword != null && keyword != "") {
-                ingredients = ingredients
-                    .where(
-                        (i) => i.toLowerCase().contains(keyword.toLowerCase()))
-                    .toList();
-              }
-
-              if (ingredients.length > 10) {
-                ingredients = ingredients.sublist(0, 10);
-              }
-
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: ingredients.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () => _onIngredientPressed(
-                      ingredients[index],
-                      context,
-                    ),
-                    child: ListTile(
-                      leading: Icon(Icons.local_bar),
-                      title: Text(ingredients[index]),
-                    ),
-                  );
-                },
-              );
-            },
-          ),
+          appBar: _buildAppBar(snapshot.data),
+          body: _buildBody(snapshot.data),
         );
       },
     );
   }
 
-  PreferredSizeWidget _buildSearchAppBar(String keyword) => AppBar(
+  Widget _buildAppBar(String keyword) => AppBar(
         title: TextField(
           autofocus: true,
-          controller: _controller,
+          controller: _textEditingController,
           keyboardType: TextInputType.text,
           style: TextStyle(
             color: Colors.white,
@@ -119,12 +76,43 @@ class _SearchScreenState extends State<SearchScreen> {
             ? <Widget>[]
             : <Widget>[
                 IconButton(
-                  icon: Icon(Icons.cancel),
+                  icon: Icon(Icons.clear),
+                  tooltip: "Clear entry",
                   onPressed: () {
-                    _controller.text = "";
+                    _textEditingController.text = "";
                     _searchBloc.changeKeyword("");
                   },
                 ),
               ],
+      );
+
+  Widget _buildBody(String keyword) => StreamBuilder(
+        stream: Provider.of<IngredientBloc>(context).ingredientNames,
+        builder: (context, AsyncSnapshot<List<String>> snapshot) {
+          if (!snapshot.hasData) {
+            return LoadingSpinner();
+          }
+
+          List<String> ingredients = _filterIngredients(
+            snapshot.data,
+            keyword,
+          );
+
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: ingredients.length,
+            itemBuilder: (context, index) {
+              Provider.of<IngredientBloc>(context)
+                  .fetchIngredient(ingredients[index]);
+
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 4),
+                child: SearchScreenListItem(
+                  ingredientName: ingredients[index],
+                ),
+              );
+            },
+          );
+        },
       );
 }

@@ -1,13 +1,15 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
+import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_list/widgets/cocktail_list_item_loading_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 class CocktailListItem extends StatelessWidget {
-  CocktailListItem({@required this.cocktailId});
   final String cocktailId;
+
+  CocktailListItem({@required this.cocktailId});
 
   @override
   Widget build(BuildContext context) {
@@ -16,62 +18,64 @@ class CocktailListItem extends StatelessWidget {
 
     return StreamBuilder(
       stream: cocktailBloc.cocktails,
-      builder:
-          (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
+      builder: (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
         if (!snapshot.hasData) {
           return CocktailListItemLoadingContainer();
         }
 
-        return FutureBuilder(
-          future: snapshot.data[cocktailId],
-          builder: (context, AsyncSnapshot<Cocktail> cocktailSnapshot) {
-            if (!cocktailSnapshot.hasData) {
-              return CocktailListItemLoadingContainer();
-            }
-
-            return Card(
-              elevation: 3,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: InkWell(
-                onTap: () => Navigator.pushNamed(
-                  context,
-                  '/cocktail',
-                  arguments: cocktailSnapshot.data.id,
-                ),
-                borderRadius: BorderRadius.circular(8),
-                child: Container(
-                  child: Row(
-                    children: <Widget>[
-                      _cocktailImage(
-                        cocktailSnapshot.data,
-                        height,
-                      ),
-                      Expanded(
-                        child: _cocktailDetails(
-                          cocktailSnapshot.data,
-                          height,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          },
-        );
+        return _cocktailListItem(snapshot.data[cocktailId], height);
       },
     );
   }
 
+  Widget _cocktailListItem(Future<Cocktail> cocktailFuture, double height) =>
+      FutureBuilder(
+        future: cocktailFuture,
+        builder: (context, AsyncSnapshot<Cocktail> snapshot) {
+          if (!snapshot.hasData) {
+            return CocktailListItemLoadingContainer();
+          }
+
+          return Card(
+            elevation: 3,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: InkWell(
+              onTap: () => Navigator.of(context).pushNamed(
+                FluroRouter.getCocktailDetailRoute(snapshot.data.id),
+              ),
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                child: Row(
+                  children: <Widget>[
+                    _cocktailImage(
+                      snapshot.data,
+                      height,
+                    ),
+                    Expanded(
+                      child: _cocktailDetails(
+                        snapshot.data,
+                        height,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+
   Widget _cocktailImage(Cocktail cocktail, double height) => ClipRRect(
         borderRadius: BorderRadius.circular(8),
-        child: FadeInImage.memoryNetwork(
-          image: cocktail.image,
-          placeholder: kTransparentImage,
+        child: FadeInImage(
+          image: CachedNetworkImageProvider("${cocktail.image}"),
+          placeholder:
+              AssetImage("assets/images/white_placeholder.png"),
           width: height,
           height: height,
+          fit: BoxFit.cover,
         ),
       );
 
