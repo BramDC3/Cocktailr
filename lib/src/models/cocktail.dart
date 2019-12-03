@@ -5,7 +5,7 @@ import 'package:hive/hive.dart';
 part 'cocktail.g.dart';
 
 @HiveType()
-class Cocktail {
+class Cocktail extends HiveObject {
   @HiveField(0)
   final String id;
   @HiveField(1)

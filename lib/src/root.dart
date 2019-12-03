@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'blocs/cocktail_bloc.dart';
 import 'blocs/ingredient_bloc.dart';
 import 'fluro_router.dart';
+import 'models/cocktail.dart';
+import 'models/ingredient.dart';
 
 class Root extends StatefulWidget {
   @override
@@ -18,8 +20,8 @@ class Root extends StatefulWidget {
 class _RootState extends State<Root> {
   @override
   void dispose() {
-    Hive.box('Cocktails').compact();
-    Hive.box('Ingredients').compact();
+    Hive.box<Cocktail>('Cocktails').compact();
+    Hive.box<Ingredient>('Ingredients').compact();
     Hive.close();
     super.dispose();
   }
@@ -43,7 +45,7 @@ class _RootState extends State<Root> {
           primarySwatch: Colors.red,
           fontFamily: 'Roboto',
         ),
-        initialRoute: 'main',
+        initialRoute: FluroRouter.main,
         onGenerateRoute: FluroRouter.router.generator,
         debugShowCheckedModeBanner: false,
       ),
