@@ -1,5 +1,4 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
-import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:cocktailr/src/widgets/no_items_available.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,7 @@ class CocktailListScreen extends StatelessWidget {
         }
 
         if (snapshot.data.isEmpty) {
-          return NoItemsAvailable(ERROR_NO_COCKTAILS);
+          return NoItemsAvailable("Er zijn momenteel geen cocktails beschikbaar");
         }
 
         return _buildCocktailList(snapshot.data, cocktailBloc);

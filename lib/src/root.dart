@@ -1,5 +1,4 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
-import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/di_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,7 +39,7 @@ class _RootState extends State<Root> {
         Provider(builder: (_) => MainNavigationBloc()),
       ],
       child: MaterialApp(
-        title: APP_NAME,
+        title: "Cocktailr",
         theme: ThemeData(
           primarySwatch: Colors.red,
           fontFamily: 'Roboto',

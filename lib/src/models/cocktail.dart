@@ -1,6 +1,7 @@
-import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/widgets.dart';
 import 'package:hive/hive.dart';
+
+import '../extensions/string_extensions.dart';
 
 part 'cocktail.g.dart';
 
@@ -37,7 +38,7 @@ class Cocktail extends HiveObject {
   factory Cocktail.fromJson(Map<String, dynamic> json) {
     return Cocktail(
       id: json['idDrink'],
-      name: StringUtils.capitalizeAllWords(json['strDrink']),
+      name: (json['strDrink'] as String).allWordsCapitalized,
       category: refactorCategory(json['strCategory']),
       instructions: json['strInstructions'],
       image: json['strDrinkThumb'],
@@ -46,47 +47,47 @@ class Cocktail extends HiveObject {
       measurements: filterList(json, 'strMeasure'),
     );
   }
+}
 
-  static List<String> filterList(Map<String, dynamic> json, String tag) {
-    if (json == null || tag == null || json.isEmpty || tag.isEmpty) return [];
+List<String> filterList(Map<String, dynamic> json, String tag) {
+  if (json == null || tag == null || json.isEmpty || tag.isEmpty) return [];
 
-    List<String> list = List.generate(json.length <= 15 ? json.length : 15, (int i) => json['$tag${i + 1}']);
-    list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null);
-    return list;
-  }
+  List<String> list = List.generate(json.length <= 15 ? json.length : 15, (int i) => json['$tag${i + 1}']);
+  list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null);
+  return list;
+}
 
-  static String refactorCategory(String category) {
-    switch (category?.toLowerCase()?.trim() ?? "") {
-      case "ordinary drink":
-      case "mundane":
-        return "Mundane";
-      case "cocktail":
-        return "Cocktail";
-      case "milk \/ float \/ shake":
-      case "milkshake":
-        return "Milkshake";
-      case "other\/unknown":
-        return "Mundane";
-      case "cocoa":
-        return "Cocoa";
-      case "shot":
-        return "Shot";
-      case "coffee \/ tea":
-      case "coffee / tea":
-        return "Coffee / Tea";
-      case "homemade liqueur":
-      case "liqueur":
-        return "Liqueur";
-      case "punch \/ party drink":
-      case "party drink":
-        return "Party Drink";
-      case "beer":
-        return "Beer";
-      case "soft drink \/ soda":
-      case "soda":
-        return "Soda";
-      default:
-        return "Mundane";
-    }
+String refactorCategory(String category) {
+  switch (category?.toLowerCase()?.trim() ?? "") {
+    case "ordinary drink":
+    case "mundane":
+      return "Mundane";
+    case "cocktail":
+      return "Cocktail";
+    case "milk \/ float \/ shake":
+    case "milkshake":
+      return "Milkshake";
+    case "other\/unknown":
+      return "Mundane";
+    case "cocoa":
+      return "Cocoa";
+    case "shot":
+      return "Shot";
+    case "coffee \/ tea":
+    case "coffee / tea":
+      return "Coffee / Tea";
+    case "homemade liqueur":
+    case "liqueur":
+      return "Liqueur";
+    case "punch \/ party drink":
+    case "party drink":
+      return "Party Drink";
+    case "beer":
+      return "Beer";
+    case "soft drink \/ soda":
+    case "soda":
+      return "Soda";
+    default:
+      return "Mundane";
   }
 }

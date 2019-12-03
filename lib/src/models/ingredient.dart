@@ -1,8 +1,10 @@
-import 'package:cocktailr/src/constants/url_constants.dart';
 import 'package:cocktailr/src/models/enum/image_size.dart';
-import 'package:cocktailr/src/utils/string_utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
+
+import '../app_config.dart';
+import '../extensions/string_extensions.dart';
+import '../extensions/image_size_extensions.dart';
 
 part 'ingredient.g.dart';
 
@@ -30,13 +32,15 @@ class Ingredient extends HiveObject {
     @required this.abv,
   });
 
-  String image(ImageSize imageSize) =>
-      "$ingredientImageBaseUrl/$name-${StringUtils.getSizeFromImageSize(imageSize)}.png";
+  String image(ImageSize imageSize) {
+    print("${AppConfig.imageBaseUrl}/$name-${imageSize.stringValue}.png");
+    return "${AppConfig.imageBaseUrl}/$name-${imageSize.stringValue}.png";
+  }
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
     return Ingredient(
       id: json['idIngredient'],
-      name: StringUtils.capitalizeAllWords(json['strIngredient']),
+      name: (json['strIngredient'] as String).allWordsCapitalized,
       description: json['strDescription'],
       type: json['strType'],
       isAlcoholic: json['strAlcohol'] == 'Yes',

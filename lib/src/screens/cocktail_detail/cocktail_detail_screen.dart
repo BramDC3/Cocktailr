@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
-import 'package:cocktailr/src/constants/color_constants.dart';
+import 'package:cocktailr/src/constants/app_colors.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_alcoholic_label.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_ingredient_list_item.dart';
@@ -115,7 +115,7 @@ class CocktailDetailScreen extends StatelessWidget {
         ),
         padding: EdgeInsets.only(top: width * 0.6 / 10),
         decoration: BoxDecoration(
-          color: ColorConstants.defaultBackgroundColor,
+          color: AppColors.defaultBackgroundColor,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(24),
             topRight: Radius.circular(24),
