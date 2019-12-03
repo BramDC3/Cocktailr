@@ -1,14 +1,11 @@
-import 'package:cocktailr/src/bases/bloc_base.dart';
+import 'package:cocktailr/src/bases/blocs/bloc_base.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/repositories/ingredient_repository.dart';
-<<<<<<< Updated upstream
-=======
 import 'package:flutter/foundation.dart';
->>>>>>> Stashed changes
 import 'package:rxdart/rxdart.dart';
 
 class IngredientBloc extends BlocBase {
-  final _ingredientRepository = IngredientRepository();
+  final IngredientRepository ingredientRepository;
   final _ingredientNames = BehaviorSubject<List<String>>();
   final _trendingIngredientNames = BehaviorSubject<List<String>>();
   final _ingredientsOutput = BehaviorSubject<Map<String, Future<Ingredient>>>();
@@ -20,7 +17,7 @@ class IngredientBloc extends BlocBase {
 
   Function(String) get fetchIngredient => _ingredientsFetcher.sink.add;
 
-  IngredientBloc() {
+  IngredientBloc({@required this.ingredientRepository}) {
     _ingredientsFetcher.stream
         .transform(_ingredientsTransformer())
         .pipe(_ingredientsOutput);
@@ -29,17 +26,17 @@ class IngredientBloc extends BlocBase {
   }
 
   Future<void> _fetchIngredientNames() async {
-    List<String> ingredientsNames = await _ingredientRepository.fetchIngredientNames();
+    List<String> ingredientsNames = await ingredientRepository.fetchIngredientNames();
     ingredientsNames.sort((a, b) => a.compareTo(b));
     _ingredientNames.sink.add(ingredientsNames);
   }
 
   Future<void> _fetchTrendingCocktailNames() async {
-    List<String> ingredientNames = await _ingredientRepository.fetchTrendingIngredientNames();
+    List<String> ingredientNames = await ingredientRepository.fetchTrendingIngredientNames();
     _trendingIngredientNames.sink.add(ingredientNames);
   }
 
-  Future<Ingredient> _fetchIngredientByName(String ingredientName) async => _ingredientRepository.fetchIngredientByName(ingredientName);
+  Future<Ingredient> _fetchIngredientByName(String ingredientName) async => ingredientRepository.fetchIngredientByName(ingredientName);
 
    ScanStreamTransformer<String, Map<String, Future<Ingredient>>> _ingredientsTransformer() {
     return ScanStreamTransformer(

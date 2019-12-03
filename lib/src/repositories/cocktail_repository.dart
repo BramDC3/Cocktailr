@@ -1,14 +1,20 @@
-import 'package:cocktailr/src/database/cocktail_cache.dart';
+import 'package:cocktailr/src/bases/database/cocktail_cache.dart';
+import 'package:cocktailr/src/bases/network/api/cocktail_api.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/network/cocktail_api.dart';
+import 'package:flutter/material.dart';
 
 class CocktailRepository {
-  final CocktailApi cocktailApi = CocktailApi();
-  final CocktailCache cocktailCache = CocktailCache();
+  final CocktailApi cocktailApi;
+  final CocktailCache cocktailCache;
+
+  CocktailRepository({
+    @required this.cocktailApi,
+    @required this.cocktailCache,
+  });
 
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     List<String> cocktailIds = await cocktailApi.fetchCocktailIdsByIngredient(ingredient);
-    
+
     if (cocktailIds.isEmpty) {
       cocktailIds = await cocktailCache.fetchCocktailIdsByIngredient(ingredient);
     }

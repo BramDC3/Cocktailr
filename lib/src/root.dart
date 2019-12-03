@@ -1,5 +1,6 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/constants/string_constants.dart';
+import 'package:cocktailr/src/di_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -8,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'blocs/cocktail_bloc.dart';
 import 'blocs/ingredient_bloc.dart';
 import 'fluro_router.dart';
+import 'models/cocktail.dart';
+import 'models/ingredient.dart';
 
 class Root extends StatefulWidget {
   @override
@@ -17,8 +20,8 @@ class Root extends StatefulWidget {
 class _RootState extends State<Root> {
   @override
   void dispose() {
-    Hive.box('Cocktails').compact();
-    Hive.box('Ingredients').compact();
+    Hive.box<Cocktail>('Cocktails').compact();
+    Hive.box<Ingredient>('Ingredients').compact();
     Hive.close();
     super.dispose();
   }
@@ -32,8 +35,8 @@ class _RootState extends State<Root> {
 
     return MultiProvider(
       providers: [
-        Provider(builder: (_) => CocktailBloc()),
-        Provider(builder: (_) => IngredientBloc()),
+        Provider(builder: (_) => sl<CocktailBloc>()),
+        Provider(builder: (_) => sl<IngredientBloc>()),
         Provider(builder: (_) => MainNavigationBloc()),
       ],
       child: MaterialApp(
@@ -42,7 +45,7 @@ class _RootState extends State<Root> {
           primarySwatch: Colors.red,
           fontFamily: 'Roboto',
         ),
-        initialRoute: 'main',
+        initialRoute: FluroRouter.main,
         onGenerateRoute: FluroRouter.router.generator,
         debugShowCheckedModeBanner: false,
       ),
