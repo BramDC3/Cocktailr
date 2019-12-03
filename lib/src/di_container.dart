@@ -34,7 +34,10 @@ void init() {
         connectTimeout: AppConfig.connectTimeout,
         receiveTimeout: AppConfig.receiveTimeout,
         baseUrl: AppConfig.baseUrl,
-      ))..interceptors.add(DioInterceptor(dioLogger: sl())));
+      ))..interceptors.add(sl()));
+
+  // Interceptors
+  sl.registerLazySingleton<Interceptor>(() => DioInterceptor(dioLogger: sl()));
 
   // Loggers
   sl.registerLazySingleton(() => Logger(

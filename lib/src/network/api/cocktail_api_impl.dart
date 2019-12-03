@@ -12,9 +12,8 @@ class CocktailApiImpl extends CocktailApi {
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     try {
       final res = await dio.get('/lookup.php?i=$cocktailId');
-      final cocktail = res.data['drinks'][0];
-
-      return Cocktail.fromJson(cocktail);
+      
+      return compute(parseCocktail, res.data);
     } catch (e) {
       print('Error while fetching cocktail by id: $e');
       return null;
@@ -25,9 +24,8 @@ class CocktailApiImpl extends CocktailApi {
   Future<Cocktail> fetchRandomCocktail() async {
     try {
       final res = await dio.get('/random.php');
-      final cocktail = res.data['drinks'][0];
 
-      return Cocktail.fromJson(cocktail);
+      return compute(parseCocktail, res.data);
     } catch (e) {
       print('Error while fetching random cocktail: $e');
       return null;
@@ -38,17 +36,19 @@ class CocktailApiImpl extends CocktailApi {
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     try {
       final res = await dio.get('/filter.php?i=$ingredient');
-      final list = res.data['drinks'];
 
-      List<String> cocktailIds = [];
-      for (int i = 0; i < list.length; i++) {
-        cocktailIds.add(list[i]["idDrink"]);
-      }
-
-      return cocktailIds;
+      return compute(parseCocktailIds, res.data);
     } catch (e) {
       print('Error while fetching cocktail ids by ingredient: $e');
       return [];
     }
   }
+}
+
+Cocktail parseCocktail(dynamic responseData) {
+  return Cocktail.fromJson(responseData['drinks'][0]);
+}
+
+List<String> parseCocktailIds(dynamic responseData) {
+  return (responseData['drinks'] as List<dynamic>).map((cocktail) => cocktail['idDrink'] as String).toList();
 }

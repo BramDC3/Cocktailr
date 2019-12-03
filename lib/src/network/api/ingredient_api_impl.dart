@@ -12,10 +12,9 @@ class IngredientApiImpl extends IngredientApi {
   Future<Ingredient> fetchIngredientByName(String ingredientName) async {
     try {
       final res = await dio.get('/search.php?i=$ingredientName');
-      final ingredient = res.data['ingredients'][0];
 
-      return Ingredient.fromJson(ingredient);
-    } catch(e) {
+      return compute(parseIngredient, res.data);
+    } catch (e) {
       print('Error while fetching ingredient by name: $e');
       return null;
     }
@@ -25,17 +24,19 @@ class IngredientApiImpl extends IngredientApi {
   Future<List<String>> fetchIngredientsNames() async {
     try {
       final res = await dio.get('/list.php?i=list');
-      final list = res.data['drinks'];
 
-      List<String> ingredients = [];
-      for (int i = 0; i < list.length; i++) {
-        ingredients.add(list[i]['strIngredient1']);
-      }
-
-      return ingredients;
+      return compute(parseIngredientNames, res.data);
     } catch (e) {
       print('Error while fetching ingredients: $e');
       return [];
     }
   }
+}
+
+Ingredient parseIngredient(dynamic responseData) {
+  return Ingredient.fromJson(responseData['ingredients'][0]);
+}
+
+List<String> parseIngredientNames(dynamic responseData) {
+  return (responseData['drinks'] as List<dynamic>).map((ingredient) => ingredient['strIngredient1'] as String).toList();
 }
