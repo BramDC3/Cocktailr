@@ -1,3 +1,4 @@
+import 'package:cocktailr/src/app_config.dart';
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/screens/cocktail_list/cocktail_list_screen.dart';
@@ -16,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
 
   final Map<String, Widget> _screens = Map.fromEntries([
     MapEntry<String, Widget>("Explore", HomeScreen()),
-    MapEntry<String, Widget>("Cocktails", CocktailListScreen()),
+    MapEntry<String, Widget>(AppConfig.flavor.toString(), CocktailListScreen()),
   ]);
 
   void _onPageChanged(int index) {

@@ -12,7 +12,7 @@ import 'src/root.dart';
 
 void main() async {
   // Set app flavor
-  AppConfig.flavor = Flavor.DEVELOPMENT;
+  AppConfig.flavor = Flavor.PRODUCTION;
 
   // Solves Hive issue (ServicesBinding.defaultBinaryMessenger was accessed before the binding was initialized);
   WidgetsFlutterBinding.ensureInitialized();
