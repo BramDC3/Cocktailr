@@ -1,35 +1,19 @@
 import 'dart:math';
 
-import 'package:cocktailr/src/bases/database/cache_base.dart';
 import 'package:cocktailr/src/bases/database/cocktail_cache.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
-class CocktailCacheImpl extends CocktailCache implements CacheBase {
-  Box<Cocktail> db;
+class CocktailCacheImpl extends CocktailCache {
+  Box<Cocktail> cocktailBox;
 
-  CocktailCacheImpl() {
-    init();
-  }
-
-  @override
-  Future<void> init() async {
-    db = await Hive.openBox<Cocktail>("Cocktails");
-  }
-
-  @override
-  Future<void> openBoxIfNecessary() async {
-    if (db == null || !db.isOpen) {
-      await init();
-    }
-  }
+  CocktailCacheImpl({@required this.cocktailBox});
 
   @override
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     try {
-      await openBoxIfNecessary();
-
-      return db.get(cocktailId);
+      return cocktailBox.get(cocktailId);
     } catch (e) {
       print('Error while fetching cocktail by id from cocktail cache: $e');
       return null;
@@ -39,9 +23,7 @@ class CocktailCacheImpl extends CocktailCache implements CacheBase {
   @override
   Future<Cocktail> fetchRandomCocktail() async {
     try {
-      await openBoxIfNecessary();
-
-      final cocktails = db.values.toList();
+      final cocktails = cocktailBox.values.toList();
 
       if (cocktails?.isEmpty ?? true) {
         return null;
@@ -58,9 +40,7 @@ class CocktailCacheImpl extends CocktailCache implements CacheBase {
   @override
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     try {
-      await openBoxIfNecessary();
-
-      final cocktails = db.values.where((cocktail) => cocktail.ingredients.contains(ingredient)).toList();
+      final cocktails = cocktailBox.values.where((cocktail) => cocktail.ingredients.contains(ingredient)).toList();
 
       if (cocktails?.isEmpty ?? true) {
         return [];
@@ -77,9 +57,7 @@ class CocktailCacheImpl extends CocktailCache implements CacheBase {
   @override
   Future<void> insertCocktail(Cocktail cocktail) async {
     try {
-      await openBoxIfNecessary();
-
-      await db.put(cocktail.id, cocktail);
+      await cocktailBox.put(cocktail.id, cocktail);
     } catch (e) {
       print('Error while inserting cocktail in cocktail cache: $e');
     }

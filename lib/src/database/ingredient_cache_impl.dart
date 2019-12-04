@@ -1,33 +1,17 @@
-import 'package:cocktailr/src/bases/database/cache_base.dart';
 import 'package:cocktailr/src/bases/database/ingredient_cache.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
-class IngredientCacheImpl extends IngredientCache implements CacheBase {
-  Box<Ingredient> db;
+class IngredientCacheImpl extends IngredientCache {
+  Box<Ingredient> ingredientBox;
 
-  IngredientCacheImpl() {
-    init();
-  }
-
-  @override
-  Future<void> init() async {
-    db = await Hive.openBox<Ingredient>("Ingredients");
-  }
-
-  @override
-  Future<void> openBoxIfNecessary() async {
-    if (db == null || !db.isOpen) {
-      await init();
-    }
-  }
+  IngredientCacheImpl({@required this.ingredientBox});
 
   @override
   Future<Ingredient> fetchIngredientByName(String ingredientName) async {
     try {
-      await openBoxIfNecessary();
-      
-      return db.get(ingredientName);
+      return ingredientBox.get(ingredientName);
     } catch (e) {
       print('Error while fetching ingredient by name from ingredient cache: $e');
       return null;
@@ -37,9 +21,7 @@ class IngredientCacheImpl extends IngredientCache implements CacheBase {
   @override
   Future<List<String>> fetchIngredientNames() async {
     try {
-      await openBoxIfNecessary();
-
-      final ingredients = db.values.toList();
+      final ingredients = ingredientBox.values.toList();
 
       if (ingredients?.isEmpty ?? true) {
         return [];
@@ -56,9 +38,7 @@ class IngredientCacheImpl extends IngredientCache implements CacheBase {
   @override
   Future<void> insertIngredient(Ingredient ingredient) async {
     try {
-      await openBoxIfNecessary();
-
-      await db.put(ingredient.name, ingredient);
+      await ingredientBox.put(ingredient.name, ingredient);
     } catch (e) {
       print('Error while inserting ingredient in ingredient cache: $e');
     }

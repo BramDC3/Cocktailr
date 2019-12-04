@@ -1,6 +1,7 @@
 import 'package:cocktailr/src/database/ingredient_cache_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 
 import 'app_config.dart';
@@ -12,6 +13,8 @@ import 'blocs/cocktail_bloc.dart';
 import 'blocs/ingredient_bloc.dart';
 import 'blocs/search_bloc.dart';
 import 'database/cocktail_cache_impl.dart';
+import 'models/cocktail.dart';
+import 'models/ingredient.dart';
 import 'network/api/cocktail_api_impl.dart';
 import 'network/api/ingredient_api_impl.dart';
 import 'network/interceptors/dio_interceptor.dart';
@@ -21,7 +24,7 @@ import 'repositories/ingredient_repository.dart';
 
 final sl = GetIt.instance;
 
-void init() {
+void init() async {
   // BLoCs
   sl.registerFactory(() => CocktailBloc(cocktailRepository: sl()));
   sl.registerFactory(() => IngredientBloc(ingredientRepository: sl()));
@@ -36,8 +39,10 @@ void init() {
   sl.registerLazySingleton<IngredientApi>(() => IngredientApiImpl(dio: sl()));
 
   // Caches
-  sl.registerLazySingleton<CocktailCache>(() => CocktailCacheImpl());
-  sl.registerLazySingleton<IngredientCache>(() => IngredientCacheImpl());
+  final cocktailBox = await Hive.openBox<Cocktail>('Cocktails');
+  sl.registerLazySingleton<CocktailCache>(() => CocktailCacheImpl(cocktailBox: cocktailBox));
+  final ingredientBox = await Hive.openBox<Ingredient>('Ingredients');
+  sl.registerLazySingleton<IngredientCache>(() => IngredientCacheImpl(ingredientBox: ingredientBox));
 
   // Dio
   sl.registerLazySingleton(() => Dio(BaseOptions(

@@ -12,9 +12,6 @@ void main() async {
   // Solves Hive issue (ServicesBinding.defaultBinaryMessenger was accessed before the binding was initialized);
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initiate Dependency Injection
-  di.init();
-
   // Initiate Hive (not necessary on the web)
   if (!kIsWeb) {
     final appDocumentsDirectory = await getApplicationDocumentsDirectory();
@@ -24,6 +21,9 @@ void main() async {
   // Register Hive TypeAdapters
   Hive.registerAdapter(CocktailAdapter(), 0);
   Hive.registerAdapter(IngredientAdapter(), 1);
+
+  // Initiate Dependency Injection
+  await di.init();
 
   // Setup Fluro router for navigation
   FluroRouter.setupRouter();
