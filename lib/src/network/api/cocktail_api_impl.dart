@@ -46,9 +46,19 @@ class CocktailApiImpl extends CocktailApi {
 }
 
 Cocktail parseCocktail(dynamic responseData) {
-  return Cocktail.fromJson(responseData['drinks'][0]);
+  try {
+    return Cocktail.fromJson(responseData['drinks'][0]);
+  } catch (e) {
+    print('Error while parsing cocktail from response data: $e');
+    return null;
+  }
 }
 
 List<String> parseCocktailIds(dynamic responseData) {
-  return (responseData['drinks'] as List<dynamic>).map((cocktail) => cocktail['idDrink'] as String).toList();
+  try {
+    return (responseData['drinks'] as List<dynamic>).map((cocktail) => cocktail['idDrink'] as String).toList();
+  } catch (e) {
+    print('Error while parsing cocktail ids from response data: $e');
+    return [];
+  }
 }

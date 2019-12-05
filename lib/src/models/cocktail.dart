@@ -53,7 +53,7 @@ List<String> filterList(Map<String, dynamic> json, String tag) {
   if (json == null || tag == null || json.isEmpty || tag.isEmpty) return [];
 
   List<String> list = List.generate(json.length <= 15 ? json.length : 15, (int i) => json['$tag${i + 1}']);
-  list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null);
+  list.removeWhere((i) => i == '' || i == ' ' || i == '\n' || i == null || i.containsNonAsciiCharacters);
   return list;
 }
 

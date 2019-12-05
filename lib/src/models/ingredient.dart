@@ -33,7 +33,6 @@ class Ingredient extends HiveObject {
   });
 
   String image(ImageSize imageSize) {
-    print("${AppConfig.imageBaseUrl}/$name-${imageSize.stringValue}.png");
     return "${AppConfig.imageBaseUrl}/$name-${imageSize.stringValue}.png";
   }
 

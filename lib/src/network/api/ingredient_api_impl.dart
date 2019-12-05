@@ -1,4 +1,5 @@
 import 'package:cocktailr/src/bases/network/api/ingredient_api.dart';
+import 'package:cocktailr/src/extensions/string_extensions.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -34,9 +35,20 @@ class IngredientApiImpl extends IngredientApi {
 }
 
 Ingredient parseIngredient(dynamic responseData) {
-  return Ingredient.fromJson(responseData['ingredients'][0]);
+  try {
+    return Ingredient.fromJson(responseData['ingredients'][0]);
+  } catch (e) {
+    print('Error while parsing ingredient: $e');
+    return null;
+  }
 }
 
 List<String> parseIngredientNames(dynamic responseData) {
-  return (responseData['drinks'] as List<dynamic>).map((ingredient) => ingredient['strIngredient1'] as String).toList();
+  try {
+    final ingredientNames = (responseData['drinks'] as List<dynamic>).map((ingredient) => ingredient['strIngredient1'] as String);
+    return ingredientNames.where((ingredient) => !ingredient.containsNonAsciiCharacters).toList();
+  } catch (e) {
+    print('Error while parsing ingredient names: $e');
+    return [];
+  }
 }

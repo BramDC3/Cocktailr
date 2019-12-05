@@ -19,4 +19,11 @@ extension StringExtensions on String {
           : word.toUpperCase())
         .join(" ");
   }
+
+  // Non-ASCII characters have a rune greater than 127
+  bool get containsNonAsciiCharacters {
+    return this
+        .split('')
+        .any((char) => char.runes.any((i) => i > 127));
+  }
 }

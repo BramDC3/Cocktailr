@@ -38,7 +38,7 @@ void init() async {
   sl.registerLazySingleton<CocktailApi>(() => CocktailApiImpl(dio: sl()));
   sl.registerLazySingleton<IngredientApi>(() => IngredientApiImpl(dio: sl()));
 
-  // Caches
+  // Hive
   final cocktailBox = await Hive.openBox<Cocktail>('Cocktails');
   sl.registerLazySingleton<CocktailCache>(() => CocktailCacheImpl(cocktailBox: cocktailBox));
   final ingredientBox = await Hive.openBox<Ingredient>('Ingredients');
