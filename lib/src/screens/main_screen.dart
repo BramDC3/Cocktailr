@@ -1,7 +1,9 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
-import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/screens/cocktail_list/cocktail_list_screen.dart';
 import 'package:cocktailr/src/screens/home/home_screen.dart';
+import 'package:cocktailr/src/services/navigation_router.dart';
+import 'package:cocktailr/src/services/navigation_service.dart';
+import 'package:cocktailr/src/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -32,8 +34,8 @@ class _MainScreenState extends State<MainScreen> {
     );
   }
 
-  Future<void> _onSearchIconPressed(BuildContext context) async {
-    await Navigator.of(context).pushNamed(FluroRouter.search);
+  Future<void> _onSearchIconPressed() async {
+    await sl<NavigationService>().navigateTo(NavigationRouter.search);
   }
 
   Future<bool> _onWillPop(int index, MainNavigationBloc bloc) {
@@ -88,9 +90,9 @@ class _MainScreenState extends State<MainScreen> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () => _onSearchIconPressed(context),
+            onPressed: _onSearchIconPressed,
             tooltip: "Search cocktails",
-          )
+          ),
         ],
       );
 

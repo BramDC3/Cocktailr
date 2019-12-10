@@ -1,37 +1,41 @@
-import 'package:cocktailr/src/di_container.dart';
+import 'package:cocktailr/src/screens/cocktail_detail/cocktail_detail_screen.dart';
+import 'package:cocktailr/src/screens/main_screen.dart';
 import 'package:cocktailr/src/screens/search/search_screen.dart';
 import 'package:fluro/fluro.dart';
 
-import 'screens/cocktail_detail/cocktail_detail_screen.dart';
-import 'screens/main_screen.dart';
+import 'service_locator.dart';
 
-class FluroRouter {
-  static Router router = Router();
+class NavigationRouter {
+  static const String main = "/";
+  static const String cocktail = "/cocktail";
+  static const String search = "/search";
 
-  static String main = "/";
-  static String cocktail = "/cocktail";
-  static String search = "/search";
+  static const String cocktailIdParameter = "cocktailId";
 
-  static String cocktailIdParameter = "cocktailId";
+  final router = Router();
 
-  static void setupRouter() {
+  NavigationRouter() {
+    _setupRouter();
+  }
+
+  void _setupRouter() {
     router.define(main, handler: _mainHandler);
     router.define(cocktail, handler: _cocktailHandler);
     router.define(search, handler: _searchHandler);
   }
 
-  static Handler _mainHandler = Handler(
+  final _mainHandler = Handler(
     handlerFunc: (_, Map<String, List<String>> params) => MainScreen(),
   );
 
-  static Handler _cocktailHandler = Handler(
+  final _cocktailHandler = Handler(
     handlerFunc: (_, Map<String, List<String>> params) {
-      String cocktailId = _parseCocktailId(params);
+      final cocktailId = _parseCocktailId(params);
       return CocktailDetailScreen(cocktailId: cocktailId);
     },
   );
 
-  static Handler _searchHandler = Handler(
+  final _searchHandler = Handler(
     handlerFunc: (_, Map<String, List<String>> params) => SearchScreen(searchBloc: sl()),
   );
 
@@ -40,7 +44,7 @@ class FluroRouter {
   }
 
   static String _parseCocktailId(Map<String, List<String>> params) {
-    String score = params[cocktailIdParameter]?.first;
+    final score = params[cocktailIdParameter]?.first;
     return score == null || score.isEmpty ? "11002" : score;
   }
 }

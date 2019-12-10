@@ -1,26 +1,28 @@
-import 'package:cocktailr/src/database/ingredient_cache_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 
-import 'app_config.dart';
-import 'bases/database/cocktail_cache.dart';
-import 'bases/database/ingredient_cache.dart';
-import 'bases/network/api/cocktail_api.dart';
-import 'bases/network/api/ingredient_api.dart';
-import 'blocs/cocktail_bloc.dart';
-import 'blocs/ingredient_bloc.dart';
-import 'blocs/search_bloc.dart';
-import 'database/cocktail_cache_impl.dart';
-import 'models/cocktail.dart';
-import 'models/ingredient.dart';
-import 'network/api/cocktail_api_impl.dart';
-import 'network/api/ingredient_api_impl.dart';
-import 'network/interceptors/dio_interceptor.dart';
-import 'network/loggers/dio_logger.dart';
-import 'repositories/cocktail_repository.dart';
-import 'repositories/ingredient_repository.dart';
+import '../app_config.dart';
+import '../bases/database/cocktail_cache.dart';
+import '../bases/database/ingredient_cache.dart';
+import '../bases/network/api/cocktail_api.dart';
+import '../bases/network/api/ingredient_api.dart';
+import '../blocs/cocktail_bloc.dart';
+import '../blocs/ingredient_bloc.dart';
+import '../blocs/search_bloc.dart';
+import '../database/cocktail_cache_impl.dart';
+import '../database/ingredient_cache_impl.dart';
+import '../models/cocktail.dart';
+import '../models/ingredient.dart';
+import '../network/api/cocktail_api_impl.dart';
+import '../network/api/ingredient_api_impl.dart';
+import '../network/interceptors/dio_interceptor.dart';
+import '../network/loggers/dio_logger.dart';
+import '../repositories/cocktail_repository.dart';
+import '../repositories/ingredient_repository.dart';
+import 'navigation_router.dart';
+import 'navigation_service.dart';
 
 final sl = GetIt.instance;
 
@@ -66,4 +68,8 @@ void init() async {
         ),
       ));
   sl.registerLazySingleton(() => DioLogger(logger: sl()));
+
+  // Navigation
+  sl.registerLazySingleton(() => NavigationRouter());
+  sl.registerLazySingleton(() => NavigationService());
 }

@@ -1,5 +1,5 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
-import 'package:cocktailr/src/di_container.dart';
+import 'package:cocktailr/src/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
@@ -7,16 +7,17 @@ import 'package:provider/provider.dart';
 
 import 'blocs/cocktail_bloc.dart';
 import 'blocs/ingredient_bloc.dart';
-import 'fluro_router.dart';
 import 'models/cocktail.dart';
 import 'models/ingredient.dart';
+import 'services/service_locator.dart';
+import 'services/navigation_router.dart';
 
-class Root extends StatefulWidget {
+class App extends StatefulWidget {
   @override
-  _RootState createState() => _RootState();
+  _AppState createState() => _AppState();
 }
 
-class _RootState extends State<Root> {
+class _AppState extends State<App> {
   @override
   void dispose() {
     Hive.box<Cocktail>('Cocktails').compact();
@@ -44,8 +45,9 @@ class _RootState extends State<Root> {
           primarySwatch: Colors.red,
           fontFamily: 'Roboto',
         ),
-        initialRoute: FluroRouter.main,
-        onGenerateRoute: FluroRouter.router.generator,
+        navigatorKey: sl<NavigationService>().navigatorKey,
+        onGenerateRoute: sl<NavigationRouter>().router.generator,
+        initialRoute: NavigationRouter.main,
         debugShowCheckedModeBanner: false,
       ),
     );

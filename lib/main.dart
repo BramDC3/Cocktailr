@@ -1,12 +1,12 @@
-import 'package:cocktailr/src/fluro_router.dart';
-import 'package:cocktailr/src/models/cocktail.dart';
-import 'package:cocktailr/src/models/ingredient.dart';
-import 'package:cocktailr/src/root.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:cocktailr/src/di_container.dart' as di;
 import 'package:path_provider/path_provider.dart';
+
+import 'src/app.dart';
+import 'src/models/cocktail.dart';
+import 'src/models/ingredient.dart';
+import 'src/services/service_locator.dart' as di;
 
 void main() async {
   // Solves Hive issue (ServicesBinding.defaultBinaryMessenger was accessed before the binding was initialized);
@@ -25,9 +25,6 @@ void main() async {
   // Initiate Dependency Injection
   await di.init();
 
-  // Setup Fluro router for navigation
-  FluroRouter.setupRouter();
-
   // Run app
-  runApp(Root());
+  runApp(App());
 }

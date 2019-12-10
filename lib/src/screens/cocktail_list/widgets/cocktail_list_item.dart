@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
-import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_list/widgets/cocktail_list_item_loading_container.dart';
+import 'package:cocktailr/src/services/navigation_router.dart';
+import 'package:cocktailr/src/services/navigation_service.dart';
+import 'package:cocktailr/src/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +12,10 @@ class CocktailListItem extends StatelessWidget {
   final String cocktailId;
 
   CocktailListItem({@required this.cocktailId});
+
+  Future<void> _onCocktailListItemPressed(String cocktailId) async {
+    await sl<NavigationService>().navigateTo(NavigationRouter.getCocktailDetailRoute(cocktailId));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +48,7 @@ class CocktailListItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(8),
             ),
             child: InkWell(
-              onTap: () => Navigator.of(context).pushNamed(
-                FluroRouter.getCocktailDetailRoute(snapshot.data.id),
-              ),
+              onTap: () => _onCocktailListItemPressed(snapshot.data.id),
               borderRadius: BorderRadius.circular(8),
               child: Container(
                 child: Row(
