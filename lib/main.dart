@@ -12,7 +12,7 @@ void main() async {
   // Solves Hive issue (ServicesBinding.defaultBinaryMessenger was accessed before the binding was initialized);
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Initiate Hive (not necessary on the web)
+  // Initialize Hive (not necessary on the web)
   if (!kIsWeb) {
     final appDocumentsDirectory = await getApplicationDocumentsDirectory();
     Hive.init(appDocumentsDirectory.path);
@@ -22,7 +22,7 @@ void main() async {
   Hive.registerAdapter(CocktailAdapter(), 0);
   Hive.registerAdapter(IngredientAdapter(), 1);
 
-  // Initiate Dependency Injection
+  // Initialize Dependency Injection
   await di.init();
 
   // Run app
