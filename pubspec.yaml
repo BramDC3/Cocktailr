@@ -19,7 +19,7 @@ dependencies:
   # Used to find the paths for local storage.
   path_provider: ^1.2.0
 
-  # Used for caching data, but is cross-platform.
+  # Used for caching data.
   hive: ^1.1.1
 
   # Used for more icons.
@@ -40,9 +40,16 @@ dependencies:
   # Used for dependency injection.
   get_it: ^3.0.3
 
+  # Used for localization.
+  flutter_localizations:
+    sdk: flutter
+
 dev_dependencies:
-  # Linter
+  # Linter.
   pedantic: ^1.8.0+1
+
+  # Translation tool.
+  intl_translation: ^0.17.7
 
   # Extension for Hive to create type adapters.
   hive_generator: ^0.5.2
