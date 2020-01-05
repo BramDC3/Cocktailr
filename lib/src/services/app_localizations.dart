@@ -5,13 +5,20 @@ import 'package:intl/intl.dart';
 import 'package:cocktailr/src/extensions/string_extensions.dart';
 
 class AppLocalizations {
+  static AppLocalizations current;
+
+  AppLocalizations._(Locale locale) {
+    current = this;
+  }
+
   static Future<AppLocalizations> load(Locale locale) {
     final String name = locale.countryCode.isNullOrEmpty ? locale.languageCode : locale.toString();
     final String localeName = Intl.canonicalizedLocale(name);
 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      return AppLocalizations();
+      final result = AppLocalizations._(locale);
+      return result;
     });
   }
 
