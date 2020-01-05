@@ -1,4 +1,5 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
+import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,6 +29,20 @@ class _AppState extends State<App> {
     super.dispose();
   }
 
+  Locale _localeResolutionCallback(Locale locale, Iterable<Locale> supportedLocales) {
+    for (final supportedLocale in supportedLocales) {
+      if (locale.languageCode == supportedLocale.languageCode) {
+        return supportedLocale;
+      }
+    }
+
+    return locale;
+  }
+
+  String _onGenerateTitle(BuildContext context) {
+    return AppLocalizations.of(context).appTitle;
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -42,7 +57,6 @@ class _AppState extends State<App> {
         Provider(builder: (_) => MainNavigationBloc()),
       ],
       child: MaterialApp(
-        title: "Cocktailr",
         theme: ThemeData(
           primarySwatch: Colors.red,
           fontFamily: 'Roboto',
@@ -52,15 +66,17 @@ class _AppState extends State<App> {
         onGenerateRoute: sl<NavigationRouter>().router.generator,
         initialRoute: NavigationRouter.main,
         supportedLocales: [
-          const Locale('en'),
-          const Locale('nl'),
-          const Locale('fr'),
+          const Locale(english, belgium),
+          const Locale(dutch, belgium),
+          const Locale(french, belgium),
         ],
         localizationsDelegates: [
           const AppLocalizationsDelegate(),
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate
         ],
+        localeResolutionCallback: _localeResolutionCallback,
+        onGenerateTitle: _onGenerateTitle,
       ),
     );
   }
