@@ -17,8 +17,7 @@ class AppLocalizations {
 
     return initializeMessages(localeName).then((_) {
       Intl.defaultLocale = localeName;
-      final result = AppLocalizations._(locale);
-      return result;
+      return AppLocalizations._(locale);
     });
   }
 
