@@ -23,8 +23,8 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   void dispose() {
-    Hive.box<Cocktail>('Cocktails').compact();
-    Hive.box<Ingredient>('Ingredients').compact();
+    Hive.box<Cocktail>(cocktailBox).compact();
+    Hive.box<Ingredient>(ingredientBox).compact();
     Hive.close();
     super.dispose();
   }
@@ -59,16 +59,16 @@ class _AppState extends State<App> {
       child: MaterialApp(
         theme: ThemeData(
           primarySwatch: Colors.red,
-          fontFamily: 'Roboto',
+          fontFamily: roboto,
         ),
         debugShowCheckedModeBanner: false,
         navigatorKey: sl<NavigationService>().navigatorKey,
         onGenerateRoute: sl<NavigationRouter>().router.generator,
         initialRoute: NavigationRouter.main,
-        supportedLocales: [
-          const Locale(english, belgium),
-          const Locale(dutch, belgium),
-          const Locale(french, belgium),
+        supportedLocales: const [
+          Locale(english, belgium),
+          Locale(dutch, belgium),
+          Locale(french, belgium),
         ],
         localizationsDelegates: [
           const AppLocalizationsDelegate(),

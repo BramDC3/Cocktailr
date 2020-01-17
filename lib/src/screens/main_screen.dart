@@ -1,6 +1,7 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/screens/cocktail_list/cocktail_list_screen.dart';
 import 'package:cocktailr/src/screens/home/home_screen.dart';
+import 'package:cocktailr/src/services/app_localizations.dart';
 import 'package:cocktailr/src/services/navigation_router.dart';
 import 'package:cocktailr/src/services/navigation_service.dart';
 import 'package:cocktailr/src/services/service_locator.dart';
@@ -17,8 +18,8 @@ class _MainScreenState extends State<MainScreen> {
   PageController _controller;
 
   final Map<String, Widget> _screens = Map.fromEntries([
-    MapEntry<String, Widget>("Explore", HomeScreen()),
-    MapEntry<String, Widget>("Cocktails", CocktailListScreen()),
+    MapEntry<String, Widget>(AppLocalizations.current.navigationLabelHomeScreen, HomeScreen()),
+    MapEntry<String, Widget>(AppLocalizations.current.navigationLabelCocktailScreen, CocktailListScreen()),
   ]);
 
   void _onPageChanged(int index) {
@@ -91,7 +92,7 @@ class _MainScreenState extends State<MainScreen> {
           IconButton(
             icon: Icon(Icons.search),
             onPressed: _onSearchIconPressed,
-            tooltip: "Search cocktails",
+            tooltip: AppLocalizations.of(context).mainButtonLabelSearch,
           ),
         ],
       );
@@ -107,11 +108,11 @@ class _MainScreenState extends State<MainScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(FontAwesomeIcons.compass),
-            title: Text("Explore"),
+            title: Text(AppLocalizations.of(context).navigationLabelHomeScreen),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.local_bar),
-            title: Text("Cocktails"),
+            title: Text(AppLocalizations.of(context).navigationLabelCocktailScreen),
           ),
         ],
         onTap: _animateToPage,

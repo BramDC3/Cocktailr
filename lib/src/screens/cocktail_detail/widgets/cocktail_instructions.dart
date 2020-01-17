@@ -1,3 +1,4 @@
+import 'package:cocktailr/src/services/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CocktailInstructions extends StatelessWidget {
@@ -15,7 +16,7 @@ class CocktailInstructions extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "How to prepare:",
+            AppLocalizations.of(context).cocktailDetailLabelHowToPrepare,
             style: TextStyle(
               fontSize: 20,
               color: Colors.black87,

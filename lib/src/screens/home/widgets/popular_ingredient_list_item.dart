@@ -14,8 +14,7 @@ class PopularIngredientListItem extends StatelessWidget {
     @required this.onPressed,
   });
 
-  String _getPopularIngredientImageUrl() =>
-      "assets/images/ingredients/${ingredientName.toLowerCase()}.jpg";
+  String _getPopularIngredientImageUrl() => "assets/images/ingredients/${ingredientName.toLowerCase()}.jpg";
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +23,7 @@ class PopularIngredientListItem extends StatelessWidget {
 
     return StreamBuilder(
       stream: ingredientBloc.ingredients,
-      builder:
-          (context, AsyncSnapshot<Map<String, Future<Ingredient>>> snapshot) {
+      builder: (context, AsyncSnapshot<Map<String, Future<Ingredient>>> snapshot) {
         if (!snapshot.hasData) {
           return PopularIngredientLoadingContainer();
         }
@@ -84,8 +82,7 @@ class PopularIngredientListItem extends StatelessWidget {
         ),
       );
 
-  Widget _ingredientImage(Ingredient ingredient, double height) =>
-      Image.asset(
+  Widget _ingredientImage(Ingredient ingredient, double height) => Image.asset(
         _getPopularIngredientImageUrl(),
         height: height,
         width: height,

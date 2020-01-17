@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
+import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_list/widgets/cocktail_list_item_loading_container.dart';
 import 'package:cocktailr/src/services/navigation_router.dart';
@@ -34,8 +35,7 @@ class CocktailListItem extends StatelessWidget {
     );
   }
 
-  Widget _cocktailListItem(Future<Cocktail> cocktailFuture, double height) =>
-      FutureBuilder(
+  Widget _cocktailListItem(Future<Cocktail> cocktailFuture, double height) => FutureBuilder(
         future: cocktailFuture,
         builder: (context, AsyncSnapshot<Cocktail> snapshot) {
           if (!snapshot.hasData) {
@@ -75,8 +75,7 @@ class CocktailListItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(8),
         child: FadeInImage(
           image: CachedNetworkImageProvider("${cocktail.image}"),
-          placeholder:
-              AssetImage("assets/images/white_placeholder.png"),
+          placeholder: AssetImage(whitePlaceholder),
           width: height,
           height: height,
           fit: BoxFit.cover,
@@ -104,10 +103,7 @@ class CocktailListItem extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
             ),
             Text(
-              cocktail.ingredients
-                  .toString()
-                  .replaceAll('[', '')
-                  .replaceAll(']', ''),
+              cocktail.ingredients.toString().replaceAll('[', '').replaceAll(']', ''),
               style: TextStyle(
                 fontSize: 14,
                 color: Colors.black54,
