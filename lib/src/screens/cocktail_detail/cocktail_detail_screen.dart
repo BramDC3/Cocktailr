@@ -2,10 +2,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/constants/app_colors.dart';
+import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_alcoholic_label.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_ingredient_list_item.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_name.dart';
+import 'package:cocktailr/src/services/app_localizations.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,8 +29,7 @@ class CocktailDetailScreen extends StatelessWidget {
     return Scaffold(
       body: StreamBuilder(
         stream: cocktailBloc.cocktails,
-        builder:
-            (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
+        builder: (context, AsyncSnapshot<Map<String, Future<Cocktail>>> snapshot) {
           if (!snapshot.hasData) {
             return LoadingSpinner();
           }
@@ -42,8 +43,7 @@ class CocktailDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCocktail(Future<Cocktail> cocktailFuture, double width) =>
-      FutureBuilder(
+  Widget _buildCocktail(Future<Cocktail> cocktailFuture, double width) => FutureBuilder(
         future: cocktailFuture,
         builder: (context, AsyncSnapshot<Cocktail> snapshot) {
           if (!snapshot.hasData) {
@@ -66,9 +66,7 @@ class CocktailDetailScreen extends StatelessWidget {
 
   Widget _cocktailImage(Cocktail cocktail, double width) => FadeInImage(
         image: CachedNetworkImageProvider(cocktail.image),
-        placeholder: AssetImage(
-          "assets/images/white_placeholder.png",
-        ),
+        placeholder: AssetImage(whitePlaceholder),
         width: width,
         height: width,
         fit: BoxFit.cover,
@@ -87,7 +85,7 @@ class CocktailDetailScreen extends StatelessWidget {
   Widget _goBackButtonIcon(BuildContext context) => Stack(
         children: <Widget>[
           IconButton(
-            tooltip: "Go back",
+            tooltip: AppLocalizations.of(context).buttonTooltipGoBack,
             onPressed: Navigator.of(context).pop,
             icon: Icon(
               FontAwesomeIcons.chevronLeft,
@@ -96,7 +94,7 @@ class CocktailDetailScreen extends StatelessWidget {
             ),
           ),
           IconButton(
-            tooltip: "Go back",
+            tooltip: AppLocalizations.of(context).buttonTooltipGoBack,
             onPressed: Navigator.of(context).pop,
             icon: Icon(
               FontAwesomeIcons.chevronCircleLeft,
@@ -164,9 +162,7 @@ class CocktailDetailScreen extends StatelessWidget {
       );
 
   Widget _cocktailAlcoholicLabel(Cocktail cocktail, double width) => Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: width / 10,
-        ),
+        padding: EdgeInsets.symmetric(horizontal: width / 10),
         child: CocktailAlcoholicLabel(isAlcoholic: cocktail.isAlcoholic),
       );
 

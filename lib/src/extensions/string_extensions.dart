@@ -26,4 +26,8 @@ extension StringExtensions on String {
         .split('')
         .any((char) => char.runes.any((i) => i > 127));
   }
+
+  bool get isNullOrEmpty {
+    return this == null || this.isEmpty;
+  }
 }

@@ -8,18 +8,21 @@ part of 'ingredient.dart';
 
 class IngredientAdapter extends TypeAdapter<Ingredient> {
   @override
+  final typeId = 1;
+
+  @override
   Ingredient read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Ingredient(
-      id: fields[0] as String,
-      name: fields[1] as String,
-      description: fields[2] as String,
-      type: fields[3] as String,
+      id: fields[0] as dynamic,
+      name: fields[1] as dynamic,
+      description: fields[2] as dynamic,
+      type: fields[3] as dynamic,
       isAlcoholic: fields[4] as bool,
-      abv: fields[5] as String,
+      abv: fields[5] as dynamic,
     );
   }
 

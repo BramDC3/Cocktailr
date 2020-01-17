@@ -1,3 +1,4 @@
+import 'package:cocktailr/src/services/app_localizations.dart';
 import 'package:flutter/material.dart';
 
 class CocktailAlcoholicLabel extends StatelessWidget {
@@ -8,7 +9,9 @@ class CocktailAlcoholicLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
-      isAlcoholic ? "Alcoholic" : "Non-alcoholic",
+      isAlcoholic
+          ? AppLocalizations.of(context).cocktailDetailLabelAlcoholic
+          : AppLocalizations.of(context).cocktailDetailLabelNonAlcoholic,
       style: TextStyle(
         color: Colors.grey[600],
         fontSize: 18,

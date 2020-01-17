@@ -19,8 +19,8 @@ void main() async {
   }
 
   // Register Hive TypeAdapters
-  Hive.registerAdapter(CocktailAdapter(), 0);
-  Hive.registerAdapter(IngredientAdapter(), 1);
+  Hive.registerAdapter(CocktailAdapter());
+  Hive.registerAdapter(IngredientAdapter());
 
   // Initialize Dependency Injection
   await di.init();

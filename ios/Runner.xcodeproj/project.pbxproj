@@ -44,6 +44,12 @@
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		3B80C3931E831B6300D905FE /* App.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = App.framework; path = Flutter/App.framework; sourceTree = "<group>"; };
 		46FD3A885CB0FBE1C61CB57C /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
+		7483D70F23C1FDB600310625 /* nl-BE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nl-BE"; path = "nl-BE.lproj/Main.strings"; sourceTree = "<group>"; };
+		7483D71023C1FDB600310625 /* nl-BE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "nl-BE"; path = "nl-BE.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		7483D71123C1FDBF00310625 /* en-BE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-BE"; path = "en-BE.lproj/Main.strings"; sourceTree = "<group>"; };
+		7483D71223C1FDBF00310625 /* en-BE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-BE"; path = "en-BE.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		7483D71323C1FDCA00310625 /* fr-BE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-BE"; path = "fr-BE.lproj/Main.strings"; sourceTree = "<group>"; };
+		7483D71423C1FDCA00310625 /* fr-BE */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fr-BE"; path = "fr-BE.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
 		7AFFD8ED1D35381100E5BB4D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7AFFD8EE1D35381100E5BB4D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -145,7 +151,6 @@
 				0D78E1E221C26BFA3ACE3259 /* Pods-Runner.release.xcconfig */,
 				46FD3A885CB0FBE1C61CB57C /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -195,6 +200,9 @@
 			knownRegions = (
 				en,
 				Base,
+				"nl-BE",
+				"en-BE",
+				"fr-BE",
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
@@ -307,6 +315,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				97C146FB1CF9000F007C117D /* Base */,
+				7483D70F23C1FDB600310625 /* nl-BE */,
+				7483D71123C1FDBF00310625 /* en-BE */,
+				7483D71323C1FDCA00310625 /* fr-BE */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -315,6 +326,9 @@
 			isa = PBXVariantGroup;
 			children = (
 				97C147001CF9000F007C117D /* Base */,
+				7483D71023C1FDB600310625 /* nl-BE */,
+				7483D71223C1FDBF00310625 /* en-BE */,
+				7483D71423C1FDCA00310625 /* fr-BE */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -327,6 +341,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -401,6 +416,7 @@
 			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
@@ -457,6 +473,7 @@
 			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";

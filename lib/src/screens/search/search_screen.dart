@@ -1,6 +1,7 @@
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
 import 'package:cocktailr/src/screens/search/widgets/search_screen_list_item.dart';
+import 'package:cocktailr/src/services/app_localizations.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -66,7 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           cursorColor: Colors.white,
           decoration: InputDecoration(
-            hintText: "Search by ingredient...",
+            hintText: AppLocalizations.of(context).searchPlaceHolderSearchText,
             hintStyle: TextStyle(
               color: Colors.white70,
               fontSize: 20,
@@ -79,7 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
             : <Widget>[
                 IconButton(
                   icon: Icon(Icons.clear),
-                  tooltip: "Clear entry",
+                  tooltip: AppLocalizations.of(context).searchButtonClearEntry,
                   onPressed: () {
                     _textEditingController.text = "";
                     widget.searchBloc.changeKeyword("");

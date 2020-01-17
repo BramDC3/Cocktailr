@@ -4,6 +4,7 @@ import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/screens/home/widgets/popular_ingredient_list_item.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_list_item.dart';
+import 'package:cocktailr/src/services/app_localizations.dart';
 import 'package:cocktailr/src/services/navigation_router.dart';
 import 'package:cocktailr/src/services/navigation_service.dart';
 import 'package:cocktailr/src/services/service_locator.dart';
@@ -35,13 +36,13 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _sectionTitle("Trending Cocktails"),
+          _sectionTitle(AppLocalizations.of(context).homeLabelTrendingCocktails),
           _buildTrendingCocktailsList(context),
           SizedBox(height: 16),
-          _sectionTitle("Popular Ingredients"),
+          _sectionTitle(AppLocalizations.of(context).homeLabelPopularIngredients),
           _buildPopularIngredientsList(context),
           SizedBox(height: 16),
-          _sectionTitle("Mystery Cocktail"),
+          _sectionTitle(AppLocalizations.of(context).homeLabelMysteryCocktail),
           _buildMysteryCocktailButton(context),
         ],
       ),
@@ -129,7 +130,7 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: RaisedButton(
                 child: Text(
-                  "I'm feeling lucky",
+                  AppLocalizations.of(context).homeButtonMysteryCocktail,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
