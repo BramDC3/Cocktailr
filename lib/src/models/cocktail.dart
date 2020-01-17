@@ -5,7 +5,7 @@ import '../extensions/string_extensions.dart';
 
 part 'cocktail.g.dart';
 
-@HiveType()
+@HiveType(typeId: 0)
 class Cocktail extends HiveObject {
   @HiveField(0)
   final String id;

@@ -8,17 +8,20 @@ part of 'cocktail.dart';
 
 class CocktailAdapter extends TypeAdapter<Cocktail> {
   @override
+  final typeId = 0;
+
+  @override
   Cocktail read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Cocktail(
-      id: fields[0] as String,
-      name: fields[1] as String,
-      category: fields[2] as String,
-      instructions: fields[3] as String,
-      image: fields[4] as String,
+      id: fields[0] as dynamic,
+      name: fields[1] as dynamic,
+      category: fields[2] as dynamic,
+      instructions: fields[3] as dynamic,
+      image: fields[4] as dynamic,
       isAlcoholic: fields[5] as bool,
       ingredients: (fields[6] as List)?.cast<dynamic>(),
       measurements: (fields[7] as List)?.cast<dynamic>(),

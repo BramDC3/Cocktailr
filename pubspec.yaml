@@ -20,7 +20,7 @@ dependencies:
   path_provider: ^1.2.0
 
   # Used for caching data.
-  hive: ^1.1.1
+  hive: ^1.3.0
 
   # Used for more icons.
   font_awesome_flutter: ^8.5.0
@@ -52,7 +52,7 @@ dev_dependencies:
   intl_translation: ^0.17.7
 
   # Extension for Hive to create type adapters.
-  hive_generator: ^0.5.2
+  hive_generator: ^0.7.0
 
   # Tools to write binaries that run builders.
   build_runner:

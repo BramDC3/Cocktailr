@@ -8,7 +8,7 @@ import '../extensions/image_size_extensions.dart';
 
 part 'ingredient.g.dart';
 
-@HiveType()
+@HiveType(typeId: 1)
 class Ingredient extends HiveObject {
   @HiveField(0)
   final String id;
