@@ -22,7 +22,7 @@ curl -s -o "translated.zip" "https://localise.biz/api/export/archive/arb.zip?key
 unzip -qq "translated.zip" -d "l10n-translated"
 
 # Generate Dart files with translations
-flutter pub pub run intl_translation:generate_from_arb --output-dir=$OUTPUT_DIR--no-use-deferred-loading $APP_LOCALIZATIONS_PATH l10n-translated/*/l10n/intl_messages_*.arb
+flutter pub pub run intl_translation:generate_from_arb --output-dir=$OUTPUT_DIR --no-use-deferred-loading $APP_LOCALIZATIONS_PATH l10n-translated/*/l10n/intl_messages_*.arb
 
 # Cleanup
 rm translated.zip
