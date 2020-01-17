@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
-import 'package:cocktailr/src/fluro_router.dart';
+import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_loading_container.dart';
+import 'package:cocktailr/src/services/navigation_router.dart';
+import 'package:cocktailr/src/services/navigation_service.dart';
+import 'package:cocktailr/src/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,6 +13,10 @@ class TrendingCocktailListItem extends StatelessWidget {
   final String cocktailId;
 
   TrendingCocktailListItem({@required this.cocktailId});
+
+  Future<void> _onCocktailListItemPressed() async {
+    await sl<NavigationService>().navigateTo(NavigationRouter.getCocktailDetailRoute(cocktailId));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,9 +79,7 @@ class TrendingCocktailListItem extends StatelessWidget {
           elevation: 3,
           child: InkWell(
             borderRadius: BorderRadius.circular(12),
-            onTap: () => Navigator.of(context).pushNamed(
-              FluroRouter.getCocktailDetailRoute(cocktailId),
-            ),
+            onTap: _onCocktailListItemPressed,
             child: Column(
               children: <Widget>[
                 _cocktailImage(cocktail, height, width),
@@ -106,9 +111,7 @@ class TrendingCocktailListItem extends StatelessWidget {
           child: FadeInImage(
             image: CachedNetworkImageProvider("${cocktail.image}"),
             fit: BoxFit.cover,
-            placeholder: AssetImage(
-              "assets/images/white_placeholder.png",
-            ),
+            placeholder: AssetImage(whitePlaceholder),
           ),
         ),
       );

@@ -1,17 +1,21 @@
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/search_bloc.dart';
 import 'package:cocktailr/src/screens/search/widgets/search_screen_list_item.dart';
+import 'package:cocktailr/src/services/app_localizations.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SearchScreen extends StatefulWidget {
+  final SearchBloc searchBloc;
+
+  SearchScreen({@required this.searchBloc});
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  SearchBloc _searchBloc;
   TextEditingController _textEditingController;
 
   List<String> _filterIngredients(List<String> ingredients, String keyword) {
@@ -29,13 +33,12 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    _searchBloc = SearchBloc();
     _textEditingController = TextEditingController();
   }
 
   @override
   void dispose() {
-    _searchBloc?.dispose();
+    widget.searchBloc?.dispose();
     _textEditingController?.dispose();
     super.dispose();
   }
@@ -43,7 +46,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _searchBloc.keyword,
+      stream: widget.searchBloc.keyword,
       builder: (context, AsyncSnapshot<String> snapshot) {
         return Scaffold(
           appBar: _buildAppBar(snapshot.data),
@@ -64,23 +67,23 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           cursorColor: Colors.white,
           decoration: InputDecoration(
-            hintText: "Search by ingredient...",
+            hintText: AppLocalizations.of(context).searchPlaceHolderSearchText,
             hintStyle: TextStyle(
               color: Colors.white70,
               fontSize: 20,
             ),
           ),
-          onChanged: _searchBloc.changeKeyword,
+          onChanged: widget.searchBloc.changeKeyword,
         ),
         actions: keyword == null || keyword == ""
             ? <Widget>[]
             : <Widget>[
                 IconButton(
                   icon: Icon(Icons.clear),
-                  tooltip: "Clear entry",
+                  tooltip: AppLocalizations.of(context).searchButtonClearEntry,
                   onPressed: () {
                     _textEditingController.text = "";
-                    _searchBloc.changeKeyword("");
+                    widget.searchBloc.changeKeyword("");
                   },
                 ),
               ],

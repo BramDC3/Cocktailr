@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
-import 'package:cocktailr/src/models/enum/image_size.dart';
+import 'package:cocktailr/src/constants/app_strings.dart';
+import 'package:cocktailr/src/enums/image_size.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,20 +29,13 @@ class CocktailIngredientListItem extends StatelessWidget {
         }
 
         return isLastIngredient
-            ? _cocktailIngredientListItem(
-                snapshot.data[ingredientName],
-              )
-            : _cocktailIngredientListItemWithDivider(
-                snapshot.data[ingredientName],
-              );
+            ? _cocktailIngredientListItem(snapshot.data[ingredientName])
+            : _cocktailIngredientListItemWithDivider(snapshot.data[ingredientName]);
       },
     );
   }
 
-  Widget _cocktailIngredientListItemWithDivider(
-    Future<Ingredient> ingredientFuture,
-  ) =>
-      Column(
+  Widget _cocktailIngredientListItemWithDivider(Future<Ingredient> ingredientFuture) => Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           _cocktailIngredientListItem(ingredientFuture),
@@ -49,10 +43,7 @@ class CocktailIngredientListItem extends StatelessWidget {
         ],
       );
 
-  Widget _cocktailIngredientListItem(
-    Future<Ingredient> ingredientFuture,
-  ) =>
-      FutureBuilder(
+  Widget _cocktailIngredientListItem(Future<Ingredient> ingredientFuture) => FutureBuilder(
         future: ingredientFuture,
         builder: (context, AsyncSnapshot<Ingredient> snapshot) {
           if (!snapshot.hasData) {
@@ -80,13 +71,12 @@ class CocktailIngredientListItem extends StatelessWidget {
         },
       );
 
-  Widget _ingredientImage(Ingredient ingredient, BuildContext context) =>
-      FadeInImage(
+  Widget _ingredientImage(Ingredient ingredient, BuildContext context) => FadeInImage(
         image: CachedNetworkImageProvider("${ingredient.image(ImageSize.SMALL)}"),
         fit: BoxFit.contain,
         height: MediaQuery.of(context).size.width / 7.5,
         width: MediaQuery.of(context).size.width / 7.5,
-        placeholder: AssetImage("assets/images/white_placeholder.png"),
+        placeholder: AssetImage(whitePlaceholder),
       );
 
   Widget _ingredientName() => Text(ingredientName);

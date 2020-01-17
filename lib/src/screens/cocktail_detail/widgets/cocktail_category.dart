@@ -1,4 +1,4 @@
-import 'package:cocktailr/src/constants/color_constants.dart';
+import 'package:cocktailr/src/constants/app_colors.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:flutter/material.dart';
 
@@ -25,7 +25,7 @@ class CocktailCategory extends StatelessWidget {
                   foreground: Paint()
                     ..style = PaintingStyle.stroke
                     ..strokeWidth = 5
-                    ..color = ColorConstants.borderedTextBorderColor,
+                    ..color = AppColors.borderedTextBorderColor,
                 ),
               ),
               Text(
@@ -33,7 +33,7 @@ class CocktailCategory extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 72,
                   fontWeight: FontWeight.bold,
-                  color: ColorConstants.defaultBackgroundColor,
+                  color: AppColors.defaultBackgroundColor,
                 ),
               ),
             ],

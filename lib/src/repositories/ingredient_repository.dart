@@ -31,7 +31,7 @@ class IngredientRepository {
 
     if (ingredient == null) {
       ingredient = await ingredientApi.fetchIngredientByName(ingredientName);
-      ingredientCache.insertIngredient(ingredient);
+      await ingredientCache.insertIngredient(ingredient);
     }
 
     return ingredient;

@@ -1,8 +1,7 @@
 import 'package:cocktailr/src/bases/blocs/bloc_base.dart';
-import 'package:cocktailr/src/constants/string_constants.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/repositories/cocktail_repository.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CocktailBloc extends BlocBase {
@@ -23,7 +22,7 @@ class CocktailBloc extends BlocBase {
         .transform(_cocktailsTransformer())
         .pipe(_cocktailsOutput);
     _fetchPopularCocktailIds();
-    fetchCocktailIdsByIngredient(INITIAL_INGREDIENT);
+    fetchCocktailIdsByIngredient("Tequila");
   }
 
   Future<void> fetchCocktailIdsByIngredient(String ingredient) async {
@@ -41,7 +40,7 @@ class CocktailBloc extends BlocBase {
 
   Future<Cocktail> _fetchCockailById(String cocktailId) async => cocktailRepository.fetchCocktailById(cocktailId);
 
-  _cocktailsTransformer() {
+  ScanStreamTransformer<String, Map<String, Future<Cocktail>>> _cocktailsTransformer() {
     return ScanStreamTransformer(
       (Map<String, Future<Cocktail>> cache, String id, _) {
         cache[id] = _fetchCockailById(id);

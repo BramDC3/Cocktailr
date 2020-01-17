@@ -1,19 +1,21 @@
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
-import 'package:cocktailr/src/fluro_router.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:cocktailr/src/screens/home/widgets/popular_ingredient_list_item.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_list_item.dart';
+import 'package:cocktailr/src/services/app_localizations.dart';
+import 'package:cocktailr/src/services/navigation_router.dart';
+import 'package:cocktailr/src/services/navigation_service.dart';
+import 'package:cocktailr/src/services/service_locator.dart';
 import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-  Future<void> _onIngredientPressed(
-      Ingredient ingredient, BuildContext context) async {
+  Future<void> _onIngredientPressed(Ingredient ingredient, BuildContext context) async {
     final cocktailBloc = Provider.of<CocktailBloc>(context);
-    cocktailBloc.fetchCocktailIdsByIngredient(ingredient.name);
+    await cocktailBloc.fetchCocktailIdsByIngredient(ingredient.name);
 
     final mainNavigationBloc = Provider.of<MainNavigationBloc>(context);
     mainNavigationBloc.changeCurrentIndex(1);
@@ -24,9 +26,7 @@ class HomeScreen extends StatelessWidget {
     final cocktail = await bloc.fetchRandomCocktail();
     bloc.fetchCocktail(cocktail.id);
 
-    Navigator.of(context).pushNamed(
-      FluroRouter.getCocktailDetailRoute(cocktail.id),
-    );
+    await sl<NavigationService>().navigateTo(NavigationRouter.getCocktailDetailRoute(cocktail.id));
   }
 
   @override
@@ -36,13 +36,13 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          _sectionTitle("Trending Cocktails"),
+          _sectionTitle(AppLocalizations.of(context).homeLabelTrendingCocktails),
           _buildTrendingCocktailsList(context),
           SizedBox(height: 16),
-          _sectionTitle("Popular Ingredients"),
+          _sectionTitle(AppLocalizations.of(context).homeLabelPopularIngredients),
           _buildPopularIngredientsList(context),
           SizedBox(height: 16),
-          _sectionTitle("Mystery Cocktail"),
+          _sectionTitle(AppLocalizations.of(context).homeLabelMysteryCocktail),
           _buildMysteryCocktailButton(context),
         ],
       ),
@@ -77,8 +77,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.only(left: 16, right: 8),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                Provider.of<CocktailBloc>(context)
-                    .fetchCocktail(snapshot.data[index]);
+                Provider.of<CocktailBloc>(context).fetchCocktail(snapshot.data[index]);
 
                 return Padding(
                   padding: EdgeInsets.only(right: 8),
@@ -108,8 +107,7 @@ class HomeScreen extends StatelessWidget {
               padding: EdgeInsets.only(left: 19, right: 8),
               itemCount: snapshot.data.length,
               itemBuilder: (BuildContext context, int index) {
-                Provider.of<IngredientBloc>(context)
-                    .fetchIngredient(snapshot.data[index]);
+                Provider.of<IngredientBloc>(context).fetchIngredient(snapshot.data[index]);
 
                 return Padding(
                   padding: EdgeInsets.only(right: 10),
@@ -132,7 +130,7 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: RaisedButton(
                 child: Text(
-                  "I'm feeling lucky",
+                  AppLocalizations.of(context).homeButtonMysteryCocktail,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
