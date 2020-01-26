@@ -7,6 +7,7 @@ import 'package:cocktailr/src/enums/image_size.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class SearchScreenListItem extends StatelessWidget {
   final String ingredientName;
@@ -40,23 +41,29 @@ class SearchScreenListItem extends StatelessWidget {
   }
 
   Widget _searchScreenListItem(Future<Ingredient> ingredientFuture) => FutureBuilder(
-    future: ingredientFuture,
-    builder: (context, AsyncSnapshot<Ingredient> snapshot) {
-      if (!snapshot.hasData) {
-        return ListTile();
-      }
+        future: ingredientFuture,
+        builder: (context, AsyncSnapshot<Ingredient> snapshot) {
+          if (!snapshot.hasData) {
+            return ListTile();
+          }
 
-      return InkWell(
-        onTap: () => _onIngredientPressed(snapshot.data.name, context),
-        child: ListTile(
-          leading: FadeInImage(
-            image: CachedNetworkImageProvider("${snapshot.data.image(ImageSize.SMALL)}"),
-            fit: BoxFit.cover,
-            placeholder: AssetImage(whitePlaceholder),
-          ),
-          title: Text(snapshot.data.name),
-        ),
+          return InkWell(
+            onTap: () => _onIngredientPressed(snapshot.data.name, context),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                return ListTile(
+                  title: Text(snapshot.data.name),
+                  leading: AspectRatio(
+                    aspectRatio: 1 / 1,
+                    child: FadeInImage(
+                      image: CachedNetworkImageProvider("${snapshot.data.image(ImageSize.SMALL)}"),
+                      placeholder: MemoryImage(kTransparentImage),
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        },
       );
-    },
-  );
 }

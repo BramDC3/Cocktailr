@@ -44,6 +44,9 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # Provides a placeholder for when an image is loading.
+  transparent_image: ^1.0.0
+
 dev_dependencies:
   # Linter.
   pedantic: ^1.8.0+1
@@ -69,7 +72,6 @@ flutter:
     - assets/images/ingredients/tequila.jpg
     - assets/images/ingredients/vodka.jpg
     - assets/images/ingredients/whiskey.jpg
-    - assets/images/white_placeholder.png
 
   fonts:
     - family: Roboto

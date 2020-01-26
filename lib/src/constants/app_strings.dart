@@ -12,6 +12,3 @@ const String ingredientBox = 'Ingredients';
 
 // Fonts
 const String roboto = 'Roboto';
-
-// Assets
-const String whitePlaceholder = 'assets/images/white_placeholder.png';

@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
-import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/home/widgets/trending_cocktail_loading_container.dart';
 import 'package:cocktailr/src/services/navigation_router.dart';
@@ -8,6 +7,7 @@ import 'package:cocktailr/src/services/navigation_service.dart';
 import 'package:cocktailr/src/services/service_locator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class TrendingCocktailListItem extends StatelessWidget {
   final String cocktailId;
@@ -111,7 +111,7 @@ class TrendingCocktailListItem extends StatelessWidget {
           child: FadeInImage(
             image: CachedNetworkImageProvider("${cocktail.image}"),
             fit: BoxFit.cover,
-            placeholder: AssetImage(whitePlaceholder),
+            placeholder: MemoryImage(kTransparentImage),
           ),
         ),
       );
