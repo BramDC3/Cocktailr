@@ -19,9 +19,9 @@ class NavigationRouter {
   }
 
   void _setupRouter() {
-    router.define(main, handler: _mainHandler);
-    router.define(cocktail, handler: _cocktailHandler);
-    router.define(search, handler: _searchHandler);
+    router.define(main, handler: _mainHandler, transitionType: TransitionType.native);
+    router.define(cocktail, handler: _cocktailHandler, transitionType: TransitionType.native);
+    router.define(search, handler: _searchHandler, transitionType: TransitionType.native);
   }
 
   final _mainHandler = Handler(
