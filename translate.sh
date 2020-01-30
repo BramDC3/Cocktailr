@@ -3,7 +3,7 @@
 set -e # Exit on first failed command
 
 # Variables
-LOCO_API_KEY="5z-IQr9pVR_2av53KAQEsU0RfXYcghnKt"
+LOCO_API_KEY=$COCKTAILR_LOCO_KEY
 APP_LOCALIZATIONS_PATH="lib/src/services/app_localizations.dart"
 OUTPUT_DIR="lib/l10n"
 
