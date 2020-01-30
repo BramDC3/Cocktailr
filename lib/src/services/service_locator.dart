@@ -1,9 +1,9 @@
+import 'package:cocktailr/src/constants/app_config.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:logger/logger.dart';
 
-import '../app_config.dart';
 import '../bases/database/cocktail_cache.dart';
 import '../bases/database/ingredient_cache.dart';
 import '../bases/network/api/cocktail_api.dart';
@@ -48,9 +48,9 @@ void init() async {
 
   // Dio
   sl.registerLazySingleton(() => Dio(BaseOptions(
-        connectTimeout: AppConfig.connectTimeout,
-        receiveTimeout: AppConfig.receiveTimeout,
-        baseUrl: AppConfig.baseUrl,
+        connectTimeout: connectTimeout,
+        receiveTimeout: receiveTimeout,
+        baseUrl: baseUrl,
       ))..interceptors.add(sl()));
 
   // Interceptors

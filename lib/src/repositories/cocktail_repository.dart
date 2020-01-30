@@ -1,5 +1,6 @@
 import 'package:cocktailr/src/bases/database/cocktail_cache.dart';
 import 'package:cocktailr/src/bases/network/api/cocktail_api.dart';
+import 'package:cocktailr/src/constants/app_config.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:flutter/material.dart';
 
@@ -23,7 +24,7 @@ class CocktailRepository {
   }
 
   Future<List<String>> fetchPopularCocktailIds() async {
-    return ["11002", "11001", "11000", "13621", "17207"];
+    return popularCocktailIds;
   }
 
   Future<Cocktail> fetchCocktailById(String cocktailId) async {

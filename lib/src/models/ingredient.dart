@@ -1,8 +1,8 @@
+import 'package:cocktailr/src/constants/app_config.dart';
 import 'package:cocktailr/src/enums/image_size.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
-import '../app_config.dart';
 import '../extensions/string_extensions.dart';
 import '../extensions/image_size_extensions.dart';
 
@@ -12,14 +12,19 @@ part 'ingredient.g.dart';
 class Ingredient extends HiveObject {
   @HiveField(0)
   final String id;
+
   @HiveField(1)
   final String name;
+
   @HiveField(2)
   final String description;
+
   @HiveField(3)
   final String type;
+
   @HiveField(4)
   final bool isAlcoholic;
+
   @HiveField(5)
   final String abv;
 
@@ -33,7 +38,7 @@ class Ingredient extends HiveObject {
   });
 
   String image(ImageSize imageSize) {
-    return "${AppConfig.imageBaseUrl}/$name-${imageSize.stringValue}.png";
+    return "$imageBaseUrl/$name-${imageSize.stringValue}.png";
   }
 
   factory Ingredient.fromJson(Map<String, dynamic> json) {
