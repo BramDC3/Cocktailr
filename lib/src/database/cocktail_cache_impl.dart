@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 class CocktailCacheImpl extends CocktailCache {
-  Box<Cocktail> cocktailBox;
+  final Box<Cocktail> cocktailBox;
 
   CocktailCacheImpl({@required this.cocktailBox});
 

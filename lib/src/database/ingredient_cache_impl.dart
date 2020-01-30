@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 class IngredientCacheImpl extends IngredientCache {
-  Box<Ingredient> ingredientBox;
+  final Box<Ingredient> ingredientBox;
 
   IngredientCacheImpl({@required this.ingredientBox});
 
