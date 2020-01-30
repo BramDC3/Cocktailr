@@ -23,14 +23,12 @@ class CocktailCacheImpl extends CocktailCache {
   @override
   Future<Cocktail> fetchRandomCocktail() async {
     try {
-      final cocktails = cocktailBox.values.toList();
-
-      if (cocktails?.isEmpty ?? true) {
+      if (cocktailBox.isEmpty) {
         return null;
       }
 
-      final index = Random.secure().nextInt(cocktails.length);
-      return cocktails[index];
+      final index = Random.secure().nextInt(cocktailBox.length);
+      return cocktailBox.getAt(index);
     } catch (e) {
       print('Error while fetching random cocktail from cocktail cache: $e');
       return null;
