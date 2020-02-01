@@ -14,7 +14,7 @@ class CocktailRepository {
   });
 
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
-    List<String> cocktailIds = await cocktailApi.fetchCocktailIdsByIngredient(ingredient);
+    var cocktailIds = await cocktailApi.fetchCocktailIdsByIngredient(ingredient);
 
     if (cocktailIds.isEmpty) {
       cocktailIds = await cocktailCache.fetchCocktailIdsByIngredient(ingredient);
@@ -28,7 +28,7 @@ class CocktailRepository {
   }
 
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
-    Cocktail cocktail = await cocktailApi.fetchCocktailById(cocktailId);
+    var cocktail = await cocktailApi.fetchCocktailById(cocktailId);
 
     if (cocktail != null) {
       await cocktailCache.insertCocktail(cocktail);
@@ -40,7 +40,7 @@ class CocktailRepository {
   }
 
   Future<Cocktail> fetchRandomCocktail() async {
-    Cocktail cocktail = await cocktailCache.fetchRandomCocktail();
+    var cocktail = await cocktailCache.fetchRandomCocktail();
 
     if (cocktail == null) {
       cocktail = await cocktailApi.fetchRandomCocktail();

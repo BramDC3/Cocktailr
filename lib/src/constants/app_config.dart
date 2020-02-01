@@ -13,8 +13,8 @@ const String french = 'fr';
 const String belgium = 'BE';
 
 // Boxes
-const String cocktailBox = 'Cocktails';
-const String ingredientBox = 'Ingredients';
+const String cocktailBoxName = 'Cocktails';
+const String ingredientBoxName = 'Ingredients';
 
 // Fonts
 const String roboto = 'Roboto';
@@ -23,3 +23,10 @@ const String roboto = 'Roboto';
 const String defaultIngredient = 'Tequila';
 const String defaultCocktailId = '11002';
 const List<String> popularCocktailIds = ['11002', '11001', '11000', '13621', '17207'];
+const List<String> trendingIngredients = ['Tequila', 'Vodka', 'Rum', 'Gin', 'Whiskey'];
+
+// Files
+const String environmentVariablesFilePath = '.env';
+
+// Environment variable keys
+const String sentryKey = 'SENTRY_KEY';

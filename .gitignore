@@ -95,3 +95,4 @@ doc/api/
 android/app/release/app.aab
 android/key.properties
 ios/Flutter/flutter_export_environment.sh
+.env
