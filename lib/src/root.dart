@@ -15,16 +15,16 @@ import 'services/app_localizations.dart';
 import 'services/service_locator.dart';
 import 'services/navigation_router.dart';
 
-class App extends StatefulWidget {
+class Root extends StatefulWidget {
   @override
-  _AppState createState() => _AppState();
+  _RootState createState() => _RootState();
 }
 
-class _AppState extends State<App> {
+class _RootState extends State<Root> {
   @override
   void dispose() {
-    Hive.box<Cocktail>(cocktailBox).compact();
-    Hive.box<Ingredient>(ingredientBox).compact();
+    Hive.box<Cocktail>(cocktailBoxName).compact();
+    Hive.box<Ingredient>(ingredientBoxName).compact();
     Hive.close();
     super.dispose();
   }

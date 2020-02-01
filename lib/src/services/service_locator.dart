@@ -1,4 +1,5 @@
 import 'package:cocktailr/src/constants/app_config.dart';
+import 'package:cocktailr/src/services/crash_reporting_service.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
@@ -37,14 +38,14 @@ void init() async {
   sl.registerLazySingleton(() => IngredientRepository(ingredientApi: sl(), ingredientCache: sl()));
 
   // APIs
-  sl.registerLazySingleton<CocktailApi>(() => CocktailApiImpl(dio: sl()));
-  sl.registerLazySingleton<IngredientApi>(() => IngredientApiImpl(dio: sl()));
+  sl.registerLazySingleton<CocktailApi>(() => CocktailApiImpl(sl(), sl()));
+  sl.registerLazySingleton<IngredientApi>(() => IngredientApiImpl(sl(), sl()));
 
   // Hive
-  final cocktailBox = await Hive.openBox<Cocktail>('Cocktails');
-  sl.registerLazySingleton<CocktailCache>(() => CocktailCacheImpl(cocktailBox: cocktailBox));
-  final ingredientBox = await Hive.openBox<Ingredient>('Ingredients');
-  sl.registerLazySingleton<IngredientCache>(() => IngredientCacheImpl(ingredientBox: ingredientBox));
+  final cocktailBox = await Hive.openBox<Cocktail>(cocktailBoxName);
+  sl.registerLazySingleton<CocktailCache>(() => CocktailCacheImpl(cocktailBox, sl()));
+  final ingredientBox = await Hive.openBox<Ingredient>(ingredientBoxName);
+  sl.registerLazySingleton<IngredientCache>(() => IngredientCacheImpl(ingredientBox, sl()));
 
   // Dio
   sl.registerLazySingleton(() => Dio(BaseOptions(
@@ -69,7 +70,8 @@ void init() async {
       ));
   sl.registerLazySingleton(() => DioLogger(logger: sl()));
 
-  // Navigation
+  // Services
   sl.registerLazySingleton(() => NavigationRouter());
   sl.registerLazySingleton(() => NavigationService());
+  sl.registerLazySingleton(() => CrashReportingService());
 }
