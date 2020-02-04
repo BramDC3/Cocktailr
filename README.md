@@ -11,7 +11,7 @@ This project was originally created for my thesis about [Flutter vs. other mobil
 
 ## What's next?
 
-I've been working with Flutter for nearly 2 years but I still learn new things every week. That's why I keep thinking  and I come up with new ideas for this project. I keep on improving and refining Cocktailr and it will probably never truly be 'done'. I've made a list of features I still want to add and chores I have to do, but feel free to leave any suggestions if you have them.
+I've been working with Flutter for nearly 2 years but I still learn new things every week. That's why I keep improving and refining Cocktailr and it will probably never truly be 'done'. I've made a list of features I still want to add and chores I have to do, feel free to leave any suggestions if you have them.
 
 - Write unit tests
 - Add proper error handling
