@@ -1,5 +1,4 @@
 import 'package:cocktailr/src/blocs/main_navigation_bloc.dart';
-import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/services/navigation_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,22 +8,23 @@ import 'package:provider/provider.dart';
 
 import 'blocs/cocktail_bloc.dart';
 import 'blocs/ingredient_bloc.dart';
+import 'constants/app_config.dart';
 import 'models/cocktail.dart';
 import 'models/ingredient.dart';
 import 'services/app_localizations.dart';
 import 'services/service_locator.dart';
 import 'services/navigation_router.dart';
 
-class App extends StatefulWidget {
+class Root extends StatefulWidget {
   @override
-  _AppState createState() => _AppState();
+  _RootState createState() => _RootState();
 }
 
-class _AppState extends State<App> {
+class _RootState extends State<Root> {
   @override
   void dispose() {
-    Hive.box<Cocktail>(cocktailBox).compact();
-    Hive.box<Ingredient>(ingredientBox).compact();
+    Hive.box<Cocktail>(cocktailBoxName).compact();
+    Hive.box<Ingredient>(ingredientBoxName).compact();
     Hive.close();
     super.dispose();
   }

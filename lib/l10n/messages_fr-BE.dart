@@ -22,6 +22,19 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "appTitle" : MessageLookupByLibrary.simpleMessage("Cocktailr!"),
-    "welcomeText" : MessageLookupByLibrary.simpleMessage("Bonjour monde!")
+    "buttonTooltipGoBack" : MessageLookupByLibrary.simpleMessage(""),
+    "cocktailDetailLabelAlcoholic" : MessageLookupByLibrary.simpleMessage(""),
+    "cocktailDetailLabelHowToPrepare" : MessageLookupByLibrary.simpleMessage(""),
+    "cocktailDetailLabelNonAlcoholic" : MessageLookupByLibrary.simpleMessage(""),
+    "cocktailListErrorNoCocktailsAvailable" : MessageLookupByLibrary.simpleMessage(""),
+    "homeButtonMysteryCocktail" : MessageLookupByLibrary.simpleMessage(""),
+    "homeLabelMysteryCocktail" : MessageLookupByLibrary.simpleMessage(""),
+    "homeLabelPopularIngredients" : MessageLookupByLibrary.simpleMessage(""),
+    "homeLabelTrendingCocktails" : MessageLookupByLibrary.simpleMessage(""),
+    "mainButtonLabelSearch" : MessageLookupByLibrary.simpleMessage(""),
+    "navigationLabelCocktailScreen" : MessageLookupByLibrary.simpleMessage(""),
+    "navigationLabelHomeScreen" : MessageLookupByLibrary.simpleMessage(""),
+    "searchButtonClearEntry" : MessageLookupByLibrary.simpleMessage(""),
+    "searchPlaceHolderSearchText" : MessageLookupByLibrary.simpleMessage("")
   };
 }

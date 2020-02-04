@@ -2,20 +2,23 @@ import 'dart:math';
 
 import 'package:cocktailr/src/bases/database/cocktail_cache.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
+import 'package:cocktailr/src/services/crash_reporting_service.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 
 class CocktailCacheImpl extends CocktailCache {
-  Box<Cocktail> cocktailBox;
+  final Box<Cocktail> _cocktailBox;
+  final CrashReportingService _crashReportingService;
 
-  CocktailCacheImpl({@required this.cocktailBox});
+  CocktailCacheImpl(this._cocktailBox, this._crashReportingService,);
 
   @override
   Future<Cocktail> fetchCocktailById(String cocktailId) async {
     try {
-      return cocktailBox.get(cocktailId);
-    } catch (e) {
-      print('Error while fetching cocktail by id from cocktail cache: $e');
+      return _cocktailBox.get(cocktailId);
+    } catch (e, stacktrace) {
+      debugPrint('Error while fetching cocktail by id from cocktail cache: $e');
+      await _crashReportingService.reportCrash(e, stacktrace);
       return null;
     }
   }
@@ -23,16 +26,15 @@ class CocktailCacheImpl extends CocktailCache {
   @override
   Future<Cocktail> fetchRandomCocktail() async {
     try {
-      final cocktails = cocktailBox.values.toList();
-
-      if (cocktails?.isEmpty ?? true) {
+      if (_cocktailBox.isEmpty) {
         return null;
       }
 
-      final index = Random.secure().nextInt(cocktails.length);
-      return cocktails[index];
-    } catch (e) {
-      print('Error while fetching random cocktail from cocktail cache: $e');
+      final index = Random.secure().nextInt(_cocktailBox.length);
+      return _cocktailBox.getAt(index);
+    } catch (e, stacktrace) {
+      debugPrint('Error while fetching random cocktail from cocktail cache: $e');
+      await _crashReportingService.reportCrash(e, stacktrace);
       return null;
     }
   }
@@ -40,7 +42,7 @@ class CocktailCacheImpl extends CocktailCache {
   @override
   Future<List<String>> fetchCocktailIdsByIngredient(String ingredient) async {
     try {
-      final cocktails = cocktailBox.values.where((cocktail) => cocktail.ingredients.contains(ingredient)).toList();
+      final cocktails = _cocktailBox.values.where((cocktail) => cocktail.ingredients.contains(ingredient)).toList();
 
       if (cocktails?.isEmpty ?? true) {
         return [];
@@ -48,8 +50,9 @@ class CocktailCacheImpl extends CocktailCache {
 
       cocktails.sort((a, b) => a.name.compareTo(b.name));
       return cocktails.map((cocktail) => cocktail.id).toList();
-    } catch (e) {
-      print('Error while fetching cocktailids by ingredient from cocktail cache: $e');
+    } catch (e, stacktrace) {
+      debugPrint('Error while fetching cocktailids by ingredient from cocktail cache: $e');
+      await _crashReportingService.reportCrash(e, stacktrace);
       return [];
     }
   }
@@ -57,9 +60,10 @@ class CocktailCacheImpl extends CocktailCache {
   @override
   Future<void> insertCocktail(Cocktail cocktail) async {
     try {
-      await cocktailBox.put(cocktail.id, cocktail);
-    } catch (e) {
-      print('Error while inserting cocktail in cocktail cache: $e');
+      await _cocktailBox.put(cocktail.id, cocktail);
+    } catch (e, stacktrace) {
+      debugPrint('Error while inserting cocktail in cocktail cache: $e');
+      await _crashReportingService.reportCrash(e, stacktrace);
     }
   }
 }

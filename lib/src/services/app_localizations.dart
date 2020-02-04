@@ -1,8 +1,21 @@
 import 'package:cocktailr/l10n/messages_all.dart';
-import 'package:cocktailr/src/constants/app_strings.dart';
+import 'package:cocktailr/src/constants/app_config.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:cocktailr/src/extensions/string_extensions.dart';
+
+class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
+  const AppLocalizationsDelegate();
+
+  @override
+  bool isSupported(Locale locale) => [english, dutch, french].contains(locale.languageCode);
+
+  @override
+  Future<AppLocalizations> load(Locale locale) => AppLocalizations.load(locale);
+
+  @override
+  bool shouldReload(LocalizationsDelegate<AppLocalizations> old) => false;
+}
 
 class AppLocalizations {
   static AppLocalizations current;
@@ -55,17 +68,4 @@ class AppLocalizations {
   String get navigationLabelHomeScreen => Intl.message('Explore', name: 'navigationLabelHomeScreen');
   String get navigationLabelCocktailScreen => Intl.message('Cocktails', name: 'navigationLabelCocktailScreen');
   String get mainButtonLabelSearch => Intl.message('Search cocktails', name: 'mainButtonLabelSearch');
-}
-
-class AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
-  const AppLocalizationsDelegate();
-
-  @override
-  bool isSupported(Locale locale) => [english, dutch, french].contains(locale.languageCode);
-
-  @override
-  Future<AppLocalizations> load(Locale locale) => AppLocalizations.load(locale);
-
-  @override
-  bool shouldReload(LocalizationsDelegate<AppLocalizations> old) => false;
 }

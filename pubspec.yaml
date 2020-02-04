@@ -44,6 +44,15 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # Provides a placeholder for when an image is loading.
+  transparent_image: ^1.0.0
+
+  # Used for crash logging.
+  sentry: ^3.0.1
+
+  # Used for environment variables.
+  flutter_dotenv: ^2.1.0
+
 dev_dependencies:
   # Linter.
   pedantic: ^1.8.0+1
@@ -64,12 +73,12 @@ flutter:
   uses-material-design: true
 
   assets:
+    - .env
     - assets/images/ingredients/gin.jpg
     - assets/images/ingredients/rum.jpg
     - assets/images/ingredients/tequila.jpg
     - assets/images/ingredients/vodka.jpg
     - assets/images/ingredients/whiskey.jpg
-    - assets/images/white_placeholder.png
 
   fonts:
     - family: Roboto

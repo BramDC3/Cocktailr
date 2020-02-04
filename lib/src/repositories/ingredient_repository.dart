@@ -1,5 +1,6 @@
 import 'package:cocktailr/src/bases/database/ingredient_cache.dart';
 import 'package:cocktailr/src/bases/network/api/ingredient_api.dart';
+import 'package:cocktailr/src/constants/app_config.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class IngredientRepository {
   });
 
   Future<List<String>> fetchIngredientNames() async {
-    List<String> ingredientNames = await ingredientApi.fetchIngredientsNames();
+    var ingredientNames = await ingredientApi.fetchIngredientsNames();
 
     if (ingredientNames.isEmpty) {
       ingredientNames = await ingredientCache.fetchIngredientNames();
@@ -23,11 +24,11 @@ class IngredientRepository {
   }
 
   Future<List<String>> fetchTrendingIngredientNames() async {
-    return ["Tequila", "Vodka", "Rum", "Gin", "Whiskey"];
+    return trendingIngredients;
   }
 
   Future<Ingredient> fetchIngredientByName(String ingredientName) async {
-    Ingredient ingredient = await ingredientCache.fetchIngredientByName(ingredientName);
+    var ingredient = await ingredientCache.fetchIngredientByName(ingredientName);
 
     if (ingredient == null) {
       ingredient = await ingredientApi.fetchIngredientByName(ingredientName);

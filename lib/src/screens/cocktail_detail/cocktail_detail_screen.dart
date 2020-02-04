@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/cocktail_bloc.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
 import 'package:cocktailr/src/constants/app_colors.dart';
-import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/models/cocktail.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_alcoholic_label.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/widgets/cocktail_ingredient_list_item.dart';
@@ -12,6 +11,7 @@ import 'package:cocktailr/src/widgets/loading_spinner.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 import 'widgets/cocktail_category.dart';
 import 'widgets/cocktail_instructions.dart';
@@ -66,7 +66,7 @@ class CocktailDetailScreen extends StatelessWidget {
 
   Widget _cocktailImage(Cocktail cocktail, double width) => FadeInImage(
         image: CachedNetworkImageProvider(cocktail.image),
-        placeholder: AssetImage(whitePlaceholder),
+        placeholder: MemoryImage(kTransparentImage),
         width: width,
         height: width,
         fit: BoxFit.cover,

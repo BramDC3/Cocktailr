@@ -1,6 +1,8 @@
+import 'package:cocktailr/src/constants/app_config.dart';
 import 'package:cocktailr/src/screens/cocktail_detail/cocktail_detail_screen.dart';
 import 'package:cocktailr/src/screens/main_screen.dart';
 import 'package:cocktailr/src/screens/search/search_screen.dart';
+import 'package:cocktailr/src/extensions/string_extensions.dart';
 import 'package:fluro/fluro.dart';
 
 import 'service_locator.dart';
@@ -19,9 +21,9 @@ class NavigationRouter {
   }
 
   void _setupRouter() {
-    router.define(main, handler: _mainHandler);
-    router.define(cocktail, handler: _cocktailHandler);
-    router.define(search, handler: _searchHandler);
+    router.define(main, handler: _mainHandler, transitionType: TransitionType.native);
+    router.define(cocktail, handler: _cocktailHandler, transitionType: TransitionType.native);
+    router.define(search, handler: _searchHandler, transitionType: TransitionType.native);
   }
 
   final _mainHandler = Handler(
@@ -45,6 +47,6 @@ class NavigationRouter {
 
   static String _parseCocktailId(Map<String, List<String>> params) {
     final score = params[cocktailIdParameter]?.first;
-    return score == null || score.isEmpty ? "11002" : score;
+    return score.isNullOrEmpty ? defaultCocktailId : score;
   }
 }

@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cocktailr/src/blocs/ingredient_bloc.dart';
-import 'package:cocktailr/src/constants/app_strings.dart';
 import 'package:cocktailr/src/enums/image_size.dart';
 import 'package:cocktailr/src/models/ingredient.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:transparent_image/transparent_image.dart';
 
 class CocktailIngredientListItem extends StatelessWidget {
   final String ingredientName;
@@ -73,13 +73,16 @@ class CocktailIngredientListItem extends StatelessWidget {
 
   Widget _ingredientImage(Ingredient ingredient, BuildContext context) => FadeInImage(
         image: CachedNetworkImageProvider("${ingredient.image(ImageSize.SMALL)}"),
-        fit: BoxFit.contain,
         height: MediaQuery.of(context).size.width / 7.5,
         width: MediaQuery.of(context).size.width / 7.5,
-        placeholder: AssetImage(whitePlaceholder),
+        placeholder: MemoryImage(kTransparentImage),
       );
 
-  Widget _ingredientName() => Text(ingredientName);
+  Widget _ingredientName() => Text(
+        ingredientName,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      );
 
   Widget _ingredientMeasurement() => Text(
         measurement,
