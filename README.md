@@ -1,4 +1,4 @@
-[![Codemagic build status](https://api.codemagic.io/apps/5d654d7350359b00172b38d6/5e395c5be85028119447a15f/status_badge.svg)](https://codemagic.io/apps/5d654d7350359b00172b38d6/5e395c5be85028119447a15f/latest_build)
+[![Codemagic build status](https://api.codemagic.io/apps/5d654d7350359b00172b38d6/5d654d7350359b00172b38d5/status_badge.svg)](https://codemagic.io/apps/5d654d7350359b00172b38d6/5d654d7350359b00172b38d5/latest_build)
 <!-- CodeCoverage here -->
 
 # Cocktailr
@@ -14,6 +14,7 @@ This project was originally created for my thesis about [Flutter vs. other mobil
 I've been working with Flutter for nearly 2 years but I still learn new things every week. That's why I keep improving and refining Cocktailr and it will probably never truly be 'done'. I've made a list of features I still want to add and chores I have to do, feel free to leave any suggestions if you have them.
 
 - Write unit tests
+- Use the Inject package to improve the dependency injection
 - Add proper error handling
 - Add a dialog service
 - Set up proper pipelines on Codemagic for beta and release builds
